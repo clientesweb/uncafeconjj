@@ -1,14 +1,14 @@
 {
-  "short_name": "Cafe Club TV",
-  "name": "Cafe Club TV Web App",
+  "short_name": "Un Café Con JJ",
+  "name": "Un Café Con JJ Web App",
   "icons": [
     {
-      "src": "images/Icon192x192.png",
+      "src": "images/android-chrome-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "images/Icon512x512.png",
+      "src": "images/android-chrome-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     },
@@ -27,7 +27,7 @@
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#000000",
-  "description": "Disfruta de entretenimiento y servicios en línea con Cafe Club TV. Accede a nuestros videos, eventos y más.",
+  "description": "El noticiero digital más escuchado de Guayaquil con el Precandidato Jimmy Jairala.",
   "orientation": "portrait",
   "scope": "/",
   "prefer_related_applications": false
