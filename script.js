@@ -206,7 +206,7 @@ async function fetchPastLiveStreams() {
         return cachedData;
     }
 
-    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&eventType=completed&channelId=${CHANNEL_ID}&key=${API_KEY}&maxResults=${MAX_RESULTS}`;
+    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&eventType=completed&channelId=${CHANNEL_ID}&key=${API_KEY}&maxResults=${MAX_RESULTS}&order=date`;
     const response = await fetch(url);
     const data = await response.json();
     const items = data.items.filter(video => video.snippet.liveBroadcastContent === 'none'); // Filtrar solo videos no en vivo
@@ -233,6 +233,7 @@ function createVideoElement(video) {
 // Función para cargar los videos
 async function loadPastLiveStreams() {
     const videos = await fetchPastLiveStreams();
+    playlistSlider.innerHTML = ''; // Limpiar el slider antes de cargar nuevos videos
     videos.forEach(video => {
         const videoElement = createVideoElement(video);
         playlistSlider.appendChild(videoElement);
@@ -260,8 +261,11 @@ function lazyLoadIframes() {
     iframes.forEach(iframe => observer.observe(iframe));
 }
 
+// Cargar videos al iniciar
 window.onload = loadPastLiveStreams;
 
+// Opcional: Actualizar cada 10 minutos
+setInterval(loadPastLiveStreams, 10 * 60 * 1000);
 
 // Seleccionar elementos
 const whatsappBtn = document.getElementById('whatsappBtn');
