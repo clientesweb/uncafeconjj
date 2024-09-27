@@ -692,7 +692,7 @@ iframe {
 .instagram-video-item {
     flex: 0 0 auto; /* Cambiado a auto para que tome el tamaño del contenido */
     width: 400px; /* Ancho fijo para todos los videos */
-    height: 700px; /* Altura fija para mantener el tamaño del reel */
+    aspect-ratio: 9 / 16; /* Mantiene la proporción de aspecto de 9:16 */
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); /* Sombra suave */
@@ -722,13 +722,13 @@ iframe {
 @media (max-width: 768px) {
     .instagram-video-item {
         width: 90%; /* Menos espacio en pantallas más pequeñas */
-        height: auto; /* Altura automática para adaptarse */
+        aspect-ratio: 9 / 16; /* Mantener proporción en móviles */
     }
 }
 
 @media (max-width: 480px) {
     .instagram-video-item {
         width: 100%; /* Cada video ocupa el 100% del contenedor */
-        height: auto; /* Altura automática para adaptarse */
+        aspect-ratio: 9 / 16; /* Mantener proporción en móviles */
     }
 }
