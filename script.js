@@ -18,7 +18,7 @@ const MAX_RESULTS = 5; // Número de videos a obtener
 const CACHE_KEY = 'playlistData';
 const CACHE_EXPIRY = 10 * 60 * 1000; // Caché expira en 10 minutos
 
-const playlistSlider = document.getElementById('playlist-slider');
+const playlistSlider = document.getElementById('live-video-slider');
 
 // Función para obtener datos de la caché
 function getCachedData() {
