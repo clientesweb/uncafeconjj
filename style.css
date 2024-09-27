@@ -295,19 +295,31 @@ h2 {
     color: var(--text-color);
 }
 
+/* Sección de Videos, Playlists, y Shorts */
+#videos, #playlists, #shorts-section {
+    margin: 50px 0;
+    padding: 0 20px;
+}
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: var(--text-color);
+}
+
 /* Estilo unificado para playlist y shorts */
 .playlist-slider, #shorts-section {
     display: flex;
     overflow-x: auto;
-    gap: 20px; /* Igualamos el espacio entre items */
+    gap: 20px; /* Mismo espacio entre items */
     scroll-behavior: smooth;
     -ms-overflow-style: none;  /* Oculta la barra de desplazamiento en IE y Edge */
     scrollbar-width: none;     /* Oculta la barra de desplazamiento en Firefox */
 }
 
 .playlist-item, .short-item {
-    flex: 0 0 300px;   /* Ancho fijo de los items */
-    height: 200px;     /* Altura fija para los shorts y playlist */
+    flex: 0 0 300px;   /* Ancho fijo para los items */
+    height: 200px;     /* Altura unificada para shorts y playlist */
     border-radius: 10px;
     overflow: hidden;
 }
@@ -322,24 +334,6 @@ iframe {
 
 .playlist-slider::-webkit-scrollbar, #shorts-section::-webkit-scrollbar {
     display: none;  /* Oculta la barra de desplazamiento en WebKit */
-}
-
-/* Scroll Snap para los shorts */
-#shorts-section {
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    gap: 10px; /* Ajustamos la separación específica para los shorts */
-}
-
-.short-item {
-    flex: 0 0 auto;
-    width: 300px;
-    height: 500px; /* Altura específica para los shorts */
-    margin-right: 10px;
-    scroll-snap-align: start;
-    border-radius: 10px;
-    overflow: hidden;
-    display: flex;
 }
 /* Estilo para la sección de patrocinadores */
 #sponsors-section {
