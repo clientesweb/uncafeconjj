@@ -382,14 +382,14 @@ document.addEventListener('DOMContentLoaded', function () {
     // Actualizar automáticamente cada 15 minutos
     setInterval(updateCountersByTime, 900000); // 15 minutos en milisegundos
 });
+La sección debe ser para este js
 const API_KEY = 'AIzaSyDm96WQoeg4AfeyYwjmXfn76eGDV8b_OOc';
 const CHANNEL_ID = 'UCc4fHgV3zRgjHxYZJkQdxhw'; // Reemplaza con tu ID de canal
 const MAX_RESULTS = 5; // Número de videos a obtener
 const CACHE_KEY = 'pastLiveStreamData';
 const CACHE_EXPIRY = 10 * 60 * 1000; // Caché expira en 10 minutos
 
-const pastPlaylistSlider = document.getElementById('live-video-slider'); // Slider para videos pasados
-const livePlaylistSlider = document.getElementById('live-video-slider'); // Slider para videos en vivo
+const playlistSlider = document.getElementById('live-video-slider'); // Cambia aquí si es necesario
 
 // Función para obtener datos de la caché
 function getCachedData() {
@@ -437,24 +437,7 @@ async function fetchPastLiveStreams() {
         return items;
     } catch (error) {
         console.error(error);
-        return []; // Retorna un array vacío en caso de error
-    }
-}
-
-// Función para obtener videos en vivo
-async function fetchLiveStreams() {
-    try {
-        const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&eventType=live&channelId=${CHANNEL_ID}&key=${API_KEY}&maxResults=${MAX_RESULTS}`;
-        const response = await fetch(url);
-        
-        if (!response.ok) {
-            throw new Error('Error al obtener videos en vivo');
-        }
-
-        const data = await response.json();
-        return data.items; // Retorna los videos en vivo
-    } catch (error) {
-        console.error(error);
+        // Puedes mostrar un mensaje de error en la interfaz si lo deseas
         return []; // Retorna un array vacío en caso de error
     }
 }
@@ -472,31 +455,14 @@ function createVideoElement(video) {
     return iframe;
 }
 
-// Función para cargar los videos pasados
+// Función para cargar los videos
 async function loadPastLiveStreams() {
     const videos = await fetchPastLiveStreams();
-    pastPlaylistSlider.innerHTML = ''; // Limpiar el slider antes de cargar nuevos videos
+    playlistSlider.innerHTML = ''; // Limpiar el slider antes de cargar nuevos videos
     videos.forEach(video => {
         const videoElement = createVideoElement(video);
-        pastPlaylistSlider.appendChild(videoElement);
+        playlistSlider.appendChild(videoElement);
     });
-
-    // Carga diferida
-    lazyLoadIframes();
-}
-
-// Función para cargar los videos en vivo
-async function loadLiveStreams() {
-    const liveVideos = await fetchLiveStreams();
-    livePlaylistSlider.innerHTML = ''; // Limpiar el slider antes de cargar nuevos videos
-    if (liveVideos.length > 0) {
-        liveVideos.forEach(video => {
-            const videoElement = createVideoElement(video);
-            livePlaylistSlider.appendChild(videoElement);
-        });
-    } else {
-        console.log('No hay transmisiones en vivo en este momento.');
-    }
 
     // Carga diferida
     lazyLoadIframes();
@@ -521,13 +487,7 @@ function lazyLoadIframes() {
 }
 
 // Cargar videos al iniciar
-window.onload = async function() {
-    await loadPastLiveStreams();
-    await loadLiveStreams();
-};
+window.onload = loadPastLiveStreams;
 
 // Opcional: Actualizar cada 10 minutos
-setInterval(async () => {
-    await loadPastLiveStreams();
-    await loadLiveStreams();
-}, 10 * 60 * 1000);
+setInterval(loadPastLiveStreams, 10 * 60 * 1000);
