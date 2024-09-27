@@ -15,8 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     // Clave de API de YouTube y ID de la playlist
-    const apiKey = 'AIzaSyB4HGg2WVC-Sq3Qyj9T9Z9aBBGbET1oGs0'; // Reemplaza con tu clave de API
-    const playlistId = 'PLZ_v3bWMqpjFa0xI11mahmOCxPk_1TK2s'; // Reemplaza con el ID de tu playlist
+    const apiKey = 'AIzaSyDm96WQoeg4AfeyYwjmXfn76eGDV8b_OOc'; // Reemplaza con tu clave de API
+    const playlistId = 'PLSwBXxeopk-y2adJzE7kpjvEBR2BPsTCq'; // Reemplaza con el ID de tu playlist
 
     const shortsSection = document.getElementById('shorts-section');
     const maxResults = 5; // Máximo de shorts a mostrar
@@ -169,8 +169,8 @@ document.addEventListener('DOMContentLoaded', () => {
         nextButton.click();
     }, 5000);
 });
-const API_KEY = 'AIzaSyB4HGg2WVC-Sq3Qyj9T9Z9aBBGbET1oGs0';
-const PLAYLIST_ID = 'PLZ_v3bWMqpjEYZDAFLI-0GuAH4BpA5PiL'; // Reemplaza con tu ID de playlist
+const API_KEY = '';
+const PLAYLIST_ID = ''; // Reemplaza con tu ID de playlist
 const MAX_RESULTS = 5; // Número de videos a obtener
 const CACHE_KEY = 'playlistData';
 const CACHE_EXPIRY = 10 * 60 * 1000; // Caché expira en 10 minutos
@@ -285,7 +285,7 @@ sendMessageBtn.addEventListener('click', function() {
     const message = whatsappMessage.value.trim();
     if (message) {
         // Formatear el mensaje para enviar a WhatsApp
-        const phoneNumber = '+593978606269'; // Cambia este número por el de CaféClubTV
+        const phoneNumber = '+593999472777'; // Cambia este número por el de CaféClubTV
         const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
         
         // Abrir el enlace en una nueva ventana/pestaña
