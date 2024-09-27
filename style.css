@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 
 :root {
-  --primary-gradient: linear-gradient(135deg, #3B2F24, #E3B95B, #F8F8F8); /* Marrón oscuro barnizado, dorado suave, blanco puro */
-  --secondary-gradient: linear-gradient(135deg, #D5C09A, #3B2F24, #F8F8F8); /* Color arena suave, marrón oscuro, blanco puro */
-  --accent-color: #E3B95B; /* Dorado suave */
-  --text-color: #F8F8F8; /* Blanco puro */
-  --text-color-dark: #222222; /* Texto oscuro */
-  --button-gradient: linear-gradient(to right, #E3B95B, #D5C09A, #3B2F24); /* Dorado suave, color arena suave, marrón oscuro */
+  --primary-gradient: linear-gradient(135deg, #8B4513, #FFD700, #FFFFFF);
+  --secondary-gradient: linear-gradient(135deg, #D2B48C, #8B4513, #FFFFFF);
+  --accent-color: #FFD700; /* Color dorado */
+  --text-color: #ffffff;
+  --text-color-dark: #333333;
+  --button-gradient: linear-gradient(to right, #FFD700, #D2B48C, #8B4513);
 }
 
 /* Estilos generales */
