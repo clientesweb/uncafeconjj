@@ -677,6 +677,19 @@ iframe {
     text-align: center; /* Centrar el título */
 }
 
+/* Sección de Videos de Instagram */
+#instagram-videos {
+    margin: 50px 0;
+    padding: 0 20px;
+}
+
+#instagram-videos h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: var(--text-color);
+    text-align: center; /* Centrar el título */
+}
+
 /* Contenedor para los videos */
 .instagram-slider {
     display: flex;
@@ -688,17 +701,17 @@ iframe {
 }
 
 .instagram-video-item {
-    flex: 0 0 300px; /* Ancho fijo para los elementos */
-    height: 400px; /* Altura unificada para los videos */
+    flex: 0 0 400px; /* Aumenta el ancho de los elementos */
+    height: 500px; /* Aumenta la altura unificada para los videos */
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); /* Sombra suave */
     position: relative; /* Para posicionar el efecto hover */
-    transition: transform 0.3s ease; /* Transición suave por defecto */
 }
 
 .instagram-video-item:hover {
     transform: scale(1.05); /* Efecto de zoom al pasar el mouse */
+    transition: transform 0.3s ease; /* Transición suave */
 }
 
 /* Estilos para el iframe */
@@ -713,10 +726,4 @@ iframe {
 /* Ocultar la barra de desplazamiento en WebKit */
 .instagram-slider::-webkit-scrollbar {
     display: none; 
-}
-@media (max-width: 768px) {
-    .instagram-video-item {
-        flex: 0 0 200px; /* Ancho más pequeño en pantallas pequeñas */
-        height: 300px; /* Altura ajustada */
-    }
 }
