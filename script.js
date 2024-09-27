@@ -15,8 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     // Clave de API de YouTube y ID de la playlist
-    const apiKey = 'AIzaSyDm96WQoeg4AfeyYwjmXfn76eGDV8b_OOc'; // Reemplaza con tu clave de API
-    const playlistId = 'PLSwBXxeopk-y2adJzE7kpjvEBR2BPsTCq'; // Reemplaza con el ID de tu playlist
+    const apiKey = ''; // Reemplaza con tu clave de API
+    const playlistId = ''; // Reemplaza con el ID de tu playlist
 
     const shortsSection = document.getElementById('shorts-section');
     const maxResults = 5; // Máximo de shorts a mostrar
