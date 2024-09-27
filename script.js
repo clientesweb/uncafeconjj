@@ -14,11 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 const API_KEY = 'AIzaSyDm96WQoeg4AfeyYwjmXfn76eGDV8b_OOc';
-const CHANNEL_ID = 'PLSwBXxeopk-y2adJzE7kpjvEBR2BPsTCq'; // Reemplaza con tu ID de canal
+const PLAYLIST_ID = 'PLZ_v3bWMqpjEYZDAFLI-0GuAH4BpA5PiL'; // Reemplaza con tu ID de playlist que contiene shorts
+const MAX_RESULTS = 5; // Número de shorts a obtener
 const CACHE_KEY = 'shortsData';
 const CACHE_EXPIRY = 10 * 60 * 1000; // Caché expira en 10 minutos
 
-const shortsSection = document.getElementById('shorts-section');
+const shortsSlider = document.getElementById('shorts-slider');
 
 // Función para obtener datos de la caché
 function getCachedData() {
@@ -42,17 +43,17 @@ function setCachedData(items) {
     localStorage.setItem(CACHE_KEY, JSON.stringify(data));
 }
 
-// Función para obtener los videos del canal, sin límite de resultados
-async function fetchRecentVideos() {
+// Función para obtener videos de la playlist (shorts)
+async function fetchPlaylistItems() {
     const cachedData = getCachedData();
     if (cachedData) {
         return cachedData;
     }
 
-    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&key=${API_KEY}&order=date`;
+    const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&key=${API_KEY}&maxResults=${MAX_RESULTS}`;
     const response = await fetch(url);
     const data = await response.json();
-    const items = data.items.filter(video => video.snippet.liveBroadcastContent === 'none'); // Filtrar solo videos no en vivo
+    const items = data.items;
 
     // Guardar en caché
     setCachedData(items);
@@ -60,36 +61,50 @@ async function fetchRecentVideos() {
     return items;
 }
 
-// Función para crear el elemento de iframe del video
+// Función para crear el elemento de iframe del short
 function createShortElement(video) {
-    const videoId = video.id.videoId;
+    const videoId = video.snippet.resourceId.videoId;
     const iframe = document.createElement('iframe');
-    iframe.src = `https://www.youtube.com/embed/${videoId}`;
+    iframe.dataset.src = `https://www.youtube.com/embed/${videoId}`;
     iframe.frameBorder = '0';
     iframe.allow = 'autoplay; encrypted-media';
     iframe.allowFullscreen = true;
-    iframe.className = 'short-item';
+    iframe.className = 'shorts-item lazy'; // Clase lazy para la carga diferida
 
     return iframe;
 }
 
-// Función para cargar los videos recientes en la sección de shorts
-async function loadRecentShorts() {
-    const videos = await fetchRecentVideos();
-
-    // Obtener solo los últimos 5 videos agregados
-    const recentVideos = videos.slice(0, 5);
-
-    // Limpiar la sección de shorts antes de cargar nuevos videos
-    shortsSection.innerHTML = '';
-    recentVideos.forEach(video => {
-        const videoElement = createShortElement(video);
-        shortsSection.appendChild(videoElement);
+// Función para cargar los shorts
+async function loadShorts() {
+    const shorts = await fetchPlaylistItems();
+    shorts.forEach(video => {
+        const shortElement = createShortElement(video);
+        shortsSlider.appendChild(shortElement);
     });
+
+    // Carga diferida
+    lazyLoadIframes();
 }
 
-// Cargar los shorts recientes
-loadRecentShorts();
+// Función para cargar iframes cuando están en el viewport (lazy load)
+function lazyLoadIframes() {
+    const iframes = document.querySelectorAll('iframe.lazy');
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const iframe = entry.target;
+                iframe.src = iframe.dataset.src; // Carga el iframe cuando está visible
+                iframe.classList.remove('lazy');
+                observer.unobserve(iframe); // Deja de observar el iframe una vez cargado
+            }
+        });
+    });
+
+    iframes.forEach(iframe => observer.observe(iframe));
+}
+
+window.onload = loadShorts;
 
 document.addEventListener('DOMContentLoaded', () => {
     const slider = document.querySelector('.sponsors-slider');
