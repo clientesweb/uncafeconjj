@@ -4,19 +4,13 @@ const RESOURCES_TO_CACHE = [
   '/index.html',
   '/style.css',
   '/script.js',
-  '/images/Icon192x192.png',
-  '/images/Icon512x512.png',
-  '/images/logo.svg',
-  '/images/logo1.png',
-  '/images/logo2.png',
-  '/images/logo3.png',
-  '/images/logo4.png',
-  '/image1.jpg',
-  '/image2 (1).jpg',
-  '/image3.jpg',
-  '/image4.jpg',
-  '/image5.jpg',
-  '/image6.jpg'
+  '/images/android-chrome-192x192.png',
+  '/images/android-chrome-512x512.png',
+  '/images/logo.png',
+  '/images/banner.jpg',
+  '/images/banner1.jpg',
+  '/images/banner2.jpg',
+  '/images/banner3.jpg'
 ];
 
 // Instalación del Service Worker y almacenamiento en caché estático
