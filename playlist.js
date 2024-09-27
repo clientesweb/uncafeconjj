@@ -1,18 +1,3 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const menuToggle = document.getElementById('menu-toggle');
-    const navMenu = document.getElementById('nav-menu');
-
-    if (menuToggle && navMenu) {
-        menuToggle.addEventListener('click', function() {
-            navMenu.classList.toggle('active');
-        });
-    } else {
-        console.warn('Elementos de navegación no encontrados.');
-    }
-
-    // Resto de tu código...
-});
-
 const API_KEY = 'AIzaSyDm96WQoeg4AfeyYwjmXfn76eGDV8b_OOc';
 const PLAYLIST_ID = 'PLSwBXxeopk-y2adJzE7kpjvEBR2BPsTCq'; // Reemplaza con tu ID de playlist
 const MAX_RESULTS = 5; // Número de videos a obtener
@@ -50,15 +35,26 @@ async function fetchPlaylistItems() {
         return cachedData;
     }
 
-    const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&key=${API_KEY}&maxResults=${MAX_RESULTS}`;
-    const response = await fetch(url);
-    const data = await response.json();
-    const items = data.items;
+    try {
+        const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&key=${API_KEY}&maxResults=${MAX_RESULTS}`;
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+            throw new Error('Error al obtener videos de la playlist');
+        }
 
-    // Guardar en caché
-    setCachedData(items);
+        const data = await response.json();
+        const items = data.items || []; // Asegúrate de que sea un array
 
-    return items;
+        // Guardar en caché
+        setCachedData(items);
+
+        return items;
+    } catch (error) {
+        console.error(error);
+        // Manejo de error: puedes mostrar un mensaje en la interfaz si lo deseas
+        return []; // Retorna un array vacío en caso de error
+    }
 }
 
 // Función para crear el elemento de iframe del video
@@ -77,6 +73,7 @@ function createVideoElement(video) {
 // Función para cargar los videos
 async function loadVideos() {
     const videos = await fetchPlaylistItems();
+    playlistSlider.innerHTML = ''; // Limpiar el slider antes de cargar nuevos videos
     videos.forEach(video => {
         const videoElement = createVideoElement(video);
         playlistSlider.appendChild(videoElement);
@@ -104,4 +101,5 @@ function lazyLoadIframes() {
     iframes.forEach(iframe => observer.observe(iframe));
 }
 
+// Cargar videos al iniciar
 window.onload = loadVideos;
