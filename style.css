@@ -677,32 +677,6 @@ iframe {
     text-align: center; /* Centrar el título */
 }
 
-/* Sección de Videos de Instagram */
-#instagram-videos {
-    margin: 50px 0;
-    padding: 0 20px;
-}
-
-#instagram-videos h2 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: var(--text-color);
-    text-align: center; /* Centrar el título */
-}
-
-/* Sección de Videos de Instagram */
-#instagram-videos {
-    margin: 50px 0;
-    padding: 0 20px;
-}
-
-#instagram-videos h2 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: var(--text-color);
-    text-align: center; /* Centrar el título */
-}
-
 /* Contenedor para los videos */
 .instagram-slider {
     display: flex;
@@ -711,10 +685,11 @@ iframe {
     scroll-behavior: smooth; /* Desplazamiento suave */
     -ms-overflow-style: none; /* Oculta la barra de desplazamiento en IE y Edge */
     scrollbar-width: none; /* Oculta la barra de desplazamiento en Firefox */
+    padding-bottom: 10px; /* Espacio inferior para evitar corte de videos */
 }
 
 .instagram-video-item {
-    flex: 0 0 100%; /* Permite que cada video ocupe el 100% del contenedor */
+    flex: 0 0 100%; /* Cada video ocupa el 100% del contenedor */
     max-width: 400px; /* Ancho máximo para pantallas grandes */
     height: auto; /* Altura automática para mantener la relación de aspecto */
     aspect-ratio: 16 / 9; /* Mantiene la proporción de aspecto de 16:9 */
@@ -735,7 +710,7 @@ iframe {
     height: 100%;
     border: none;
     border-radius: 10px;
-    object-fit: cover; /* Mantener la relación de aspecto */
+    object-fit: fill; /* Cambiado a fill para llenar completamente el contenedor */
 }
 
 /* Ocultar la barra de desplazamiento en WebKit */
