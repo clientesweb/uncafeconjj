@@ -283,16 +283,19 @@ h2 {
     color: var(--text-color);
 }
 
-.playlist-slider {
+/* Estilo unificado para playlist y shorts */
+.playlist-slider, #shorts-section {
     display: flex;
     overflow-x: auto;
-    gap: 20px;
+    gap: 20px; /* Igualamos el espacio entre items */
     scroll-behavior: smooth;
+    -ms-overflow-style: none;  /* Oculta la barra de desplazamiento en IE y Edge */
+    scrollbar-width: none;     /* Oculta la barra de desplazamiento en Firefox */
 }
 
-.playlist-item {
-    flex: 0 0 300px;
-    height: 200px;
+.playlist-item, .short-item {
+    flex: 0 0 300px;   /* Ancho fijo de los items */
+    height: 200px;     /* Altura para los shorts y playlist */
     border-radius: 10px;
     overflow: hidden;
 }
@@ -305,13 +308,8 @@ iframe {
     object-fit: cover;
 }
 
-.playlist-slider::-webkit-scrollbar {
-    display: none;
-}
-
-.playlist-slider {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+.playlist-slider::-webkit-scrollbar, #shorts-section::-webkit-scrollbar {
+    display: none;  /* Oculta la barra de desplazamiento en WebKit */
 }
 
 /* Estilo para la sección de shorts */
