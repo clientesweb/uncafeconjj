@@ -1,23 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 
 :root {
-  /* Colores existentes */
-  --primary-gradient: linear-gradient(135deg, #3a1c71, #d76d77, #ffaf7b);
-  --secondary-gradient: linear-gradient(135deg, #4b6cb7, #182848);
-  --accent-color: #ff9a8b;
+  --primary-gradient: linear-gradient(135deg, #8B4513, #FFD700, #FFFFFF);
+  --secondary-gradient: linear-gradient(135deg, #D2B48C, #8B4513, #FFFFFF);
+  --accent-color: #FFD700; /* Color dorado */
   --text-color: #ffffff;
   --text-color-dark: #333333;
-  --button-gradient: linear-gradient(to right, #ff9a8b, #ff6a88, #ff99ac);
-
-  /* Nuevos gradientes */
-  --gold-gradient: linear-gradient(135deg, #ffd700, #fffacd);
-  --brown-gradient: linear-gradient(135deg, #8b4513, #d2b48c);
-  --gold-brown-gradient: linear-gradient(135deg, #ffd700, #8b4513);
+  --button-gradient: linear-gradient(to right, #FFD700, #D2B48C, #8B4513);
 }
 
 /* Estilos generales */
 body {
-    background: var(--gold-brown-gradient); /* Cambia el fondo a gradiente dorado y marrón */
+    background: var(--primary-gradient);
     color: var(--text-color);
     font-family: 'Poppins', Arial, sans-serif;
     margin: 0;
@@ -27,7 +21,7 @@ body {
 
 /* Estilos para el encabezado */
 header {
-    background: var(--gold-gradient); /* Cambia el fondo del encabezado a gradiente dorado */
+    background: var(--secondary-gradient);
     color: var(--text-color);
     padding: 1rem;
     display: flex;
@@ -49,7 +43,7 @@ header a:hover {
 }
 
 .logo img {
-    max-height: 70px;
+    max-height: 50px;
     transition: transform 0.3s ease;
 }
 
@@ -64,7 +58,7 @@ header a:hover {
 }
 
 .install-button {
-    background: var(--brown-gradient); /* Fondo marrón para el botón */
+    background: var(--button-gradient);
     color: var(--text-color-dark);
     border: none;
     border-radius: 25px;
@@ -75,7 +69,6 @@ header a:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-
 .install-button:hover {
     transform: scale(1.05);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
@@ -85,26 +78,23 @@ header a:hover {
     margin-right: 8px;
 }
 
-/* ------- main -------- */
+/* ------- main-------- */
 .container {
-    background: rgba(31, 41, 55, 0.8); /* Fondo oscuro con mayor opacidad */
-    backdrop-filter: blur(15px); /* Desenfoque moderado */
-    padding: 60px 2%; /* Espaciado generoso */
-    border-radius: 15px; /* Bordes redondeados sutiles */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Sombra ligera */
+    background: var(--secondary-gradient);
+    padding-left: 17%;
+    padding-right: 2%;
+    padding-top: 20px;
+    padding-bottom: 20%;
 }
 
 .large-container {
-    padding: 0 5%; /* Reducción de espaciado lateral */
+    padding-left: 7%;
 }
 
 .banner {
     position: relative;
     width: 100%;
-    height: auto; /* Dejar que la altura sea calculada según la imagen */
-    aspect-ratio: 16 / 9; /* Mantener la relación de aspecto de 16:9 */
     overflow: hidden;
-    border-radius: 15px; /* Bordes redondeados */
 }
 
 .carousel {
@@ -112,141 +102,127 @@ header a:hover {
     align-items: center;
     position: relative;
     width: 100%;
-    height: 100%;
 }
 
 .carousel-images {
     display: flex;
     transition: transform 0.5s ease-in-out;
-    height: 100%;
 }
 
 .carousel-images img {
     width: 100%;
-    height: 100%;
-    object-fit: cover; /* Mantener la relación de aspecto y cubrir todo el área del banner */
-    max-height: 100%; /* Asegura que la imagen no exceda la altura del banner */
     flex-shrink: 0;
-    border-radius: 15px; /* Bordes redondeados */
-    filter: brightness(0.9); /* Oscurecer ligeramente las imágenes */
-    transition: transform 0.3s ease;
-}
-
-.carousel-images img:hover {
-    transform: scale(1.05); /* Efecto de zoom al pasar el mouse */
+    border-radius: 8px;
 }
 
 .carousel-button {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semi-transparente */
+    background-color: rgba(0, 0, 0, 0.5);
     border: none;
-    color: #333; /* Texto oscuro */
-    font-size: 28px; /* Tamaño de fuente */
+    color: var(--text-color);
+    font-size: 24px;
     cursor: pointer;
-    padding: 12px; /* Espaciado interno */
-    border-radius: 50%; /* Botones redondos */
+    padding: 10px;
     z-index: 10;
-    transition: background-color 0.3s ease, transform 0.3s ease; /* Transición suave */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Sombra suave en botones */
+    transition: background-color 0.3s ease;
 }
 
 .carousel-button:hover {
-    background-color: rgba(255, 255, 255, 1); /* Cambio de fondo al pasar el ratón */
-    transform: scale(1.1); /* Aumento de tamaño al pasar el ratón */
+    background-color: rgba(0, 0, 0, 0.8);
 }
 
 .carousel-button.prev {
-    left: 15px; /* Espaciado lateral */
+    left: 10px;
 }
 
 .carousel-button.next {
-    right: 15px; /* Espaciado lateral */
-}
-/* Estilos para el footer */
-footer {
-    background: linear-gradient(135deg, rgba(31, 41, 55, 0.9), rgba(20, 24, 34, 0.9));
-    backdrop-filter: blur(12px);
-    color: var(--text-color);
-    padding: 3rem 1.5rem;
-    border-top: 5px solid var(--accent-color);
-    position: relative;
-    overflow: hidden;
+    right: 10px;
 }
 
-footer::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, rgba(0, 0, 0, 0) 60%);
-    z-index: 0;
+/* Estilos para el footer */
+footer {
+    background: var(--secondary-gradient);
+    color: var(--text-color);
+    padding: 2rem 1rem;
+    border-top: 5px solid var(--accent-color);
 }
 
 .footer-content {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 2.5rem;
-    position: relative;
-    z-index: 1;
+    gap: 2rem;
 }
 
 .footer-section {
     flex: 1;
-    min-width: 220px;
-    margin-bottom: 1.5rem;
+    min-width: 200px;
+    margin-bottom: 1rem;
 }
 
 .footer-logo {
-    max-height: 60px;
-    margin-bottom: 1.5rem;
-    transition: transform 0.4s ease, filter 0.4s ease;
+    max-height: 50px;
+    margin-bottom: 1rem;
+    transition: transform 0.3s ease;
 }
 
 .footer-logo:hover {
-    transform: scale(1.1);
-    filter: drop-shadow(0 0 10px var(--accent-color));
+    transform: scale(1.05);
 }
 
-.social-icons {
+.socials {
     display: flex;
-    gap: 1.2rem;
+    gap: 1rem;
 }
 
 .social-icon {
     color: var(--text-color);
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     text-decoration: none;
-    transition: transform 0.3s ease, color 0.3s ease;
+    transition: color 0.3s ease;
 }
 
 .social-icon:hover {
     color: var(--accent-color);
-    transform: scale(1.2);
+}
+
+.links ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.links ul li {
+    margin-bottom: 0.5rem;
+}
+
+.links ul li a {
+    color: var(--text-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.links ul li a:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
 }
 
 .map-container {
     width: 100%;
-    height: 250px;
-    background-color: rgba(200, 200, 200, 0.15);
-    border-radius: 10px;
+    height: 200px;
+    background-color: #ddd;
+    border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
 }
 
 .footer-bottom {
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.2);
     color: var(--text-color);
     text-align: center;
-    padding: 1.2rem 0;
-    font-size: 0.95rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.15);
-    position: relative;
-    z-index: 1;
+    padding: 1rem 0;
+    font-size: 0.9rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .footer-bottom a {
@@ -256,26 +232,9 @@ footer::before {
 }
 
 .footer-bottom a:hover {
-    color: var(--text-hover-color);
     text-decoration: underline;
 }
 
-/* Animación sutil en hover de los íconos sociales */
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.1);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-.social-icon:hover {
-    animation: pulse 0.6s infinite;
-}
 /* Sección de Videos, Playlists, y Shorts */
 #videos, #playlists, #shorts-section {
     margin: 50px 0;
@@ -288,43 +247,16 @@ h2 {
     color: var(--text-color);
 }
 
-/* Sección de Videos, Playlists, y Shorts */
-#videos, #playlists, #shorts-section {
-    margin: 50px 0;
-    padding: 0 20px;
-}
-
-h2 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: var(--text-color);
-}
-
-/* Sección de Videos, Playlists, y Shorts */
-#videos, #playlists, #shorts-section {
-    margin: 50px 0;
-    padding: 0 20px;
-}
-
-h2 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: var(--text-color);
-}
-
-/* Estilo unificado para playlist y shorts */
-.playlist-slider, #shorts-section {
+.playlist-slider {
     display: flex;
     overflow-x: auto;
-    gap: 20px; /* Mismo espacio entre items */
+    gap: 20px;
     scroll-behavior: smooth;
-    -ms-overflow-style: none;  /* Oculta la barra de desplazamiento en IE y Edge */
-    scrollbar-width: none;     /* Oculta la barra de desplazamiento en Firefox */
 }
 
-.playlist-item, .short-item {
-    flex: 0 0 300px;   /* Ancho fijo para los items */
-    height: 200px;     /* Altura unificada para shorts y playlist */
+.playlist-item {
+    flex: 0 0 300px;
+    height: 200px;
     border-radius: 10px;
     overflow: hidden;
 }
@@ -337,16 +269,59 @@ iframe {
     object-fit: cover;
 }
 
-.playlist-slider::-webkit-scrollbar, #shorts-section::-webkit-scrollbar {
-    display: none;  /* Oculta la barra de desplazamiento en WebKit */
+.playlist-slider::-webkit-scrollbar {
+    display: none;
 }
+
+.playlist-slider {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Estilo para la sección de shorts */
+#shorts-section {
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+    padding: 10px 0;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+}
+
+.short-item {
+    flex: 0 0 auto;
+    width: 300px;
+    height: 500px;
+    margin-right: 10px;
+    scroll-snap-align: start;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+}
+
+.short-item iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    object-fit: cover;
+}
+
+#shorts-section::-webkit-scrollbar {
+    display: none;
+}
+
+#shorts-section {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
 /* Estilo para la sección de patrocinadores */
 #sponsors-section {
     overflow: hidden;
     position: relative;
     width: 100%;
     height: 150px;
-    background: radial-gradient(circle, var(--accent-color) 0%, #4F46E5 60%, #1E40AF 100%);
+    background: radial-gradient(circle, var(--accent-color) 0%, #3a1c71 60%, #182848 100%);
     padding: 10px 0;
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -401,42 +376,25 @@ iframe {
     bottom: 70px;
     right: 20px;
     z-index: 1000;
-    animation: pulse 2s infinite;
 }
 
 .whatsapp-button {
-    background-color: #10B981;
-    color: #fff;
+    background-color: #25D366;
+    color: var(--text-color);
     border-radius: 50%;
     padding: 15px;
     font-size: 24px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    transition: background-color 0.3s ease;
 }
 
 .whatsapp-button:hover {
-    background-color: #059669;
-    transform: scale(1.1);
-}
-
-/* Animación de pulsación del botón */
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5);
-    }
-    70% {
-        transform: scale(1.1);
-        box-shadow: 0 0 0 20px rgba(16, 185, 129, 0);
-    }
-    100% {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
-    }
+    background-color: #128C7E;
 }
 
 /* Estilos para el modal de WhatsApp */
@@ -447,109 +405,45 @@ iframe {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: 1001;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-}
-
-.whatsapp-modal.show {
-    display: block;
-    opacity: 1;
 }
 
 .whatsapp-modal-content {
-    background: #fff;
-    color: #333;
-    margin: 10% auto;
+    background: var(--text-color);
+    margin: 15% auto;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 5px;
     width: 80%;
     max-width: 500px;
     position: relative;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-    animation: modalFadeIn 0.5s ease;
-}
-
-@keyframes modalFadeIn {
-    from {
-        transform: translateY(-20px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
 }
 
 .whatsapp-close {
     position: absolute;
-    top: 15px;
-    right: 20px;
+    top: 10px;
+    right: 15px;
     font-size: 24px;
     cursor: pointer;
-    color: #333;
-}
-
-.whatsapp-close:hover {
-    color: #ff4d4d;
+    color: var(--text-color-dark);
 }
 
 .send-btn {
-    background-color: #10B981;
-    color: #fff;
+    background-color: #25D366;
+    color: var(--text-color);
     border: none;
-    padding: 12px 24px;
-    border-radius: 8px;
+    padding: 10px 20px;
+    border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
-    margin-top: 15px;
     transition: background-color 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-.send-btn i {
-    font-size: 20px;
 }
 
 .send-btn:hover {
-    background-color: #059669;
-}
-
-/* Estilo para el texto dentro del modal */
-.whatsapp-modal h2 {
-    color: #10B981;
-    font-size: 1.8rem;
-    margin-bottom: 10px;
-}
-
-.whatsapp-modal p {
-    font-size: 1rem;
-    margin-bottom: 10px;
-    color: #555;
-}
-
-.whatsapp-modal textarea {
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    font-size: 1rem;
-    resize: none;
-    outline: none;
-    transition: border-color 0.3s ease;
-}
-
-.whatsapp-modal textarea:focus {
-    border-color: #10B981;
+    background-color: #128C7E;
 }
 
 .bottom-nav {
-    background: rgba(31, 41, 55, 0.8);
-    backdrop-filter: blur(10px);
+    background: var(--secondary-gradient);
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: space-around;
@@ -607,8 +501,7 @@ iframe {
     justify-content: space-around;
     align-items: center;
     padding: 20px;
-    background: rgba(31, 41, 55, 0.5);
-    backdrop-filter: blur(10px);
+    background: var(--secondary-gradient);
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     flex-wrap: wrap;
@@ -622,7 +515,6 @@ iframe {
     width: 150px;
     text-align: center;
     background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(5px);
     border-radius: 10px;
     padding: 30px;
     margin: 10px;
@@ -649,23 +541,23 @@ iframe {
 
 /* Estilos para las etiquetas */
 .counter-label {
-    font-size: 14px;
-    color: #ffffff;
+    font-size: 14px;                  /* Tamaño de la etiqueta */
+    color: #ffffff;                   /* Color blanco para la etiqueta */
 }
 
 /* Media Queries para ajustar en pantallas más grandes */
 @media (min-width: 600px) {
     .counter {
-        width: 200px;
+        width: 200px;                 /* Aumentar el ancho en pantallas más grandes */
     }
 }
 
 @media (min-width: 900px) {
     .counters-container {
-        padding: 40px;
+        padding: 40px;                /* Ajustar padding en pantallas grandes */
     }
     
     .counter {
-        width: 220px;
+        width: 220px;                 /* Aumentar el ancho de los contadores aún más */
     }
 }
