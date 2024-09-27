@@ -271,6 +271,48 @@ footer::before {
 .social-icon:hover {
     animation: pulse 0.6s infinite;
 }
+/* Sección de Live Videos */
+#live-videos {
+    margin: 50px 0;
+    padding: 0 20px;
+}
+
+#live-videos h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: var(--text-color);
+}
+
+.live-video-slider {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    scroll-behavior: smooth;
+}
+
+.live-video-item {
+    flex: 0 0 300px;
+    height: 200px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.live-video-item iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.live-video-slider::-webkit-scrollbar {
+    display: none;
+}
+
+.live-video-slider {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
 
 /* Sección de Videos, Playlists, y Shorts */
 #videos, #playlists, #shorts-section {
