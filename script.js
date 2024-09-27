@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const shortsSection = document.getElementById('shorts-section');
     const maxResults = 5; // Máximo de shorts a mostrar
-    const fetchResults = 35; // Máximo de resultados a obtener de la API
+    const fetchResults = 100; // Máximo de resultados a obtener de la API
 
     // Mostrar un loader mientras se cargan los iframes
     function showLoader() {
@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 const API_KEY = 'AIzaSyDm96WQoeg4AfeyYwjmXfn76eGDV8b_OOc';
 const CHANNEL_ID = 'UCc4fHgV3zRgjHxYZJkQdxhw'; // Reemplaza con tu ID de canal
-const MAX_RESULTS = 5; // Número de videos a obtener
+const MAX_RESULTS = 10; // Número de videos a obtener
 const CACHE_KEY = 'pastLiveStreamData';
 const CACHE_EXPIRY = 10 * 60 * 1000; // Caché expira en 10 minutos
 
