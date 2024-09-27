@@ -16,11 +16,11 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
     // Clave de API de YouTube y ID de la playlist
     const apiKey = 'AIzaSyDm96WQoeg4AfeyYwjmXfn76eGDV8b_OOc'; // Reemplaza con tu clave de API
-    const playlistId = 'PLSwBXxeopk-wmW6MFByqj__mFobHxXq68'; // Reemplaza con el ID de tu playlist
+    const playlistId = 'PLSwBXxeopk-y2adJzE7kpjvEBR2BPsTCq'; // Reemplaza con el ID de tu playlist
 
     const shortsSection = document.getElementById('shorts-section');
     const maxResults = 5; // Máximo de shorts a mostrar
-    const fetchResults = 100 ; // Máximo de resultados a obtener de la API
+    const fetchResults = 35; // Máximo de resultados a obtener de la API
 
     // Mostrar un loader mientras se cargan los iframes
     function showLoader() {
@@ -37,20 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
         loaders.forEach(loader => loader.remove());
     }
 
-    // Crear el elemento iframe para mostrar el video de YouTube
-    function createShortElement(videoId) {
-        const shortItem = document.createElement('div');
-        shortItem.className = 'short-item';
-
-        const iframe = document.createElement('iframe');
-        iframe.src = `https://www.youtube.com/embed/${videoId}`;
-        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-        iframe.allowFullscreen = true;
-
-        shortItem.appendChild(iframe);
-        return shortItem;
-    }
-
     // Función para obtener los videos de la playlist
     function fetchPlaylistVideos(pageToken = '') {
         const apiUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=${fetchResults}&playlistId=${playlistId}&key=${apiKey}&pageToken=${pageToken}`;
@@ -60,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 removeLoader(); // Elimina el loader antes de cargar los iframes
 
-                // Invertir el orden de los videos y seleccionar los últimos 5
+                // Invertir el orden de los videos
                 const itemsToShow = data.items.reverse().slice(0, maxResults);
 
                 itemsToShow.forEach(item => {
@@ -75,10 +61,22 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
-    // Mostrar el loader inicialmente
-    showLoader();
+    // Crear elemento de Short con lazy loading
+    function createShortElement(videoId) {
+        const shortItem = document.createElement('div');
+        shortItem.className = 'short-item';
+        shortItem.innerHTML = `
+            <iframe src="https://www.youtube.com/embed/${videoId}?rel=0"
+                    loading="lazy"
+                    frameborder="0"
+                    allowfullscreen>
+            </iframe>
+        `;
+        return shortItem;
+    }
 
-    // Cargar los videos de la playlist
+    // Mostrar loaders y cargar Shorts al iniciar
+    showLoader();
     fetchPlaylistVideos();
 });
 
