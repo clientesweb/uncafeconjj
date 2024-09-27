@@ -694,11 +694,11 @@ iframe {
     overflow: hidden;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); /* Sombra suave */
     position: relative; /* Para posicionar el efecto hover */
+    transition: transform 0.3s ease; /* Transición suave por defecto */
 }
 
 .instagram-video-item:hover {
     transform: scale(1.05); /* Efecto de zoom al pasar el mouse */
-    transition: transform 0.3s ease; /* Transición suave */
 }
 
 /* Estilos para el iframe */
@@ -713,4 +713,10 @@ iframe {
 /* Ocultar la barra de desplazamiento en WebKit */
 .instagram-slider::-webkit-scrollbar {
     display: none; 
+}
+@media (max-width: 768px) {
+    .instagram-video-item {
+        flex: 0 0 200px; /* Ancho más pequeño en pantallas pequeñas */
+        height: 300px; /* Altura ajustada */
+    }
 }
