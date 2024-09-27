@@ -1,18 +1,18 @@
+Buenas noches! Me gustaría mejorar los colores de mi css utilizando un gradiant moderno, atractivo, ideal para una App, que pegue totalmente con el diseño de mi página, te daré el css
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 
 :root {
-  --primary-gradient: linear-gradient(135deg, #6366F1, #8B5CF6, #EC4899);
-  --secondary-gradient: linear-gradient(135deg, #3B82F6, #2563EB);
-  --accent-color: #F472B6;
-  --text-color: #F3F4F6;
-  --text-color-dark: #1F2937;
-  --button-gradient: linear-gradient(to right, #EC4899, #F472B6, #F59E0B);
-  --background-gradient: linear-gradient(to bottom right, #111827, #1F2937);
+  --primary-gradient: linear-gradient(135deg, #3a1c71, #d76d77, #ffaf7b);
+  --secondary-gradient: linear-gradient(135deg, #4b6cb7, #182848);
+  --accent-color: #ff9a8b;
+  --text-color: #ffffff;
+  --text-color-dark: #333333;
+  --button-gradient: linear-gradient(to right, #ff9a8b, #ff6a88, #ff99ac);
 }
 
 /* Estilos generales */
 body {
-    background: var(--background-gradient);
+    background: var(--primary-gradient);
     color: var(--text-color);
     font-family: 'Poppins', Arial, sans-serif;
     margin: 0;
@@ -22,8 +22,7 @@ body {
 
 /* Estilos para el encabezado */
 header {
-    background: rgba(31, 41, 55, 0.8);
-    backdrop-filter: blur(10px);
+    background: var(--secondary-gradient);
     color: var(--text-color);
     padding: 1rem;
     display: flex;
@@ -61,7 +60,7 @@ header a:hover {
 
 .install-button {
     background: var(--button-gradient);
-    color: var(--text-color);
+    color: var(--text-color-dark);
     border: none;
     border-radius: 25px;
     padding: 12px 25px;
@@ -82,8 +81,7 @@ header a:hover {
 
 /* ------- main-------- */
 .container {
-    background: rgba(31, 41, 55, 0.5);
-    backdrop-filter: blur(10px);
+    background: var(--secondary-gradient);
     padding-left: 17%;
     padding-right: 2%;
     padding-top: 20px;
@@ -146,8 +144,7 @@ header a:hover {
 
 /* Estilos para el footer */
 footer {
-    background: rgba(31, 41, 55, 0.8);
-    backdrop-filter: blur(10px);
+    background: var(--secondary-gradient);
     color: var(--text-color);
     padding: 2rem 1rem;
     border-top: 5px solid var(--accent-color);
@@ -325,7 +322,7 @@ iframe {
     position: relative;
     width: 100%;
     height: 150px;
-    background: radial-gradient(circle, var(--accent-color) 0%, #4F46E5 60%, #1E40AF 100%);
+    background: radial-gradient(circle, var(--accent-color) 0%, #3a1c71 60%, #182848 100%);
     padding: 10px 0;
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -383,7 +380,7 @@ iframe {
 }
 
 .whatsapp-button {
-    background-color: #10B981;
+    background-color: #25D366;
     color: var(--text-color);
     border-radius: 50%;
     padding: 15px;
@@ -398,7 +395,7 @@ iframe {
 }
 
 .whatsapp-button:hover {
-    background-color: #059669;
+    background-color: #128C7E;
 }
 
 /* Estilos para el modal de WhatsApp */
@@ -433,7 +430,7 @@ iframe {
 }
 
 .send-btn {
-    background-color: #10B981;
+    background-color: #25D366;
     color: var(--text-color);
     border: none;
     padding: 10px 20px;
@@ -443,12 +440,11 @@ iframe {
 }
 
 .send-btn:hover {
-    background-color: #059669;
+    background-color: #128C7E;
 }
 
 .bottom-nav {
-    background: rgba(31, 41, 55, 0.8);
-    backdrop-filter: blur(10px);
+    background: var(--secondary-gradient);
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: space-around;
@@ -506,8 +502,7 @@ iframe {
     justify-content: space-around;
     align-items: center;
     padding: 20px;
-    background: rgba(31, 41, 55, 0.5);
-    backdrop-filter: blur(10px);
+    background: var(--secondary-gradient);
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     flex-wrap: wrap;
@@ -521,7 +516,6 @@ iframe {
     width: 150px;
     text-align: center;
     background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(5px);
     border-radius: 10px;
     padding: 30px;
     margin: 10px;
@@ -548,23 +542,23 @@ iframe {
 
 /* Estilos para las etiquetas */
 .counter-label {
-    font-size: 14px;
-    color: #ffffff;
+    font-size: 14px;                  /* Tamaño de la etiqueta */
+    color: #ffffff;                   /* Color blanco para la etiqueta */
 }
 
 /* Media Queries para ajustar en pantallas más grandes */
 @media (min-width: 600px) {
     .counter {
-        width: 200px;
+        width: 200px;                 /* Aumentar el ancho en pantallas más grandes */
     }
 }
 
 @media (min-width: 900px) {
     .counters-container {
-        padding: 40px;
+        padding: 40px;                /* Ajustar padding en pantallas grandes */
     }
     
     .counter {
-        width: 220px;
+        width: 220px;                 /* Aumentar el ancho de los contadores aún más */
     }
 }
