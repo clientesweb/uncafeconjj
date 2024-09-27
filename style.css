@@ -62,7 +62,7 @@ header a:hover {
 
 .install-button {
     background: var(--button-gradient);
-    color: #FFFFF (--text-color);
+    color: #FFFFFF; /* Cambiado a blanco */
     border: none;
     border-radius: 25px;
     padding: 12px 25px;
