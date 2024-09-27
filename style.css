@@ -1,17 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 
 :root {
-  --primary-gradient: linear-gradient(135deg, #8B4513, #FFD700, #FFFFFF);
-  --secondary-gradient: linear-gradient(135deg, #D2B48C, #8B4513, #FFFFFF);
-  --accent-color: #FFD700; /* Color dorado */
+  /* Colores existentes */
+  --primary-gradient: linear-gradient(135deg, #3a1c71, #d76d77, #ffaf7b);
+  --secondary-gradient: linear-gradient(135deg, #4b6cb7, #182848);
+  --accent-color: #ff9a8b;
   --text-color: #ffffff;
   --text-color-dark: #333333;
-  --button-gradient: linear-gradient(to right, #FFD700, #D2B48C, #8B4513);
+  --button-gradient: linear-gradient(to right, #ff9a8b, #ff6a88, #ff99ac);
+
+  /* Nuevos gradientes */
+  --gold-gradient: linear-gradient(135deg, #ffd700, #fffacd);
+  --brown-gradient: linear-gradient(135deg, #8b4513, #d2b48c);
+  --gold-brown-gradient: linear-gradient(135deg, #ffd700, #8b4513);
 }
 
 /* Estilos generales */
 body {
-    background: var(--background-gradient);
+    background: var(--gold-brown-gradient); /* Cambia el fondo a gradiente dorado y marrón */
     color: var(--text-color);
     font-family: 'Poppins', Arial, sans-serif;
     margin: 0;
@@ -21,8 +27,7 @@ body {
 
 /* Estilos para el encabezado */
 header {
-    background: rgba(31, 41, 55, 0.8);
-    backdrop-filter: blur(10px);
+    background: var(--gold-gradient); /* Cambia el fondo del encabezado a gradiente dorado */
     color: var(--text-color);
     padding: 1rem;
     display: flex;
@@ -59,8 +64,8 @@ header a:hover {
 }
 
 .install-button {
-    background: var(--button-gradient);
-    color: var(--text-color);
+    background: var(--brown-gradient); /* Fondo marrón para el botón */
+    color: var(--text-color-dark);
     border: none;
     border-radius: 25px;
     padding: 12px 25px;
@@ -69,6 +74,7 @@ header a:hover {
     transition: transform 0.2s, box-shadow 0.3s;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
 
 .install-button:hover {
     transform: scale(1.05);
