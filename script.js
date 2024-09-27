@@ -382,7 +382,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Actualizar automáticamente cada 15 minutos
     setInterval(updateCountersByTime, 900000); // 15 minutos en milisegundos
 });
-La sección debe ser para este js
 const API_KEY = 'AIzaSyDm96WQoeg4AfeyYwjmXfn76eGDV8b_OOc';
 const CHANNEL_ID = 'UCc4fHgV3zRgjHxYZJkQdxhw'; // Reemplaza con tu ID de canal
 const MAX_RESULTS = 5; // Número de videos a obtener
