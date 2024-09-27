@@ -175,7 +175,7 @@ const MAX_RESULTS = 5; // Número de videos a obtener
 const CACHE_KEY = 'pastLiveStreamData';
 const CACHE_EXPIRY = 10 * 60 * 1000; // Caché expira en 10 minutos
 
-const playlistSlider = document.getElementById('playlist-slider');
+const playlistSlider = document.getElementById('live-video-slider'); // Cambia aquí si es necesario
 
 // Función para obtener datos de la caché
 function getCachedData() {
@@ -206,15 +206,26 @@ async function fetchPastLiveStreams() {
         return cachedData;
     }
 
-    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&eventType=completed&channelId=${CHANNEL_ID}&key=${API_KEY}&maxResults=${MAX_RESULTS}&order=date`;
-    const response = await fetch(url);
-    const data = await response.json();
-    const items = data.items.filter(video => video.snippet.liveBroadcastContent === 'none'); // Filtrar solo videos no en vivo
+    try {
+        const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&eventType=completed&channelId=${CHANNEL_ID}&key=${API_KEY}&maxResults=${MAX_RESULTS}&order=date`;
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+            throw new Error('Error al obtener videos en vivo pasados');
+        }
 
-    // Guardar en caché
-    setCachedData(items);
+        const data = await response.json();
+        const items = data.items.filter(video => video.snippet.liveBroadcastContent === 'none'); // Filtrar solo videos no en vivo
 
-    return items;
+        // Guardar en caché
+        setCachedData(items);
+
+        return items;
+    } catch (error) {
+        console.error(error);
+        // Puedes mostrar un mensaje de error en la interfaz si lo deseas
+        return []; // Retorna un array vacío en caso de error
+    }
 }
 
 // Función para crear el elemento de iframe del video
