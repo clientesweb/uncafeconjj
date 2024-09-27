@@ -170,9 +170,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 5000);
 });
 const API_KEY = 'AIzaSyDm96WQoeg4AfeyYwjmXfn76eGDV8b_OOc';
-const PLAYLIST_ID = 'PLSwBXxeopk-y2adJzE7kpjvEBR2BPsTCq'; // Reemplaza con tu ID de playlist
+const CHANNEL_ID = 'UCc4fHgV3zRgjHxYZJkQdxhw'; // Reemplaza con tu ID de canal
 const MAX_RESULTS = 5; // Número de videos a obtener
-const CACHE_KEY = 'playlistData';
+const CACHE_KEY = 'liveVideosData';
 const CACHE_EXPIRY = 10 * 60 * 1000; // Caché expira en 10 minutos
 
 const playlistSlider = document.getElementById('playlist-slider');
@@ -199,14 +199,14 @@ function setCachedData(items) {
     localStorage.setItem(CACHE_KEY, JSON.stringify(data));
 }
 
-// Función para obtener videos de la playlist
-async function fetchPlaylistItems() {
+// Función para obtener videos en vivo
+async function fetchLiveVideos() {
     const cachedData = getCachedData();
     if (cachedData) {
         return cachedData;
     }
 
-    const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&key=${API_KEY}&maxResults=${MAX_RESULTS}`;
+    const url = `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&eventType=live&type=video&part=snippet&maxResults=${MAX_RESULTS}`;
     const response = await fetch(url);
     const data = await response.json();
     const items = data.items;
@@ -219,9 +219,9 @@ async function fetchPlaylistItems() {
 
 // Función para crear el elemento de iframe del video
 function createVideoElement(video) {
-    const videoId = video.snippet.resourceId.videoId;
+    const videoId = video.id.videoId; // Cambiado para acceder al ID del video en vivo
     const iframe = document.createElement('iframe');
-    iframe.dataset.src = `https://www.youtube.com/embed/${videoId}`;
+    iframe.dataset.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`; // Agregar autoplay si deseas
     iframe.frameBorder = '0';
     iframe.allow = 'autoplay; encrypted-media';
     iframe.allowFullscreen = true;
@@ -232,14 +232,21 @@ function createVideoElement(video) {
 
 // Función para cargar los videos
 async function loadVideos() {
-    const videos = await fetchPlaylistItems();
-    videos.forEach(video => {
-        const videoElement = createVideoElement(video);
-        playlistSlider.appendChild(videoElement);
-    });
+    const videos = await fetchLiveVideos();
+    
+    if (videos.length > 0) {
+        videos.forEach(video => {
+            const videoElement = createVideoElement(video);
+            playlistSlider.appendChild(videoElement);
+        });
 
-    // Carga diferida
-    lazyLoadIframes();
+        // Carga diferida
+        lazyLoadIframes();
+    } else {
+        const noLiveMessage = document.createElement('p');
+        noLiveMessage.textContent = 'No hay transmisiones en vivo en este momento.';
+        playlistSlider.appendChild(noLiveMessage);
+    }
 }
 
 // Función para cargar iframes cuando están en el viewport
