@@ -1,13 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 
 :root {
-  --primary-gradient: linear-gradient(135deg, #6366F1, #8B5CF6, #EC4899);
-  --secondary-gradient: linear-gradient(135deg, #3B82F6, #2563EB);
-  --accent-color: #F472B6;
-  --text-color: #F3F4F6;
-  --text-color-dark: #1F2937;
-  --button-gradient: linear-gradient(to right, #EC4899, #F472B6, #F59E0B);
-  --background-gradient: linear-gradient(to bottom right, #111827, #1F2937);
+  --primary-gradient: linear-gradient(135deg, rgba(255, 215, 0, 0.8), rgba(139, 69, 19, 0.8)); /* Dorado opaco y marrón suave */
+  --secondary-gradient: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(139, 69, 19, 0.8)); /* Negro y marrón suave */
+  --accent-color: rgba(255, 215, 0, 0.8); /* Dorado opaco */
+  --text-color: #F3F4F6; /* Puedes cambiarlo si es necesario */
+  --text-color-dark: #1F2937; /* Puedes cambiarlo si es necesario */
+  --button-gradient: linear-gradient(to right, rgba(255, 215, 0, 0.8), rgba(255, 165, 0, 0.8), rgba(139, 69, 19, 0.8)); /* Dorado opaco a marrón suave */
+  --background-gradient: linear-gradient(to bottom right, rgba(0, 0, 0, 0.8), rgba(139, 69, 19, 0.8)); /* Negro y marrón suave */
 }
 
 /* Estilos generales */
