@@ -13,98 +13,74 @@ document.addEventListener('DOMContentLoaded', () => {
     // Resto de tu código...
 });
 
-const API_KEY = 'AIzaSyDm96WQoeg4AfeyYwjmXfn76eGDV8b_OOc';
-const PLAYLIST_ID = 'PLZ_v3bWMqpjEYZDAFLI-0GuAH4BpA5PiL'; // Reemplaza con tu ID de playlist que contiene shorts
-const MAX_RESULTS = 5; // Número de shorts a obtener
-const CACHE_KEY = 'shortsData';
-const CACHE_EXPIRY = 10 * 60 * 1000; // Caché expira en 10 minutos
+document.addEventListener('DOMContentLoaded', () => {
+    // Clave de API de YouTube y ID de la playlist
+    const apiKey = 'AIzaSyDm96WQoeg4AfeyYwjmXfn76eGDV8b_OOc'; // Reemplaza con tu clave de API
+    const playlistId = 'PLSwBXxeopk-wmW6MFByqj__mFobHxXq68'; // Reemplaza con el ID de tu playlist
 
-const shortsSlider = document.getElementById('shorts-slider');
+    const shortsSection = document.getElementById('shorts-section');
+    const maxResults = 5; // Máximo de shorts a mostrar
+    const fetchResults = 150; // Máximo de resultados a obtener de la API
 
-// Función para obtener datos de la caché
-function getCachedData() {
-    const cached = localStorage.getItem(CACHE_KEY);
-    if (cached) {
-        const data = JSON.parse(cached);
-        const now = new Date().getTime();
-        if (now - data.timestamp < CACHE_EXPIRY) {
-            return data.items;
+    // Mostrar un loader mientras se cargan los iframes
+    function showLoader() {
+        for (let i = 0; i < maxResults; i++) {
+            const shortItem = document.createElement('div');
+            shortItem.className = 'short-item loader'; // Clase para estilo de carga
+            shortsSection.appendChild(shortItem);
         }
     }
-    return null;
-}
 
-// Función para guardar datos en caché
-function setCachedData(items) {
-    const data = {
-        items: items,
-        timestamp: new Date().getTime()
-    };
-    localStorage.setItem(CACHE_KEY, JSON.stringify(data));
-}
-
-// Función para obtener videos de la playlist (shorts)
-async function fetchPlaylistItems() {
-    const cachedData = getCachedData();
-    if (cachedData) {
-        return cachedData;
+    // Remover el loader
+    function removeLoader() {
+        const loaders = document.querySelectorAll('.loader');
+        loaders.forEach(loader => loader.remove());
     }
 
-    const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&key=${API_KEY}&maxResults=${MAX_RESULTS}`;
-    const response = await fetch(url);
-    const data = await response.json();
-    const items = data.items;
+    // Crear el elemento iframe para mostrar el video de YouTube
+    function createShortElement(videoId) {
+        const shortItem = document.createElement('div');
+        shortItem.className = 'short-item';
 
-    // Guardar en caché
-    setCachedData(items);
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://www.youtube.com/embed/${videoId}`;
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+        iframe.allowFullscreen = true;
 
-    return items;
-}
+        shortItem.appendChild(iframe);
+        return shortItem;
+    }
 
-// Función para crear el elemento de iframe del short
-function createShortElement(video) {
-    const videoId = video.snippet.resourceId.videoId;
-    const iframe = document.createElement('iframe');
-    iframe.dataset.src = `https://www.youtube.com/embed/${videoId}`;
-    iframe.frameBorder = '0';
-    iframe.allow = 'autoplay; encrypted-media';
-    iframe.allowFullscreen = true;
-    iframe.className = 'shorts-item lazy'; // Clase lazy para la carga diferida
+    // Función para obtener los videos de la playlist
+    function fetchPlaylistVideos(pageToken = '') {
+        const apiUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=${fetchResults}&playlistId=${playlistId}&key=${apiKey}&pageToken=${pageToken}`;
 
-    return iframe;
-}
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                removeLoader(); // Elimina el loader antes de cargar los iframes
 
-// Función para cargar los shorts
-async function loadShorts() {
-    const shorts = await fetchPlaylistItems();
-    shorts.forEach(video => {
-        const shortElement = createShortElement(video);
-        shortsSlider.appendChild(shortElement);
-    });
+                // Invertir el orden de los videos y seleccionar los últimos 5
+                const itemsToShow = data.items.reverse().slice(0, maxResults);
 
-    // Carga diferida
-    lazyLoadIframes();
-}
+                itemsToShow.forEach(item => {
+                    const videoId = item.snippet.resourceId.videoId;
+                    const shortElement = createShortElement(videoId);
+                    shortsSection.appendChild(shortElement);
+                });
+            })
+            .catch(error => {
+                console.error('Error al cargar la playlist de YouTube:', error);
+                removeLoader(); // Remover el loader en caso de error
+            });
+    }
 
-// Función para cargar iframes cuando están en el viewport (lazy load)
-function lazyLoadIframes() {
-    const iframes = document.querySelectorAll('iframe.lazy');
+    // Mostrar el loader inicialmente
+    showLoader();
 
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const iframe = entry.target;
-                iframe.src = iframe.dataset.src; // Carga el iframe cuando está visible
-                iframe.classList.remove('lazy');
-                observer.unobserve(iframe); // Deja de observar el iframe una vez cargado
-            }
-        });
-    });
-
-    iframes.forEach(iframe => observer.observe(iframe));
-}
-
-window.onload = loadShorts;
+    // Cargar los videos de la playlist
+    fetchPlaylistVideos();
+});
 
 document.addEventListener('DOMContentLoaded', () => {
     const slider = document.querySelector('.sponsors-slider');
