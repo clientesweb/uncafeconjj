@@ -382,3 +382,152 @@ document.addEventListener('DOMContentLoaded', function () {
     // Actualizar automáticamente cada 15 minutos
     setInterval(updateCountersByTime, 900000); // 15 minutos en milisegundos
 });
+const API_KEY = 'AIzaSyDm96WQoeg4AfeyYwjmXfn76eGDV8b_OOc';
+const CHANNEL_ID = 'UCc4fHgV3zRgjHxYZJkQdxhw'; // Reemplaza con tu ID de canal
+const MAX_RESULTS = 5; // Número de videos a obtener
+const CACHE_KEY = 'pastLiveStreamData';
+const CACHE_EXPIRY = 10 * 60 * 1000; // Caché expira en 10 minutos
+
+const pastPlaylistSlider = document.getElementById('live-video-slider'); // Slider para videos pasados
+const livePlaylistSlider = document.getElementById('live-video-slider'); // Slider para videos en vivo
+
+// Función para obtener datos de la caché
+function getCachedData() {
+    const cached = localStorage.getItem(CACHE_KEY);
+    if (cached) {
+        const data = JSON.parse(cached);
+        const now = new Date().getTime();
+        if (now - data.timestamp < CACHE_EXPIRY) {
+            return data.items;
+        }
+    }
+    return null;
+}
+
+// Función para guardar datos en caché
+function setCachedData(items) {
+    const data = {
+        items: items,
+        timestamp: new Date().getTime()
+    };
+    localStorage.setItem(CACHE_KEY, JSON.stringify(data));
+}
+
+// Función para obtener videos pasados de la sección "En Vivo"
+async function fetchPastLiveStreams() {
+    const cachedData = getCachedData();
+    if (cachedData) {
+        return cachedData;
+    }
+
+    try {
+        const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&eventType=completed&channelId=${CHANNEL_ID}&key=${API_KEY}&maxResults=${MAX_RESULTS}&order=date`;
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+            throw new Error('Error al obtener videos en vivo pasados');
+        }
+
+        const data = await response.json();
+        const items = data.items.filter(video => video.snippet.liveBroadcastContent === 'none'); // Filtrar solo videos no en vivo
+
+        // Guardar en caché
+        setCachedData(items);
+
+        return items;
+    } catch (error) {
+        console.error(error);
+        return []; // Retorna un array vacío en caso de error
+    }
+}
+
+// Función para obtener videos en vivo
+async function fetchLiveStreams() {
+    try {
+        const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&eventType=live&channelId=${CHANNEL_ID}&key=${API_KEY}&maxResults=${MAX_RESULTS}`;
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+            throw new Error('Error al obtener videos en vivo');
+        }
+
+        const data = await response.json();
+        return data.items; // Retorna los videos en vivo
+    } catch (error) {
+        console.error(error);
+        return []; // Retorna un array vacío en caso de error
+    }
+}
+
+// Función para crear el elemento de iframe del video
+function createVideoElement(video) {
+    const videoId = video.id.videoId;
+    const iframe = document.createElement('iframe');
+    iframe.dataset.src = `https://www.youtube.com/embed/${videoId}`;
+    iframe.frameBorder = '0';
+    iframe.allow = 'autoplay; encrypted-media';
+    iframe.allowFullscreen = true;
+    iframe.className = 'playlist-item lazy'; // Clase lazy para la carga diferida
+
+    return iframe;
+}
+
+// Función para cargar los videos pasados
+async function loadPastLiveStreams() {
+    const videos = await fetchPastLiveStreams();
+    pastPlaylistSlider.innerHTML = ''; // Limpiar el slider antes de cargar nuevos videos
+    videos.forEach(video => {
+        const videoElement = createVideoElement(video);
+        pastPlaylistSlider.appendChild(videoElement);
+    });
+
+    // Carga diferida
+    lazyLoadIframes();
+}
+
+// Función para cargar los videos en vivo
+async function loadLiveStreams() {
+    const liveVideos = await fetchLiveStreams();
+    livePlaylistSlider.innerHTML = ''; // Limpiar el slider antes de cargar nuevos videos
+    if (liveVideos.length > 0) {
+        liveVideos.forEach(video => {
+            const videoElement = createVideoElement(video);
+            livePlaylistSlider.appendChild(videoElement);
+        });
+    } else {
+        console.log('No hay transmisiones en vivo en este momento.');
+    }
+
+    // Carga diferida
+    lazyLoadIframes();
+}
+
+// Función para cargar iframes cuando están en el viewport
+function lazyLoadIframes() {
+    const iframes = document.querySelectorAll('iframe.lazy');
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const iframe = entry.target;
+                iframe.src = iframe.dataset.src; // Carga el iframe cuando está visible
+                iframe.classList.remove('lazy');
+                observer.unobserve(iframe); // Deja de observar el iframe una vez cargado
+            }
+        });
+    });
+
+    iframes.forEach(iframe => observer.observe(iframe));
+}
+
+// Cargar videos al iniciar
+window.onload = async function() {
+    await loadPastLiveStreams();
+    await loadLiveStreams();
+};
+
+// Opcional: Actualizar cada 10 minutos
+setInterval(async () => {
+    await loadPastLiveStreams();
+    await loadLiveStreams();
+}, 10 * 60 * 1000);
