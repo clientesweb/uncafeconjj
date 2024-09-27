@@ -169,10 +169,10 @@ document.addEventListener('DOMContentLoaded', () => {
         nextButton.click();
     }, 5000);
 });
-const API_KEY = 'AIzaSyB4HGg2WVC-Sq3Qyj9T9Z9aBBGbET1oGs0';
-const PLAYLIST_ID = 'PLZ_v3bWMqpjEYZDAFLI-0GuAH4BpA5PiL'; // Reemplaza con tu ID de playlist
+const API_KEY = 'AIzaSyDm96WQoeg4AfeyYwjmXfn76eGDV8b_OOc';
+const CHANNEL_ID = 'UCc4fHgV3zRgjHxYZJkQdxhw'; // Reemplaza con tu ID de canal
 const MAX_RESULTS = 5; // Número de videos a obtener
-const CACHE_KEY = 'playlistData';
+const CACHE_KEY = 'pastLiveStreamData';
 const CACHE_EXPIRY = 10 * 60 * 1000; // Caché expira en 10 minutos
 
 const playlistSlider = document.getElementById('playlist-slider');
@@ -199,17 +199,17 @@ function setCachedData(items) {
     localStorage.setItem(CACHE_KEY, JSON.stringify(data));
 }
 
-// Función para obtener videos de la playlist
-async function fetchPlaylistItems() {
+// Función para obtener videos pasados de la sección "En Vivo"
+async function fetchPastLiveStreams() {
     const cachedData = getCachedData();
     if (cachedData) {
         return cachedData;
     }
 
-    const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&key=${API_KEY}&maxResults=${MAX_RESULTS}`;
+    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&eventType=completed&channelId=${CHANNEL_ID}&key=${API_KEY}&maxResults=${MAX_RESULTS}&order=date`;
     const response = await fetch(url);
     const data = await response.json();
-    const items = data.items;
+    const items = data.items.filter(video => video.snippet.liveBroadcastContent === 'none'); // Filtrar solo videos no en vivo
 
     // Guardar en caché
     setCachedData(items);
@@ -219,7 +219,7 @@ async function fetchPlaylistItems() {
 
 // Función para crear el elemento de iframe del video
 function createVideoElement(video) {
-    const videoId = video.snippet.resourceId.videoId;
+    const videoId = video.id.videoId;
     const iframe = document.createElement('iframe');
     iframe.dataset.src = `https://www.youtube.com/embed/${videoId}`;
     iframe.frameBorder = '0';
@@ -231,8 +231,9 @@ function createVideoElement(video) {
 }
 
 // Función para cargar los videos
-async function loadVideos() {
-    const videos = await fetchPlaylistItems();
+async function loadPastLiveStreams() {
+    const videos = await fetchPastLiveStreams();
+    playlistSlider.innerHTML = ''; // Limpiar el slider antes de cargar nuevos videos
     videos.forEach(video => {
         const videoElement = createVideoElement(video);
         playlistSlider.appendChild(videoElement);
@@ -260,8 +261,11 @@ function lazyLoadIframes() {
     iframes.forEach(iframe => observer.observe(iframe));
 }
 
-window.onload = loadVideos;
+// Cargar videos al iniciar
+window.onload = loadPastLiveStreams;
 
+// Opcional: Actualizar cada 10 minutos
+setInterval(loadPastLiveStreams, 10 * 60 * 1000);
 
 // Seleccionar elementos
 const whatsappBtn = document.getElementById('whatsappBtn');
