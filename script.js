@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
 const API_KEY = 'AIzaSyDm96WQoeg4AfeyYwjmXfn76eGDV8b_OOc';
 const CHANNEL_ID = 'UCc4fHgV3zRgjHxYZJkQdxhw'; // Reemplaza con tu ID de canal
 const MAX_RESULTS = 5; // Número de videos a obtener
-const CACHE_KEY = 'liveVideosData';
+const CACHE_KEY = 'pastLiveStreamData';
 const CACHE_EXPIRY = 10 * 60 * 1000; // Caché expira en 10 minutos
 
 const playlistSlider = document.getElementById('playlist-slider');
@@ -199,17 +199,17 @@ function setCachedData(items) {
     localStorage.setItem(CACHE_KEY, JSON.stringify(data));
 }
 
-// Función para obtener videos en vivo
-async function fetchLiveVideos() {
+// Función para obtener videos pasados de la sección "En Vivo"
+async function fetchPastLiveStreams() {
     const cachedData = getCachedData();
     if (cachedData) {
         return cachedData;
     }
 
-    const url = `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&eventType=live&type=video&part=snippet&maxResults=${MAX_RESULTS}`;
+    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&eventType=completed&channelId=${CHANNEL_ID}&key=${API_KEY}&maxResults=${MAX_RESULTS}`;
     const response = await fetch(url);
     const data = await response.json();
-    const items = data.items;
+    const items = data.items.filter(video => video.snippet.liveBroadcastContent === 'none'); // Filtrar solo videos no en vivo
 
     // Guardar en caché
     setCachedData(items);
@@ -219,9 +219,9 @@ async function fetchLiveVideos() {
 
 // Función para crear el elemento de iframe del video
 function createVideoElement(video) {
-    const videoId = video.id.videoId; // Cambiado para acceder al ID del video en vivo
+    const videoId = video.id.videoId;
     const iframe = document.createElement('iframe');
-    iframe.dataset.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`; // Agregar autoplay si deseas
+    iframe.dataset.src = `https://www.youtube.com/embed/${videoId}`;
     iframe.frameBorder = '0';
     iframe.allow = 'autoplay; encrypted-media';
     iframe.allowFullscreen = true;
@@ -231,22 +231,15 @@ function createVideoElement(video) {
 }
 
 // Función para cargar los videos
-async function loadVideos() {
-    const videos = await fetchLiveVideos();
-    
-    if (videos.length > 0) {
-        videos.forEach(video => {
-            const videoElement = createVideoElement(video);
-            playlistSlider.appendChild(videoElement);
-        });
+async function loadPastLiveStreams() {
+    const videos = await fetchPastLiveStreams();
+    videos.forEach(video => {
+        const videoElement = createVideoElement(video);
+        playlistSlider.appendChild(videoElement);
+    });
 
-        // Carga diferida
-        lazyLoadIframes();
-    } else {
-        const noLiveMessage = document.createElement('p');
-        noLiveMessage.textContent = 'No hay transmisiones en vivo en este momento.';
-        playlistSlider.appendChild(noLiveMessage);
-    }
+    // Carga diferida
+    lazyLoadIframes();
 }
 
 // Función para cargar iframes cuando están en el viewport
@@ -267,7 +260,7 @@ function lazyLoadIframes() {
     iframes.forEach(iframe => observer.observe(iframe));
 }
 
-window.onload = loadVideos;
+window.onload = loadPastLiveStreams;
 
 
 // Seleccionar elementos
