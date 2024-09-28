@@ -133,6 +133,7 @@ header a:hover {
 }
 
 .carousel-button {
+    display: none; /* Oculta los botones */
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
