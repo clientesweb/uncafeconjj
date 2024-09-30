@@ -287,6 +287,35 @@ h2 {
     color: var(--text-color);
 }
 
+/* Estilo unificado para playlist, en vivo, y shorts */
+.playlist-slider, #shorts-section, #live-stream-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Estilos para la sección En Vivo */
+#live-stream-section {
+    margin-bottom: 40px;
+}
+
+#live-stream-section h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: var(--text-color);
+    text-align: center;
+}
+
+#live-stream-container iframe {
+    width: 100%;
+    height: 360px;
+    border: none;
+    border-radius: 10px;
+}
+
 /* Estilo unificado para playlist y shorts */
 .playlist-slider, #shorts-section {
     display: flex;
@@ -315,7 +344,6 @@ iframe {
 .playlist-slider::-webkit-scrollbar, #shorts-section::-webkit-scrollbar {
     display: none;
 }
-
 /* Estilo para la sección de patrocinadores */
 #sponsors-section {
     overflow: hidden;
