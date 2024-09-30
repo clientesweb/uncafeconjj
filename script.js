@@ -171,52 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 const API_KEY = 'AIzaSyDm96WQoeg4AfeyYwjmXfn76eGDV8b_OOc';
 const CHANNEL_ID = 'UCc4fHgV3zRgjHxYZJkQdxhw'; // Reemplaza con tu ID de canal
-const MAX_RESULTS = 5; // Número de videos a obtener
-const CACHE_KEY = 'pastLiveStreamData';
-const CACHE_EXPIRY = 10 * 60 * 1000; // Caché expira en 10 minutos
-
-const playlistSlider = document.getElementById('playlist-slider');
 const liveStreamContainer = document.getElementById('live-stream-container'); // Contenedor para el video en vivo
-
-// Función para obtener datos de la caché
-function getCachedData() {
-    const cached = localStorage.getItem(CACHE_KEY);
-    if (cached) {
-        const data = JSON.parse(cached);
-        const now = new Date().getTime();
-        if (now - data.timestamp < CACHE_EXPIRY) {
-            return data.items;
-        }
-    }
-    return null;
-}
-
-// Función para guardar datos en caché
-function setCachedData(items) {
-    const data = {
-        items: items,
-        timestamp: new Date().getTime()
-    };
-    localStorage.setItem(CACHE_KEY, JSON.stringify(data));
-}
-
-// Función para obtener videos pasados de la sección "En Vivo"
-async function fetchPastLiveStreams() {
-    const cachedData = getCachedData();
-    if (cachedData) {
-        return cachedData;
-    }
-
-    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&eventType=completed&channelId=${CHANNEL_ID}&key=${API_KEY}&maxResults=${MAX_RESULTS}&order=date`;
-    const response = await fetch(url);
-    const data = await response.json();
-    const items = data.items.filter(video => video.snippet.liveBroadcastContent === 'none'); // Filtrar solo videos no en vivo
-
-    // Guardar en caché
-    setCachedData(items);
-
-    return items;
-}
 
 // Función para obtener el video en vivo actual
 async function fetchLiveStream() {
@@ -241,8 +196,8 @@ function createVideoElement(video) {
     return iframe;
 }
 
-// Función para cargar los videos pasados y el video en vivo
-async function loadLiveAndPastStreams() {
+// Función para cargar el video en vivo
+async function loadLiveStream() {
     const liveStream = await fetchLiveStream();
     
     // Verifica si hay un video en vivo
@@ -253,10 +208,29 @@ async function loadLiveAndPastStreams() {
     } else {
         liveStreamContainer.innerHTML = '<p>No hay transmisión en vivo actualmente.</p>';
     }
+}
 
-    // Cargar videos pasados
+// Cargar video en vivo al iniciar
+window.onload = loadLiveStream;
+
+// Opcional: Actualizar cada 10 minutos
+setInterval(loadLiveStream, 10 * 60 * 1000);
+
+const playlistSlider = document.getElementById('playlist-slider'); // Contenedor para la playlist
+
+// Función para obtener videos pasados de la sección "En Vivo"
+async function fetchPastLiveStreams() {
+    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&eventType=completed&channelId=${CHANNEL_ID}&key=${API_KEY}&maxResults=${MAX_RESULTS}&order=date`;
+    const response = await fetch(url);
+    const data = await response.json();
+    return data.items.filter(video => video.snippet.liveBroadcastContent === 'none'); // Filtrar solo videos no en vivo
+}
+
+// Función para cargar los videos pasados
+async function loadPastStreams() {
     const pastVideos = await fetchPastLiveStreams();
     playlistSlider.innerHTML = ''; // Limpiar el slider antes de cargar nuevos videos
+    
     if (pastVideos.length > 0) {
         pastVideos.forEach(video => {
             const videoElement = createVideoElement(video);
@@ -271,7 +245,7 @@ async function loadLiveAndPastStreams() {
     lazyLoadIframes();
 }
 
-// Función para cargar iframes cuando están en el viewport
+// Función para cargar iframes cuando están en el viewport (lazy load)
 function lazyLoadIframes() {
     const iframes = document.querySelectorAll('iframe.lazy');
 
@@ -289,11 +263,11 @@ function lazyLoadIframes() {
     iframes.forEach(iframe => observer.observe(iframe));
 }
 
-// Cargar videos al iniciar
-window.onload = loadLiveAndPastStreams;
+// Cargar videos pasados al iniciar
+window.onload = loadPastStreams;
 
 // Opcional: Actualizar cada 10 minutos
-setInterval(loadLiveAndPastStreams, 10 * 60 * 1000);
+setInterval(loadPastStreams, 10 * 60 * 1000);
 
 // Seleccionar elementos
 const whatsappBtn = document.getElementById('whatsappBtn');
