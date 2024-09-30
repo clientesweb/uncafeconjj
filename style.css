@@ -285,20 +285,35 @@ h2 {
     font-size: 2rem;
     margin-bottom: 20px;
     color: var(--text-color);
-    text-align: center; /* Centra los títulos de todas las secciones */
 }
 
-
-/* Sección de Videos, Playlists, y Shorts */
-#videos, #playlists, #shorts-section {
-    margin: 50px 0;
-    padding: 0 20px;
+/* Estilo unificado para playlist, en vivo, y shorts */
+.playlist-slider, #shorts-section, #live-stream-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
-h2 {
+/* Estilos para la sección En Vivo */
+#live-stream-section {
+    margin-bottom: 40px;
+}
+
+#live-stream-section h2 {
     font-size: 2rem;
     margin-bottom: 20px;
     color: var(--text-color);
+    text-align: center;
+}
+
+#live-stream-container iframe {
+    width: 100%;
+    height: 360px;
+    border: none;
+    border-radius: 10px;
 }
 
 /* Estilo unificado para playlist y shorts */
