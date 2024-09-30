@@ -310,7 +310,7 @@ h2 {
 
 #live-stream-container iframe {
     width: 100%;
-    max-width: 720px; /* Ajusta este valor según el tamaño máximo deseado */
+    max-width: 1080px; /* Ajusta este valor según el tamaño máximo deseado */
     height: 400px; /* Aumenta la altura para darle mayor prominencia */
     border: none;
     border-radius: 10px;
