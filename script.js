@@ -1,67 +1,133 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Configuración general
+    const API_KEY = 'AIzaSyDm96WQoeg4AfeyYwjmXfn76eGDV8b_OOc';
+    const CHANNEL_ID = 'UCc4fHgV3zRgjHxYZJkQdxhw';
+    const PLAYLIST_ID = 'PLSwBXxeopk-y2adJzE7kpjvEBR2BPsTCq';
+    const MAX_RESULTS = 10;
+    const CACHE_KEY = 'pastLiveStreamData';
+    const CACHE_EXPIRY = 10 * 60 * 1000; // 10 minutos
+
+    const playlistSlider = document.getElementById('playlist-slider');
+    const liveStreamContainer = document.getElementById('live-stream-container');
+    const shortsSection = document.getElementById('shorts-section');
     const menuToggle = document.getElementById('menu-toggle');
     const navMenu = document.getElementById('nav-menu');
 
-    if (menuToggle && navMenu) {
-        menuToggle.addEventListener('click', function() {
-            navMenu.classList.toggle('active');
-        });
-    } else {
-        console.warn('Elementos de navegación no encontrados.');
+    // Funciones de caché
+    function getCachedData() {
+        const cached = localStorage.getItem(CACHE_KEY);
+        if (cached) {
+            const data = JSON.parse(cached);
+            if (new Date().getTime() - data.timestamp < CACHE_EXPIRY) {
+                return data.items;
+            }
+        }
+        return null;
     }
 
-    // Resto de tu código...
-});
+    function setCachedData(items) {
+        localStorage.setItem(CACHE_KEY, JSON.stringify({
+            items: items,
+            timestamp: new Date().getTime()
+        }));
+    }
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Clave de API de YouTube y ID de la playlist
-    const apiKey = 'AIzaSyDm96WQoeg4AfeyYwjmXfn76eGDV8b_OOc'; // Reemplaza con tu clave de API
-    const playlistId = 'PLSwBXxeopk-y2adJzE7kpjvEBR2BPsTCq'; // Reemplaza con el ID de tu playlist
+    // Función para obtener videos pasados
+    async function fetchPastLiveStreams() {
+        const cachedData = getCachedData();
+        if (cachedData) return cachedData;
 
-    const shortsSection = document.getElementById('shorts-section');
-    const maxResults = 5; // Máximo de shorts a mostrar
-    const fetchResults = 100; // Máximo de resultados a obtener de la API
-
-    // Mostrar un loader mientras se cargan los iframes
-    function showLoader() {
-        for (let i = 0; i < maxResults; i++) {
-            const shortItem = document.createElement('div');
-            shortItem.className = 'short-item loader'; // Clase para estilo de carga
-            shortsSection.appendChild(shortItem);
+        try {
+            const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&eventType=completed&channelId=${CHANNEL_ID}&key=${API_KEY}&maxResults=${MAX_RESULTS}&order=date`;
+            const response = await fetch(url);
+            if (!response.ok) throw new Error('Error al obtener videos pasados');
+            
+            const data = await response.json();
+            const items = data.items.filter(video => video.snippet.liveBroadcastContent === 'none');
+            
+            setCachedData(items);
+            return items;
+        } catch (error) {
+            console.error('Error fetching past live streams:', error);
+            return [];
         }
     }
 
-    // Remover el loader
-    function removeLoader() {
-        const loaders = document.querySelectorAll('.loader');
-        loaders.forEach(loader => loader.remove());
+    // Función para obtener el video en vivo actual
+    async function fetchLiveStream() {
+        try {
+            const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&eventType=live&channelId=${CHANNEL_ID}&key=${API_KEY}&maxResults=1`;
+            const response = await fetch(url);
+            if (!response.ok) throw new Error('Error al obtener video en vivo');
+
+            const data = await response.json();
+            return data.items.length ? data.items[0] : null;
+        } catch (error) {
+            console.error('Error fetching live stream:', error);
+            return null;
+        }
     }
 
-    // Función para obtener los videos de la playlist
-    function fetchPlaylistVideos(pageToken = '') {
-        const apiUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=${fetchResults}&playlistId=${playlistId}&key=${apiKey}&pageToken=${pageToken}`;
+    // Función para crear el elemento de iframe del video
+    function createVideoElement(video) {
+        const iframe = document.createElement('iframe');
+        iframe.dataset.src = `https://www.youtube.com/embed/${video.id.videoId}`;
+        iframe.className = 'playlist-item lazy';
+        iframe.frameBorder = '0';
+        iframe.allow = 'autoplay; encrypted-media';
+        iframe.allowFullscreen = true;
+        return iframe;
+    }
 
-        fetch(apiUrl)
-            .then(response => response.json())
-            .then(data => {
-                removeLoader(); // Elimina el loader antes de cargar los iframes
+    // Función para cargar los videos pasados y el video en vivo
+    async function loadLiveAndPastStreams() {
+        if (liveStreamContainer) {
+            const liveStream = await fetchLiveStream();
+            liveStreamContainer.innerHTML = liveStream
+                ? ''
+                : '<p>No hay transmisión en vivo actualmente.</p>';
+            if (liveStream) {
+                liveStreamContainer.appendChild(createVideoElement(liveStream));
+            }
+        }
 
-                // Invertir el orden de los videos
-                const itemsToShow = data.items.reverse().slice(0, maxResults);
-
-                itemsToShow.forEach(item => {
-                    const videoId = item.snippet.resourceId.videoId;
-                    const shortElement = createShortElement(videoId);
-                    shortsSection.appendChild(shortElement);
-                });
-            })
-            .catch(error => {
-                console.error('Error al cargar la playlist de YouTube:', error);
-                removeLoader(); // Remover el loader en caso de error
+        if (playlistSlider) {
+            const pastVideos = await fetchPastLiveStreams();
+            playlistSlider.innerHTML = '';
+            pastVideos.forEach(video => {
+                playlistSlider.appendChild(createVideoElement(video));
             });
+        }
+
+        lazyLoadIframes();
     }
 
-    // Crear elemento de Short con lazy loading
+    // Función para cargar shorts
+    async function loadShorts() {
+        if (!shortsSection) {
+            console.warn('Elemento shorts-section no encontrado');
+            return;
+        }
+
+        try {
+            const response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=5&playlistId=${PLAYLIST_ID}&key=${API_KEY}`);
+            if (!response.ok) throw new Error('Error al obtener shorts');
+            
+            const data = await response.json();
+            shortsSection.innerHTML = '';
+            
+            data.items.forEach(item => {
+                const videoId = item.snippet.resourceId.videoId;
+                const shortElement = createShortElement(videoId);
+                shortsSection.appendChild(shortElement);
+            });
+        } catch (error) {
+            console.error('Error al cargar shorts:', error);
+            shortsSection.innerHTML = '<p>Error al cargar shorts. Por favor, intenta más tarde.</p>';
+        }
+    }
+
+    // Función para crear elemento de Short
     function createShortElement(videoId) {
         const shortItem = document.createElement('div');
         shortItem.className = 'short-item';
@@ -75,335 +141,227 @@ document.addEventListener('DOMContentLoaded', () => {
         return shortItem;
     }
 
-    // Mostrar loaders y cargar Shorts al iniciar
-    showLoader();
-    fetchPlaylistVideos();
-});
+    // Función para cargar iframes cuando están en el viewport
+    function lazyLoadIframes() {
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const iframe = entry.target;
+                    iframe.src = iframe.dataset.src;
+                    iframe.classList.remove('lazy');
+                    observer.unobserve(iframe);
+                }
+            });
+        });
 
-document.addEventListener('DOMContentLoaded', () => {
-    const slider = document.querySelector('.sponsors-slider');
-    const items = slider.children;
-    const totalItems = items.length;
-    
-    // Clonar los primeros elementos para el efecto infinito
-    for (let i = 0; i < totalItems; i++) {
-        const clone = items[i].cloneNode(true);
-        slider.appendChild(clone);
+        document.querySelectorAll('iframe.lazy').forEach(iframe => observer.observe(iframe));
     }
 
-    let itemWidth = items[0].offsetWidth;
-    let totalWidth = itemWidth * totalItems;
-    slider.style.width = `${totalWidth * 2}px`;
+    // Iniciar carga de videos
+    loadLiveAndPastStreams();
+    loadShorts();
 
-    let currentIndex = 0;
-    const transitionDuration = 2; // Duración de la transición en segundos (más lenta)
-    const slideInterval = 5000; // Intervalo entre slides en milisegundos (5 segundos)
-    
-    slider.style.transition = `transform ${transitionDuration}s ease-in-out`;
+    // Actualizar cada 10 minutos
+    setInterval(() => {
+        loadLiveAndPastStreams();
+        loadShorts();
+    }, CACHE_EXPIRY);
 
-    const slideToNext = () => {
-        currentIndex++;
-        if (currentIndex >= totalItems) {
-            currentIndex = 0;
-            slider.style.transition = 'none';
-            slider.style.transform = `translateX(0px)`;
-            setTimeout(() => {
-                slider.style.transition = `transform ${transitionDuration}s ease-in-out`;
-                currentIndex = totalItems;
-                slider.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
-            }, 20);
-        } else {
-            slider.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+    // Funcionalidad del menú de navegación
+    if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+        });
+    } else {
+        console.warn('Elementos de navegación no encontrados.');
+    }
+
+    // Slider de patrocinadores
+    const sponsorsSlider = document.querySelector('.sponsors-slider');
+    if (sponsorsSlider) {
+        const items = sponsorsSlider.children;
+        const totalItems = items.length;
+        
+        // Clonar los primeros elementos para el efecto infinito
+        for (let i = 0; i < totalItems; i++) {
+            const clone = items[i].cloneNode(true);
+            sponsorsSlider.appendChild(clone);
         }
-    };
 
-    // Cambiar el slide cada 5 segundos
-    setInterval(slideToNext, slideInterval);
+        let itemWidth = items[0].offsetWidth;
+        let totalWidth = itemWidth * totalItems;
+        sponsorsSlider.style.width = `${totalWidth * 2}px`;
 
-    // Asegurar la experiencia táctil para dispositivos móviles
-    slider.addEventListener('touchstart', (e) => {
-        const touchStartX = e.touches[0].clientX;
-        slider.addEventListener('touchmove', (e) => {
-            const touchMoveX = e.touches[0].clientX;
-            if (touchMoveX - touchStartX < -50) { // Desplazar a la izquierda
-                slideToNext();
-                slider.removeEventListener('touchmove', arguments.callee);
+        let currentIndex = 0;
+        const transitionDuration = 2;
+        const slideInterval = 5000;
+        
+        sponsorsSlider.style.transition = `transform ${transitionDuration}s ease-in-out`;
+
+        const slideToNext = () => {
+            currentIndex++;
+            if (currentIndex >= totalItems) {
+                currentIndex = 0;
+                sponsorsSlider.style.transition = 'none';
+                sponsorsSlider.style.transform = `translateX(0px)`;
+                setTimeout(() => {
+                    sponsorsSlider.style.transition = `transform ${transitionDuration}s ease-in-out`;
+                    currentIndex = totalItems;
+                    sponsorsSlider.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+                }, 20);
+            } else {
+                sponsorsSlider.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
             }
+        };
+
+        setInterval(slideToNext, slideInterval);
+
+        // Experiencia táctil para dispositivos móviles
+        sponsorsSlider.addEventListener('touchstart', (e) => {
+            const touchStartX = e.touches[0].clientX;
+            sponsorsSlider.addEventListener('touchmove', (e) => {
+                const touchMoveX = e.touches[0].clientX;
+                if (touchMoveX - touchStartX < -50) {
+                    slideToNext();
+                    sponsorsSlider.removeEventListener('touchmove', arguments.callee);
+                }
+            }, { passive: true });
         }, { passive: true });
-    }, { passive: true });
 
-    // Reajustar el ancho del slider cuando se cambia el tamaño de la ventana
-    const updateItemWidth = () => {
-        itemWidth = items[0].offsetWidth;
-        totalWidth = itemWidth * totalItems;
-        slider.style.width = `${totalWidth * 2}px`;
-    };
-    window.addEventListener('resize', updateItemWidth);
-    updateItemWidth();
-});
+        // Reajustar el ancho del slider cuando se cambia el tamaño de la ventana
+        const updateItemWidth = () => {
+            itemWidth = items[0].offsetWidth;
+            totalWidth = itemWidth * totalItems;
+            sponsorsSlider.style.width = `${totalWidth * 2}px`;
+        };
+        window.addEventListener('resize', updateItemWidth);
+        updateItemWidth();
+    }
 
-document.addEventListener('DOMContentLoaded', () => {
+    // Carrusel de imágenes
     const prevButton = document.querySelector('.carousel-button.prev');
     const nextButton = document.querySelector('.carousel-button.next');
     const carouselImages = document.querySelector('.carousel-images');
-    let index = 0;
-    const imageCount = document.querySelectorAll('.carousel-images img').length;
+    if (prevButton && nextButton && carouselImages) {
+        let index = 0;
+        const imageCount = document.querySelectorAll('.carousel-images img').length;
 
-    function updateCarousel() {
-        const offset = -index * 100;
-        carouselImages.style.transform = `translateX(${offset}%)`;
-    }
-
-    prevButton.addEventListener('click', () => {
-        index = (index > 0) ? index - 1 : imageCount - 1;
-        updateCarousel();
-    });
-
-    nextButton.addEventListener('click', () => {
-        index = (index < imageCount - 1) ? index + 1 : 0;
-        updateCarousel();
-    });
-
-    // Optional: Auto-slide every 5 seconds
-    setInterval(() => {
-        nextButton.click();
-    }, 5000);
-});
-const API_KEY = 'AIzaSyDm96WQoeg4AfeyYwjmXfn76eGDV8b_OOc';
-const CHANNEL_ID = 'UCc4fHgV3zRgjHxYZJkQdxhw';
-const MAX_RESULTS = 10;
-const CACHE_KEY = 'pastLiveStreamData';
-const CACHE_EXPIRY = 10 * 60 * 1000; // 10 minutos
-
-const playlistSlider = document.getElementById('playlist-slider');
-const liveStreamContainer = document.getElementById('live-stream-container');
-
-// Funciones de caché
-function getCachedData() {
-    const cached = localStorage.getItem(CACHE_KEY);
-    if (cached) {
-        const data = JSON.parse(cached);
-        if (new Date().getTime() - data.timestamp < CACHE_EXPIRY) {
-            return data.items;
+        function updateCarousel() {
+            const offset = -index * 100;
+            carouselImages.style.transform = `translateX(${offset}%)`;
         }
-    }
-    return null;
-}
 
-function setCachedData(items) {
-    localStorage.setItem(CACHE_KEY, JSON.stringify({
-        items: items,
-        timestamp: new Date().getTime()
-    }));
-}
-
-// Función para obtener videos pasados
-async function fetchPastLiveStreams() {
-    const cachedData = getCachedData();
-    if (cachedData) return cachedData;
-
-    try {
-        const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&eventType=completed&channelId=${CHANNEL_ID}&key=${API_KEY}&maxResults=${MAX_RESULTS}&order=date`;
-        const response = await fetch(url);
-        if (!response.ok) throw new Error('Error al obtener videos pasados');
-        
-        const data = await response.json();
-        const items = data.items.filter(video => video.snippet.liveBroadcastContent === 'none');
-        
-        setCachedData(items);
-        return items;
-    } catch (error) {
-        console.error('Error fetching past live streams:', error);
-        return [];
-    }
-}
-
-// Función para obtener el video en vivo actual
-async function fetchLiveStream() {
-    try {
-        const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&eventType=live&channelId=${CHANNEL_ID}&key=${API_KEY}&maxResults=1`;
-        const response = await fetch(url);
-        if (!response.ok) throw new Error('Error al obtener video en vivo');
-
-        const data = await response.json();
-        return data.items.length ? data.items[0] : null;
-    } catch (error) {
-        console.error('Error fetching live stream:', error);
-        return null;
-    }
-}
-
-// Función para crear el elemento de iframe del video
-function createVideoElement(video) {
-    const iframe = document.createElement('iframe');
-    iframe.dataset.src = `https://www.youtube.com/embed/${video.id.videoId}`;
-    iframe.className = 'playlist-item lazy';
-    iframe.frameBorder = '0';
-    iframe.allow = 'autoplay; encrypted-media';
-    iframe.allowFullscreen = true;
-    return iframe;
-}
-
-// Función para cargar los videos pasados y el video en vivo
-async function loadLiveAndPastStreams() {
-    // Cargar video en vivo
-    const liveStream = await fetchLiveStream();
-    liveStreamContainer.innerHTML = liveStream
-        ? ''
-        : '<p>No hay transmisión en vivo actualmente.</p>';
-    if (liveStream) {
-        liveStreamContainer.appendChild(createVideoElement(liveStream));
-    }
-
-    // Cargar videos pasados
-    const pastVideos = await fetchPastLiveStreams();
-    playlistSlider.innerHTML = '';
-    pastVideos.forEach(video => {
-        playlistSlider.appendChild(createVideoElement(video));
-    });
-
-    // Iniciar carga diferida
-    lazyLoadIframes();
-}
-
-// Función para cargar iframes cuando están en el viewport
-function lazyLoadIframes() {
-    const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const iframe = entry.target;
-                iframe.src = iframe.dataset.src;
-                iframe.classList.remove('lazy');
-                observer.unobserve(iframe);
-            }
+        prevButton.addEventListener('click', () => {
+            index = (index > 0) ? index - 1 : imageCount - 1;
+            updateCarousel();
         });
-    });
 
-    document.querySelectorAll('iframe.lazy').forEach(iframe => observer.observe(iframe));
-}
-
-// Iniciar carga de videos
-window.addEventListener('load', loadLiveAndPastStreams);
-
-// Actualizar cada 10 minutos
-setInterval(loadLiveAndPastStreams, CACHE_EXPIRY);
-
-// Seleccionar elementos
-const whatsappBtn = document.getElementById('whatsappBtn');
-const whatsappModal = document.getElementById('whatsappModal');
-const whatsappClose = document.querySelector('.whatsapp-close');
-const sendMessageBtn = document.getElementById('sendMessageBtn');
-const whatsappMessage = document.getElementById('whatsappMessage');
-
-// Mostrar el modal cuando se hace clic en el botón de WhatsApp
-whatsappBtn.addEventListener('click', function() {
-    whatsappModal.classList.add('show');
-});
-
-// Cerrar el modal cuando se hace clic en el botón de cerrar
-whatsappClose.addEventListener('click', function() {
-    whatsappModal.classList.remove('show');
-});
-
-// Enviar el mensaje a WhatsApp cuando se hace clic en el botón "Enviar"
-sendMessageBtn.addEventListener('click', function() {
-    const message = whatsappMessage.value.trim();
-    if (message) {
-        // Formatear el mensaje para enviar a WhatsApp
-        const phoneNumber = '+593999472777'; // Cambia este número por el de CaféClubTV
-        const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-        
-        // Abrir el enlace en una nueva ventana/pestaña
-        window.open(url, '_blank');
-
-        // Cerrar el modal
-        whatsappModal.classList.remove('show');
-
-        // Limpiar el campo de texto
-        whatsappMessage.value = '';
-    } else {
-        alert('Por favor, escribe un mensaje antes de enviar.');
-    }
-});
-
-// Cerrar el modal si el usuario hace clic fuera del contenido del modal
-window.addEventListener('click', function(event) {
-    if (event.target == whatsappModal) {
-        whatsappModal.classList.remove('show');
-    }
-});
-// Siempre mostrar el botón al cargar la página
-document.addEventListener('DOMContentLoaded', function() {
-    // Verifica si la app ya está instalada
-    const isInstalled = window.matchMedia('(display-mode: standalone)').matches;
-
-    // Verifica si se accede desde Instagram
-    const isInstagram = /Instagram/.test(navigator.userAgent);
-
-    const installButton = document.getElementById('install-button');
-
-    // Muestra el botón si no está instalada y se accede desde Instagram
-    if (!isInstalled || isInstagram) {
-        installButton.style.display = 'block'; // Muestra el botón
-    }
-
-    installButton.addEventListener('click', function() {
-        // Lógica para instalar la app
-        this.style.display = 'none'; // Oculta el botón después de la instalación
-    });
-});
-document.addEventListener('DOMContentLoaded', function () {
-    const counters = document.querySelectorAll('.counter-number');
-
-    // Valores base iniciales
-    let baseVisitas = 4870;
-    let baseDescargas = 110;
-    let baseInteracciones = 2340;
-
-    // Función para actualizar los contadores
-    function updateCountersByTime() {
-        const now = new Date().getTime();
-
-        // Modificar estos valores según el tiempo
-        const newVisitas = baseVisitas + Math.floor((now / 100000) % 250); // Aumento más rápido para visitas
-        const newDescargas = baseDescargas + Math.floor((now / 100000) % 25); // Aumento más lento para descargas
-        const newInteracciones = baseInteracciones + Math.floor((now / 100000) % 150); // Aumento más rápido para interacciones
-
-        counters.forEach(counter => {
-            const type = counter.getAttribute('data-type');
-
-            // Asignar nuevo valor basado en el tipo de contador
-            let newValue;
-            if (type === 'visitas') newValue = newVisitas;
-            if (type === 'descargas') newValue = newDescargas;
-            if (type === 'interacciones') newValue = newInteracciones;
-
-            counter.setAttribute('data-count', newValue);
-            animateCounter(counter);
+        nextButton.addEventListener('click', () => {
+            index = (index < imageCount - 1) ? index + 1 : 0;
+            updateCarousel();
         });
+
+        // Auto-slide cada 5 segundos
+        setInterval(() => {
+            nextButton.click();
+        }, 5000);
     }
 
-    // Función para animar el contador
-    function animateCounter(counter) {
-        const target = +counter.getAttribute('data-count');
-        let count = +counter.innerText;
-        const increment = Math.ceil((target - count) / 400); // Reduce la velocidad general del conteo
+    // Funcionalidad de WhatsApp
+    const whatsappBtn = document.getElementById('whatsappBtn');
+    const whatsappModal = document.getElementById('whatsappModal');
+    const whatsappClose = document.querySelector('.whatsapp-close');
+    const sendMessageBtn = document.getElementById('sendMessageBtn');
+    const whatsappMessage = document.getElementById('whatsappMessage');
 
-        const updateCount = () => {
-            if (count < target) {
-                count += increment;
-                counter.innerText = count;
-                setTimeout(updateCount, 10); // Ajusta el tiempo de actualización
+    if (whatsappBtn && whatsappModal && whatsappClose && sendMessageBtn && whatsappMessage) {
+        whatsappBtn.addEventListener('click', function() {
+            whatsappModal.classList.add('show');
+        });
+
+        whatsappClose.addEventListener('click', function() {
+            whatsappModal.classList.remove('show');
+        });
+
+        sendMessageBtn.addEventListener('click', function() {
+            const message = whatsappMessage.value.trim();
+            if (message) {
+                const phoneNumber = '+593999472777';
+                const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+                window.open(url, '_blank');
+                whatsappModal.classList.remove('show');
+                whatsappMessage.value = '';
             } else {
-                counter.innerText = target;
+                alert('Por favor, escribe un mensaje antes de enviar.');
             }
-        };
-        updateCount();
+        });
+
+        window.addEventListener('click', function(event) {
+            if (event.target == whatsappModal) {
+                whatsappModal.classList.remove('show');
+            }
+        });
     }
 
-    // Inicializar contadores al cargar la página
-    updateCountersByTime();
+    // Funcionalidad de instalación de la app
+    const installButton = document.getElementById('install-button');
+    if (installButton) {
+        const isInstalled = window.matchMedia('(display-mode: standalone)').matches;
+        const isInstagram = /Instagram/.test(navigator.userAgent);
 
-    // Actualizar automáticamente cada 15 minutos
-    setInterval(updateCountersByTime, 900000); // 15 minutos en milisegundos
+        if (!isInstalled || isInstagram) {
+            installButton.style.display = 'block';
+        }
+
+        installButton.addEventListener('click', function() {
+            // Lógica para instalar la app
+            this.style.display = 'none';
+        });
+    }
+
+    // Contadores
+    const counters = document.querySelectorAll('.counter-number');
+    if (counters.length > 0) {
+        let baseVisitas = 4870;
+        let baseDescargas = 110;
+        let baseInteracciones = 2340;
+
+        function updateCountersByTime() {
+            const now = new Date().getTime();
+            const newVisitas = baseVisitas + Math.floor((now / 100000) % 250);
+            const newDescargas = baseDescargas + Math.floor((now / 100000) % 25);
+            const newInteracciones = baseInteracciones + Math.floor((now / 100000) % 150);
+
+            counters.forEach(counter => {
+                const type = counter.getAttribute('data-type');
+                let newValue;
+                if (type === 'visitas') newValue = newVisitas;
+                if (type === 'descargas') newValue = newDescargas;
+                if (type === 'interacciones') newValue = newInteracciones;
+
+                counter.setAttribute('data-count', newValue);
+                animateCounter(counter);
+            });
+        }
+
+        function animateCounter(counter) {
+            const target = +counter.getAttribute('data-count');
+            let count = +counter.innerText;
+            const increment = Math.ceil((target - count) / 400);
+
+            const updateCount = () => {
+                if (count < target) {
+                    count += increment;
+                    counter.innerText = count;
+                    setTimeout(updateCount, 10);
+                } else {
+                    counter.innerText = target;
+                }
+            };
+            updateCount();
+        }
+
+        updateCountersByTime();
+        setInterval(updateCountersByTime, 900000);
+    }
 });
