@@ -344,7 +344,6 @@ iframe {
 .playlist-slider::-webkit-scrollbar, #shorts-section::-webkit-scrollbar {
     display: none;
 }
-
 /* Estilo para la sección de patrocinadores */
 #sponsors-section {
     overflow: hidden;
