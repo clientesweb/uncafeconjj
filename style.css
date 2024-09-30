@@ -285,6 +285,7 @@ h2 {
     font-size: 2rem;
     margin-bottom: 20px;
     color: var(--text-color);
+    text-align: center; /* Centra todos los títulos */
 }
 
 /* Estilos para la sección En Vivo */
@@ -296,7 +297,7 @@ h2 {
     font-size: 2rem;
     margin-bottom: 20px;
     color: var(--text-color);
-    text-align: center;
+    text-align: center; /* Centra el título de la sección En Vivo */
 }
 
 #live-stream-container {
@@ -309,11 +310,23 @@ h2 {
 
 #live-stream-container iframe {
     width: 100%;
-    max-width: 1200px; /* Ajusta este valor según el tamaño máximo deseado */
-    height: 500px; /* Aumenta la altura para darle mayor prominencia */
+    max-width: 720px; /* Ajusta este valor según el tamaño máximo deseado */
+    height: 400px; /* Aumenta la altura para darle mayor prominencia */
     border: none;
     border-radius: 10px;
     object-fit: cover;
+}
+
+/* Estilo para la sección Playlist */
+#playlist-section {
+    margin-bottom: 40px;
+}
+
+#playlist-section h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: var(--text-color);
+    text-align: center; /* Centra el título de la sección Últimos Programas */
 }
 
 /* Estilo unificado para playlist y shorts */
