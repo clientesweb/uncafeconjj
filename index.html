@@ -1,31 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Un Cafe Con JJ | Noticiero</title>
     <meta name="description" content="El noticiero digital más escuchado de Guayaquil con el Precandidato Jimmy Jairala!">
-    <link rel="icon" href="images/android-chrome-512x512.png" type="image/x-icon">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Un Cafe Con JJ">
+    <link rel="canonical" href="https://uncafeconjj.com">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#ffffff">
     <!-- Open Graph tags -->
     <meta property="og:title" content="Un Café Con JJ">
     <meta property="og:description" content="Descubre que sucede en Ecuador y todo el mundo en el noticiero digital más visto de Guayaquil.">
-    <meta property="og:image" content="https://tudominio.com/og-image.jpg">
-    <meta property="og:url" content="https://tudominio.com">
+    <meta property="og:image" content="https://uncafeconjj.com/images/og-image.jpg">
+    <meta property="og:url" content="https://uncafeconjj.com">
+    <!-- Twitter Card tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@uncafeconjj">
+    <meta name="twitter:title" content="Un Café Con JJ | Noticiero">
+    <meta name="twitter:description" content="El noticiero digital más escuchado de Guayaquil con el Precandidato Jimmy Jairala!">
+    <meta name="twitter:image" content="https://uncafeconjj.com/images/twitter-image.jpg">
 </head>
 <body>
     <header>
-    <div class="logo">
-        <img src="images/logo.png" alt="Logo de Un Café Con JJ">
-    </div>
-    <div class="install-container">
-        <button id="install-button" class="install-button" style="display: none;">
-            <i class="fas fa-download"></i> Instalar Un Café Con JJ
-        </button>
-    </div>
-</header>
+        <div class="logo">
+            <img src="images/logo.png" alt="Logo de Un Café Con JJ">
+        </div>
+        <div class="install-container">
+            <button id="install-button" class="install-button" style="display: none;">
+                <i class="fas fa-download"></i> Instalar Un Café Con JJ
+            </button>
+        </div>
+    </header>
     
     <main class="background-container">
         <div class="main-container">
@@ -33,83 +46,82 @@
                 <div class="carousel">
                     <div class="carousel-images">
                         <img src="images/uncafeconjj (1).png" alt="Imagen destacada 1" loading="lazy">
-
                     </div>
                     <button class="carousel-button prev" aria-label="Imagen anterior"></button>
-                    <button class="carousel-button prev" aria-label="Imagen siguiente"></button>
+                    <button class="carousel-button next" aria-label="Imagen siguiente"></button>
                 </div>
             </section>
 
-<section id="playlists">
-    <div class="playlist-slider" id="playlist-slider">
-        <!-- Los videos de la Playlist 1 se cargarán aquí dinámicamente -->
-    </div>
+            <section id="playlists">
+                <div class="playlist-slider" id="playlist-slider">
+                    <!-- Los videos de la Playlist 1 se cargarán aquí dinámicamente -->
+                </div>
 
-    <div class="playlist-slider" id="playlist-slider-1">
-        <!-- Los videos de la Playlist 2 se cargarán aquí dinámicamente -->
-    </div>
-    
-    <div id="youtube-live-chat" style="display: none;">
-        <!-- El chat de YouTube se cargará aquí si hay un video en vivo -->
-    </div>
-</section>
+                <div class="playlist-slider" id="playlist-slider-1">
+                    <!-- Los videos de la Playlist 2 se cargarán aquí dinámicamente -->
+                </div>
+                
+                <div id="youtube-live-chat" style="display: none;">
+                    <!-- El chat de YouTube se cargará aquí si hay un video en vivo -->
+                </div>
+            </section>
 
-<section id="shorts-section">
-    <!-- Los Shorts se cargarán aquí dinámicamente -->
-</section>
-         
-           <section id="instagram-videos">
-    
-    <div class="instagram-slider">
-        <div class="instagram-video-item">
-            <iframe src="https://www.instagram.com/reel/DAePsIUR3Hm/embed" allowfullscreen></iframe>
+            <section id="shorts-section">
+                <!-- Los Shorts se cargarán aquí dinámicamente -->
+            </section>
+                 
+            <section id="instagram-videos">
+                <div class="instagram-slider">
+                    <div class="instagram-video-item">
+                        <iframe src="https://www.instagram.com/reel/DAePsIUR3Hm/embed" allowfullscreen></iframe>
+                    </div>
+                    <div class="instagram-video-item">
+                        <iframe src="https://www.instagram.com/reel/DAg1iizxm1z/embed" allowfullscreen></iframe>
+                    </div>
+                    <div class="instagram-video-item">
+                        <iframe src="https://www.instagram.com/reel/DAg1NwUR4m2/embed" allowfullscreen></iframe>
+                    </div>
+                    <!-- Agrega más Reels según sea necesario -->
+                </div>
+            </section>
         </div>
-        <div class="instagram-video-item">
-            <iframe src="https://www.instagram.com/reel/DAg1iizxm1z/embed" allowfullscreen></iframe>
-        </div>
-        <div class="instagram-video-item">
-            <iframe src="https://www.instagram.com/reel/DAg1NwUR4m2/embed" allowfullscreen></iframe>
-        </div>
-        <!-- Agrega más Reels según sea necesario -->
-    </div>
-</section>
-
+    </main>
 
     <footer>
-    <div class="footer-content">
-        <div class="footer-section about">
-            <img src="images/logo.png" alt="Un Café con JJ" class="footer-logo">
-            <p>Descubre que sucede en Ecuador y todo el mundo en el noticiero digital más visto de Guayaquil.</p>
-        </div>
-        <div class="footer-section socials">
-            <h3>Conéctate con Nosotros</h3>
-            <div class="social-icons">
-                <a href="https://facebook.com" target="_blank" rel="noopener" class="social-icon" aria-label="Síguenos en Facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="https://twitter.com" target="_blank" rel="noopener" class="social-icon" aria-label="Síguenos en Twitter"><i class="fab fa-twitter"></i></a>
-                <a href="https://www.instagram.com/uncafeconjjoficial?igsh=MW9idW52eDAxZDd5cQ==" target="_blank" rel="noopener" class="social-icon" aria-label="Síguenos en Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="https://youtube.com/@jimmyjairala?si=WzGRe9DqJ74pUqsz" target="_blank" rel="noopener" class="social-icon" aria-label="Suscríbete a nuestro canal de YouTube"><i class="fab fa-youtube"></i></a>
+        <div class="footer-content">
+            <div class="footer-section about">
+                <img src="images/logo.png" alt="Un Café con JJ" class="footer-logo">
+                <p>Descubre que sucede en Ecuador y todo el mundo en el noticiero digital más visto de Guayaquil.</p>
+            </div>
+            <div class="footer-section socials">
+                <h3>Conéctate con Nosotros</h3>
+                <div class="social-icons">
+                    <a href="https://facebook.com" target="_blank" rel="noopener" class="social-icon" aria-label="Síguenos en Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com" target="_blank" rel="noopener" class="social-icon" aria-label="Síguenos en Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/uncafeconjjoficial?igsh=MW9idW52eDAxZDd5cQ==" target="_blank" rel="noopener" class="social-icon" aria-label="Síguenos en Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://youtube.com/@jimmyjairala?si=WzGRe9DqJ74pUqsz" target="_blank" rel="noopener" class="social-icon" aria-label="Suscríbete a nuestro canal de YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-section map">
+                <h3>Encuéntranos</h3>
+                <div class="map-container">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15769.14526397902!2d-79.8899031!3d-2.1891341!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x902d13cbe855805f%3A0x8015a492f4fca473!2sGuayaquil%2C%20Ecuador!5e0!3m2!1ses!2ses!4v1695866437905!5m2!1ses!2ses"
+                        width="100%" 
+                        height="300" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="Ubicación de Un Café Con JJ">
+                    </iframe>
+                </div>
             </div>
         </div>
-        <div class="footer-section map">
-            <h3>Encuéntranos</h3>
-            <div class="map-container">
-                <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15769.14526397902!2d-79.8899031!3d-2.1891341!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x902d13cbe855805f%3A0x8015a492f4fca473!2sGuayaquil%2C%20Ecuador!5e0!3m2!1ses!2ses!4v1695866437905!5m2!1ses!2ses"
-                    width="100%" 
-                    height="300" 
-                    style="border:0;" 
-                    allowfullscreen="" 
-                    loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade"
-                    title="Ubicación de Un Café Con JJ">
-                </iframe>
-            </div>
+        <div class="footer-bottom">
+            <p>Powered by <a href="https://dualitydomain.github.io/Dualitydomain/" target="_blank" rel="noopener">Duality Domain</a> | &copy; 2024 Todos los derechos reservados.</p>
         </div>
-    </div>
-    <div class="footer-bottom">
-        <p>Powered by <a href="https://dualitydomain.github.io/Dualitydomain/" target="_blank" rel="noopener">Duality Domain</a> | &copy; 2024 Todos los derechos reservados.</p>
-    </div>
-</footer>
+    </footer>
 
     <div class="whatsapp-float">
         <a href="javascript:void(0);" id="whatsappBtn" class="whatsapp-button" aria-label="Chatea con UnCafeConJJ en WhatsApp">
@@ -137,8 +149,17 @@
 
     <script src="script.js"></script>
     <script src="playlist.js"></script>
-    <script src="service-worker.js"></script>
     <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, function(err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+
         // Código para la instalación de la PWA
         let deferredPrompt;
         const installButton = document.getElementById('install-button');
