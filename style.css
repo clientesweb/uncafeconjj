@@ -306,22 +306,22 @@ h2 {
 }
 
 #live-stream-container {
-    width: 100%;
+    width: 100vw; /* Ocupar todo el ancho de la pantalla */
     height: auto;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-left: calc(-50vw + 50%); /* Truco para hacer que el ancho sea completo */
 }
 
 #live-stream-container iframe {
     width: 100%;
-    max-width: 1400px; /* Aumenta el ancho para darle mayor prominencia */
-    height: 600px; /* Aumenta la altura del video en vivo */
+    max-width: 100vw; /* Ocupar todo el ancho disponible */
+    height: 400px; /* Altura ajustada para que no sea muy alto */
     border: none;
     border-radius: 10px;
     object-fit: cover;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Sombra más fuerte para el video */
-    background-color: #000; /* Fondo negro para simular un entorno de video */
 }
 
 /* Estilo para la sección Playlist */
