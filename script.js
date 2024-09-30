@@ -170,42 +170,37 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 5000);
 });
 const API_KEY = 'AIzaSyDm96WQoeg4AfeyYwjmXfn76eGDV8b_OOc';
-const CHANNEL_ID = 'UCc4fHgV3zRgjHxYZJkQdxhw'; // Reemplaza con tu ID de canal
-const MAX_RESULTS = 10; // Número de videos a obtener
+const CHANNEL_ID = 'UCc4fHgV3zRgjHxYZJkQdxhw';
+const MAX_RESULTS = 10;
 const CACHE_KEY = 'pastLiveStreamData';
-const CACHE_EXPIRY = 10 * 60 * 1000; // Caché expira en 10 minutos
+const CACHE_EXPIRY = 10 * 60 * 1000; // 10 minutos
 
 const playlistSlider = document.getElementById('playlist-slider');
 const liveStreamContainer = document.getElementById('live-stream-container');
 
-// Función para obtener datos de la caché
+// Funciones de caché
 function getCachedData() {
     const cached = localStorage.getItem(CACHE_KEY);
     if (cached) {
         const data = JSON.parse(cached);
-        const now = new Date().getTime();
-        if (now - data.timestamp < CACHE_EXPIRY) {
+        if (new Date().getTime() - data.timestamp < CACHE_EXPIRY) {
             return data.items;
         }
     }
     return null;
 }
 
-// Función para guardar datos en caché
 function setCachedData(items) {
-    const data = {
+    localStorage.setItem(CACHE_KEY, JSON.stringify({
         items: items,
         timestamp: new Date().getTime()
-    };
-    localStorage.setItem(CACHE_KEY, JSON.stringify(data));
+    }));
 }
 
-// Función para obtener videos pasados de la sección "En Vivo"
+// Función para obtener videos pasados
 async function fetchPastLiveStreams() {
     const cachedData = getCachedData();
-    if (cachedData) {
-        return cachedData;
-    }
+    if (cachedData) return cachedData;
 
     try {
         const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&eventType=completed&channelId=${CHANNEL_ID}&key=${API_KEY}&maxResults=${MAX_RESULTS}&order=date`;
@@ -213,14 +208,13 @@ async function fetchPastLiveStreams() {
         if (!response.ok) throw new Error('Error al obtener videos pasados');
         
         const data = await response.json();
-        const items = data.items.filter(video => video.snippet.liveBroadcastContent === 'none'); // Filtrar solo videos no en vivo
-
-        // Guardar en caché
+        const items = data.items.filter(video => video.snippet.liveBroadcastContent === 'none');
+        
         setCachedData(items);
         return items;
     } catch (error) {
-        console.error(error);
-        return []; // Retorna un arreglo vacío en caso de error
+        console.error('Error fetching past live streams:', error);
+        return [];
     }
 }
 
@@ -234,69 +228,65 @@ async function fetchLiveStream() {
         const data = await response.json();
         return data.items.length ? data.items[0] : null;
     } catch (error) {
-        console.error(error);
-        return null; // Retorna null en caso de error
+        console.error('Error fetching live stream:', error);
+        return null;
     }
 }
 
 // Función para crear el elemento de iframe del video
 function createVideoElement(video) {
-    const videoId = video.id.videoId;
     const iframe = document.createElement('iframe');
-    iframe.dataset.src = `https://www.youtube.com/embed/${videoId}`; // Cambiado a dataset.src
-    iframe.className = 'playlist-item lazy'; // Agregar la clase lazy
+    iframe.dataset.src = `https://www.youtube.com/embed/${video.id.videoId}`;
+    iframe.className = 'playlist-item lazy';
     iframe.frameBorder = '0';
     iframe.allow = 'autoplay; encrypted-media';
     iframe.allowFullscreen = true;
-
     return iframe;
 }
 
 // Función para cargar los videos pasados y el video en vivo
 async function loadLiveAndPastStreams() {
+    // Cargar video en vivo
     const liveStream = await fetchLiveStream();
+    liveStreamContainer.innerHTML = liveStream
+        ? ''
+        : '<p>No hay transmisión en vivo actualmente.</p>';
     if (liveStream) {
-        const liveStreamElement = createVideoElement(liveStream);
-        liveStreamContainer.innerHTML = ''; // Limpiar contenedor de video en vivo
-        liveStreamContainer.appendChild(liveStreamElement); // Mostrar el video en vivo
-    } else {
-        liveStreamContainer.innerHTML = '<p>No hay transmisión en vivo actualmente.</p>';
+        liveStreamContainer.appendChild(createVideoElement(liveStream));
     }
 
+    // Cargar videos pasados
     const pastVideos = await fetchPastLiveStreams();
-    playlistSlider.innerHTML = ''; // Limpiar el slider antes de cargar nuevos videos
+    playlistSlider.innerHTML = '';
     pastVideos.forEach(video => {
-        const videoElement = createVideoElement(video);
-        playlistSlider.appendChild(videoElement);
+        playlistSlider.appendChild(createVideoElement(video));
     });
 
-    // Carga diferida
+    // Iniciar carga diferida
     lazyLoadIframes();
 }
 
 // Función para cargar iframes cuando están en el viewport
 function lazyLoadIframes() {
-    const iframes = document.querySelectorAll('iframe.lazy');
-
-    const observer = new IntersectionObserver(entries => {
+    const observer = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const iframe = entry.target;
-                iframe.src = iframe.dataset.src; // Carga el iframe cuando está visible
+                iframe.src = iframe.dataset.src;
                 iframe.classList.remove('lazy');
-                observer.unobserve(iframe); // Deja de observar el iframe una vez cargado
+                observer.unobserve(iframe);
             }
         });
     });
 
-    iframes.forEach(iframe => observer.observe(iframe));
+    document.querySelectorAll('iframe.lazy').forEach(iframe => observer.observe(iframe));
 }
 
-// Cargar videos al iniciar
-window.onload = loadLiveAndPastStreams;
+// Iniciar carga de videos
+window.addEventListener('load', loadLiveAndPastStreams);
 
-// Opcional: Actualizar cada 10 minutos
-setInterval(loadLiveAndPastStreams, 10 * 60 * 1000);
+// Actualizar cada 10 minutos
+setInterval(loadLiveAndPastStreams, CACHE_EXPIRY);
 
 // Seleccionar elementos
 const whatsappBtn = document.getElementById('whatsappBtn');
