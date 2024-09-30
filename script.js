@@ -176,7 +176,7 @@ const CACHE_KEY = 'pastLiveStreamData';
 const CACHE_EXPIRY = 10 * 60 * 1000; // Caché expira en 10 minutos
 
 const playlistSlider = document.getElementById('playlist-slider');
-const liveStreamContainer = document.getElementById('live-stream-container'); // Nuevo contenedor para el video en vivo
+const liveStreamContainer = document.getElementById('live-stream-container'); // Contenedor para el video en vivo
 
 // Función para obtener datos de la caché
 function getCachedData() {
@@ -244,6 +244,8 @@ function createVideoElement(video) {
 // Función para cargar los videos pasados y el video en vivo
 async function loadLiveAndPastStreams() {
     const liveStream = await fetchLiveStream();
+    
+    // Verifica si hay un video en vivo
     if (liveStream) {
         const liveStreamElement = createVideoElement(liveStream);
         liveStreamContainer.innerHTML = ''; // Limpiar contenedor de video en vivo
@@ -252,12 +254,18 @@ async function loadLiveAndPastStreams() {
         liveStreamContainer.innerHTML = '<p>No hay transmisión en vivo actualmente.</p>';
     }
 
+    // Cargar videos pasados
     const pastVideos = await fetchPastLiveStreams();
     playlistSlider.innerHTML = ''; // Limpiar el slider antes de cargar nuevos videos
-    pastVideos.forEach(video => {
-        const videoElement = createVideoElement(video);
-        playlistSlider.appendChild(videoElement);
-    });
+    if (pastVideos.length > 0) {
+        pastVideos.forEach(video => {
+            const videoElement = createVideoElement(video);
+            playlistSlider.appendChild(videoElement);
+        });
+    } else {
+        // Si no hay videos pasados, mostrar mensaje
+        playlistSlider.innerHTML = '<p>No hay videos pasados disponibles.</p>';
+    }
 
     // Carga diferida
     lazyLoadIframes();
