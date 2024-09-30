@@ -169,7 +169,6 @@ document.addEventListener('DOMContentLoaded', () => {
         nextButton.click();
     }, 5000);
 });
-
 const API_KEY = 'AIzaSyDm96WQoeg4AfeyYwjmXfn76eGDV8b_OOc';
 const CHANNEL_ID = 'UCc4fHgV3zRgjHxYZJkQdxhw'; // Reemplaza con tu ID de canal
 const MAX_RESULTS = 10; // Número de videos a obtener
@@ -177,7 +176,7 @@ const CACHE_KEY = 'pastLiveStreamData';
 const CACHE_EXPIRY = 10 * 60 * 1000; // Caché expira en 10 minutos
 
 const playlistSlider = document.getElementById('playlist-slider');
-const liveStreamContainer = document.getElementById('live-stream-container'); // Nuevo contenedor para el video en vivo
+const liveStreamContainer = document.getElementById('live-stream-container');
 
 // Función para obtener datos de la caché
 function getCachedData() {
@@ -208,36 +207,47 @@ async function fetchPastLiveStreams() {
         return cachedData;
     }
 
-    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&eventType=completed&channelId=${CHANNEL_ID}&key=${API_KEY}&maxResults=${MAX_RESULTS}&order=date`;
-    const response = await fetch(url);
-    const data = await response.json();
-    const items = data.items.filter(video => video.snippet.liveBroadcastContent === 'none'); // Filtrar solo videos no en vivo
+    try {
+        const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&eventType=completed&channelId=${CHANNEL_ID}&key=${API_KEY}&maxResults=${MAX_RESULTS}&order=date`;
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Error al obtener videos pasados');
+        
+        const data = await response.json();
+        const items = data.items.filter(video => video.snippet.liveBroadcastContent === 'none'); // Filtrar solo videos no en vivo
 
-    // Guardar en caché
-    setCachedData(items);
-
-    return items;
+        // Guardar en caché
+        setCachedData(items);
+        return items;
+    } catch (error) {
+        console.error(error);
+        return []; // Retorna un arreglo vacío en caso de error
+    }
 }
 
 // Función para obtener el video en vivo actual
 async function fetchLiveStream() {
-    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&eventType=live&channelId=${CHANNEL_ID}&key=${API_KEY}&maxResults=1`;
-    const response = await fetch(url);
-    const data = await response.json();
+    try {
+        const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&eventType=live&channelId=${CHANNEL_ID}&key=${API_KEY}&maxResults=1`;
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Error al obtener video en vivo');
 
-    // Retornar el primer video si está en vivo
-    return data.items.length ? data.items[0] : null;
+        const data = await response.json();
+        return data.items.length ? data.items[0] : null;
+    } catch (error) {
+        console.error(error);
+        return null; // Retorna null en caso de error
+    }
 }
 
 // Función para crear el elemento de iframe del video
 function createVideoElement(video) {
     const videoId = video.id.videoId;
     const iframe = document.createElement('iframe');
-    iframe.src = `https://www.youtube.com/embed/${videoId}`;
+    iframe.dataset.src = `https://www.youtube.com/embed/${videoId}`; // Cambiado a dataset.src
+    iframe.className = 'playlist-item lazy'; // Agregar la clase lazy
     iframe.frameBorder = '0';
     iframe.allow = 'autoplay; encrypted-media';
     iframe.allowFullscreen = true;
-    iframe.className = 'playlist-item';
 
     return iframe;
 }
