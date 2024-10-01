@@ -41,9 +41,8 @@ function displayPlaylist(videos) {
     // Mostrar los últimos 4 videos (excluyendo el más reciente)
     videos.slice(1).forEach(video => { // Comenzar en el índice 1 para omitir el primero
         const videoItem = document.createElement('div');
-        videoItem.classList.add('video-item');
+        videoItem.classList.add('playlist-item'); // Asegúrate de que esta clase esté definida en tu CSS
         videoItem.innerHTML = `
-            <h3>${video.snippet.title}</h3>
             <iframe 
                 width="100%" 
                 height="200" 
