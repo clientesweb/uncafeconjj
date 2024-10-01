@@ -286,7 +286,7 @@ footer::before {
 .playlist-slider {
     display: flex; /* Usar flexbox para alinear horizontalmente */
     overflow-x: auto; /* Habilitar desplazamiento horizontal */
-    gap: 20px; /* Espacio entre videos */
+    gap: 10px; /* Espacio mínimo entre videos */
     scroll-behavior: smooth; /* Suavizar el desplazamiento */
     -ms-overflow-style: none; /* Para IE y Edge */
     scrollbar-width: none; /* Para Firefox */
@@ -316,11 +316,11 @@ footer::before {
     border-radius: 10px; /* Bordes redondeados */
     overflow: hidden; /* Ocultar desbordamiento */
     background-color: #f0f0f0; /* Fondo claro */
-    margin: 0; /* Eliminar margen */
+    margin: 0 5px; /* Margen lateral mínimo para separar los videos */
     padding: 0; /* Eliminar padding */
 }
 
-/* Eliminar espacios debajo de los iframes */
+/* Estilo del iframe para los videos */
 .playlist-item iframe,
 #live-video-container iframe {
     width: 100%; /* Ancho completo del contenedor */
@@ -351,7 +351,6 @@ footer::before {
     color: #333; /* Color del texto */
     text-align: center; /* Centrar el texto */
 }
-/* Estilo para la sección de patrocinadores */
 #sponsors-section {
     overflow: hidden;
     position: relative;
