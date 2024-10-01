@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Resto de tu código...
 });
-const API_KEY = ''AIzaSyDm96WQoeg4AfeyYwjmXfn76eGDV8b_OOc'; // Reemplaza con tu clave de API
+const API_KEY = 'AIzaSyDm96WQoeg4AfeyYwjmXfn76eGDV8b_OOc'; // Reemplaza con tu clave de API
 const PLAYLIST_ID = 'PLSwBXxeopk-y2adJzE7kpjvEBR2BPsTCq'; // Reemplaza con el ID de tu lista de reproducción
 
 async function fetchPlaylistItems() {
