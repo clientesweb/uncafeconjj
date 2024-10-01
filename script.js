@@ -12,11 +12,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Resto de tu código...
 });
-const API_KEY = 'AIzaSyDm96WQoeg4AfeyYwjmXfn76eGDV8b_OOc'; // Reemplaza con tu clave de API
-const PLAYLIST_ID = 'PLSwBXxeopk-y2adJzE7kpjvEBR2BPsTCq'; // Reemplaza con el ID de tu lista de reproducción
+
+const API_KEY = 'AIzaSyBcNo4pMTbFhTs8RKujYFfNSo_HbIP9f7E'; // Reemplaza con tu clave de API
+const PLAYLIST_ID = 'PLSwBXxeopk-wzps96LvzkMKyy-YSxD2r5'; // Reemplaza con el ID de tu lista de reproducción
 
 async function fetchPlaylistItems() {
-    const response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=5&key=${API_KEY}`);
+    const response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=50&key=${API_KEY}`);
     const data = await response.json();
     return data.items;
 }
@@ -39,7 +40,8 @@ function displayPlaylist(videos) {
     const playlistContainer = document.getElementById('playlist-container');
     playlistContainer.innerHTML = ''; // Limpiar contenedor
 
-    videos.slice(0, 4).forEach(video => {
+    // Excluir el último video para no mostrarlo en la playlist
+    videos.slice(0, videos.length - 1).forEach(video => {
         const videoItem = document.createElement('div');
         videoItem.classList.add('video-item');
         videoItem.innerHTML = `
@@ -59,9 +61,13 @@ function displayPlaylist(videos) {
 
 async function loadVideos() {
     const videos = await fetchPlaylistItems();
-    const liveVideo = videos[videos.length - 1]; // El último video es el que está en vivo
-    displayLiveVideo(liveVideo);
-    displayPlaylist(videos);
+    if (videos.length > 0) {
+        const liveVideo = videos[0]; // El primer video es el más reciente
+        displayLiveVideo(liveVideo);
+        displayPlaylist(videos);
+    } else {
+        console.warn('No se encontraron videos en la playlist.');
+    }
 }
 
 // Cargar videos al inicio
