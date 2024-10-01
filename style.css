@@ -304,7 +304,7 @@ footer::before {
 #live-video-container {
     width: 100%; /* Ancho completo */
     max-width: 90%; /* Ancho máximo para que no ocupe toda la pantalla */
-    height: 500px; /* Incrementar la altura del video en vivo */
+    height: 400px; /* Incrementar la altura del video en vivo */
     border-radius: 15px; /* Bordes redondeados */
     overflow: hidden; /* Ocultar desbordamiento */
     background-color: #000; /* Fondo negro para evitar que se vea blanco mientras carga */
