@@ -302,12 +302,11 @@ footer::before {
 /* Contenedor del video en vivo */
 #live-video-container {
     flex: 0 0 auto; /* Permitir que el contenedor se adapte al contenido */
-    height: auto; /* Ajustar la altura automáticamente */
-}
-
-/* Contenedor de la lista de videos */
-#playlist-container {
-    display: flex; /* Alinear videos horizontalmente */
+    height: 400px; /* Altura fija para el video en vivo */
+    width: 100%; /* Ancho del contenedor en vivo */
+    max-width: 90%; /* Ancho máximo para que no ocupe todo el ancho de la pantalla */
+    border-radius: 10px; /* Bordes redondeados */
+    overflow: hidden; /* Ocultar el desbordamiento */
 }
 
 /* Estilo de los videos en la playlist */
@@ -321,7 +320,7 @@ footer::before {
 }
 
 /* Estilo del iframe para los videos */
-iframe {
+.playlist-item iframe {
     width: 100%; /* Ancho completo del contenedor */
     height: 100%; /* Altura completa del contenedor */
     border: none; /* Sin borde */
@@ -336,6 +335,7 @@ iframe {
 
 /* Ajustes para el contenedor de videos */
 #playlist-container {
+    display: flex; /* Alinear videos horizontalmente */
     padding-bottom: 20px; /* Espacio en la parte inferior para evitar que los videos se corten */
 }
 /* Estilo para la sección de patrocinadores */
