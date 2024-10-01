@@ -304,9 +304,10 @@ footer::before {
 #live-video-container {
     width: 100%; /* Ancho completo */
     max-width: 90%; /* Ancho máximo para que no ocupe toda la pantalla */
+    height: 500px; /* Incrementar la altura del video en vivo */
     border-radius: 15px; /* Bordes redondeados */
     overflow: hidden; /* Ocultar desbordamiento */
-    background-color: #f0f0f0; /* Fondo claro para el contenedor */
+    background-color: #000; /* Fondo negro para evitar que se vea blanco mientras carga */
     margin: 0; /* Eliminar margen */
 }
 
@@ -315,16 +316,17 @@ footer::before {
     flex: 0 0 auto; /* Ajustar a su contenido natural */
     border-radius: 10px; /* Bordes redondeados */
     overflow: hidden; /* Ocultar desbordamiento */
-    background-color: #f0f0f0; /* Fondo claro */
+    background-color: #000; /* Fondo negro para evitar que se vea blanco mientras carga */
     margin: 0 5px; /* Margen lateral mínimo para separar los videos */
     padding: 0; /* Eliminar padding */
+    height: 220px; /* Incrementar la altura para mostrar bien las miniaturas */
 }
 
 /* Estilo del iframe para los videos */
 .playlist-item iframe,
 #live-video-container iframe {
     width: 100%; /* Ancho completo del contenedor */
-    height: auto; /* Altura automática basada en el contenido */
+    height: 100%; /* Altura completa */
     border: none; /* Sin borde */
     border-radius: 10px; /* Bordes redondeados */
     object-fit: cover; /* Ajustar el contenido dentro del iframe */
