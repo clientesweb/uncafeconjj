@@ -338,6 +338,14 @@ footer::before {
     display: flex; /* Alinear videos horizontalmente */
     padding-bottom: 20px; /* Espacio en la parte inferior para evitar que los videos se corten */
 }
+/* Estilo para los títulos de las playlists */
+.playlist-title {
+    font-size: 24px; /* Tamaño de fuente */
+    font-weight: bold; /* Peso de la fuente */
+    margin: 20px 0; /* Margen superior e inferior */
+    color: #333; /* Color del texto */
+    text-align: center; /* Centrar el texto */
+}
 /* Estilo para la sección de patrocinadores */
 #sponsors-section {
     overflow: hidden;
