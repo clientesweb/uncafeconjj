@@ -1,4 +1,3 @@
-No me aparecen los vídeos de playlist ni tampoco los de shorts
 document.addEventListener('DOMContentLoaded', () => {
     const menuToggle = document.getElementById('menu-toggle');
     const navMenu = document.getElementById('nav-menu');
