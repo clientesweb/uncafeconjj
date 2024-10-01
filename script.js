@@ -9,8 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         console.warn('Elementos de navegación no encontrados.');
     }
-
-    // Resto de tu código...
 });
 
 const API_KEY = 'AIzaSyBcNo4pMTbFhTs8RKujYFfNSo_HbIP9f7E'; // Reemplaza con tu clave de API
@@ -41,7 +39,7 @@ function displayPlaylist(videos) {
     playlistContainer.innerHTML = ''; // Limpiar contenedor
 
     // Mostrar los últimos 4 videos (excluyendo el más reciente)
-    videos.slice(1, 5).forEach(video => {
+    videos.slice(1).forEach(video => { // Comenzar en el índice 1 para omitir el primero
         const videoItem = document.createElement('div');
         videoItem.classList.add('video-item');
         videoItem.innerHTML = `
