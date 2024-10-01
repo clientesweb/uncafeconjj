@@ -299,32 +299,28 @@ footer::before {
     margin-bottom: 0; /* Eliminar espacio entre la sección de video en vivo y la sección de playlist */
 }
 
-/* Contenedor del video en vivo */
+/* Estilo del video en vivo sin restricciones */
 #live-video-container {
-    flex: 0 0 auto; /* Permitir que el contenedor se adapte al contenido */
-    height: 450px; /* Altura fija para el video en vivo */
-    width: 100%; /* Ancho del contenedor en vivo */
-    max-width: 900px; /* Ancho máximo del video en vivo */
+    width: 100%; /* Ancho completo */
+    max-width: 90%; /* Ancho máximo para que no ocupe toda la pantalla */
     border-radius: 15px; /* Bordes redondeados */
-    overflow: hidden; /* Ocultar el desbordamiento */
+    overflow: hidden; /* Ocultar desbordamiento */
     background-color: #f0f0f0; /* Fondo claro para el contenedor */
 }
 
-/* Estilo de los videos en la playlist */
+/* Eliminar tamaños fijos de los videos en la playlist */
 .playlist-item {
-    flex: 0 0 300px; /* Ancho fijo para cada video */
-    height: 200px; /* Altura del contenedor de video */
+    flex: 0 0 auto; /* Ajustar a su contenido natural */
     border-radius: 10px; /* Bordes redondeados */
-    overflow: hidden; /* Ocultar el desbordamiento */
-    background-color: #f0f0f0; /* Fondo claro para el contenedor */
-    position: relative; /* Posicionamiento relativo para el iframe */
-    padding: 10px; /* Espacio interno para separación entre videos */
+    overflow: hidden; /* Ocultar desbordamiento */
+    background-color: #f0f0f0; /* Fondo claro */
 }
 
-/* Estilo del iframe para los videos */
-.playlist-item iframe {
+/* Eliminar restricciones de tamaño del iframe */
+.playlist-item iframe,
+#live-video-container iframe {
     width: 100%; /* Ancho completo del contenedor */
-    height: 100%; /* Altura completa del contenedor */
+    height: auto; /* Altura automática basada en el contenido */
     border: none; /* Sin borde */
     border-radius: 10px; /* Bordes redondeados */
     object-fit: cover; /* Ajustar el contenido dentro del iframe */
@@ -338,7 +334,7 @@ footer::before {
 /* Ajustes para el contenedor de videos */
 #playlist-container {
     display: flex; /* Alinear videos horizontalmente */
-    padding-bottom: 20px; /* Espacio en la parte inferior para evitar que los videos se corten */
+    padding-bottom: 20px; /* Espacio en la parte inferior */
 }
 
 /* Estilo para los títulos de las playlists */
