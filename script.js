@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const shortsSection = document.getElementById('shorts-section');
     const maxResults = 5; // Máximo de shorts a mostrar
-    const fetchResults = 100; // Máximo de resultados a obtener de la API
+    const fetchResults = 35; // Máximo de resultados a obtener de la API
 
     // Mostrar un loader mientras se cargan los iframes
     function showLoader() {
