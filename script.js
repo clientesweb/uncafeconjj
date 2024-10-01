@@ -17,7 +17,7 @@ const API_KEY = 'AIzaSyBcNo4pMTbFhTs8RKujYFfNSo_HbIP9f7E'; // Reemplaza con tu c
 const PLAYLIST_ID = 'PLSwBXxeopk-wzps96LvzkMKyy-YSxD2r5'; // Reemplaza con el ID de tu lista de reproducción
 
 async function fetchPlaylistItems() {
-    const response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=50&key=${API_KEY}`);
+    const response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=30&key=${API_KEY}`);
     const data = await response.json();
     return data.items;
 }
@@ -28,7 +28,7 @@ function displayLiveVideo(video) {
         <iframe 
             width="100%" 
             height="315" 
-            src="https://www.youtube.com/embed/${video.id.videoId}?autoplay=1" 
+            src="https://www.youtube.com/embed/${video.snippet.resourceId.videoId}?autoplay=1" 
             frameborder="0" 
             allow="autoplay; encrypted-media" 
             allowfullscreen>
@@ -40,8 +40,8 @@ function displayPlaylist(videos) {
     const playlistContainer = document.getElementById('playlist-container');
     playlistContainer.innerHTML = ''; // Limpiar contenedor
 
-    // Excluir el último video para no mostrarlo en la playlist
-    videos.slice(0, videos.length - 1).forEach(video => {
+    // Mostrar los últimos 4 videos (excluyendo el más reciente)
+    videos.slice(1, 5).forEach(video => {
         const videoItem = document.createElement('div');
         videoItem.classList.add('video-item');
         videoItem.innerHTML = `
@@ -62,9 +62,10 @@ function displayPlaylist(videos) {
 async function loadVideos() {
     const videos = await fetchPlaylistItems();
     if (videos.length > 0) {
-        const liveVideo = videos[0]; // El primer video es el más reciente
+        const latestVideos = videos.slice(0, 5); // Obtener los últimos 5 videos
+        const liveVideo = latestVideos[0]; // El primer video es el más reciente
         displayLiveVideo(liveVideo);
-        displayPlaylist(videos);
+        displayPlaylist(latestVideos);
     } else {
         console.warn('No se encontraron videos en la playlist.');
     }
