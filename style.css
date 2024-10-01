@@ -304,11 +304,24 @@ footer::before {
 #live-video-container {
     width: 100%; /* Ancho completo */
     max-width: 90%; /* Ancho máximo para que no ocupe toda la pantalla */
-    height: 400px; /* Incrementar la altura del video en vivo */
+    height: 0; /* Iniciar con altura 0 para usar padding en relación de aspecto */
+    padding-bottom: 56.25%; /* Relación de aspecto 16:9 (9/16 = 0.5625) */
     border-radius: 15px; /* Bordes redondeados */
     overflow: hidden; /* Ocultar desbordamiento */
     background-color: #000; /* Fondo negro para evitar que se vea blanco mientras carga */
-    margin: 0; /* Eliminar margen */
+    position: relative; /* Para posicionar el iframe dentro */
+}
+
+/* Ajustes del iframe para mantener la proporción 16:9 */
+#live-video-container iframe {
+    position: absolute; /* Posición absoluta para llenar el contenedor */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 10px; /* Bordes redondeados */
+    object-fit: cover;
 }
 
 /* Eliminar espacios no deseados debajo de los videos */
@@ -319,12 +332,11 @@ footer::before {
     background-color: #000; /* Fondo negro para evitar que se vea blanco mientras carga */
     margin: 0 5px; /* Margen lateral mínimo para separar los videos */
     padding: 0; /* Eliminar padding */
-    height: 220px; /* Incrementar la altura para mostrar bien las miniaturas */
+    height: 220px; /* Altura ajustada para mostrar bien las miniaturas */
 }
 
 /* Estilo del iframe para los videos */
-.playlist-item iframe,
-#live-video-container iframe {
+.playlist-item iframe {
     width: 100%; /* Ancho completo del contenedor */
     height: 100%; /* Altura completa */
     border: none; /* Sin borde */
