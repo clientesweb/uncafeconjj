@@ -282,11 +282,6 @@ footer::before {
     padding: 0 20px;
 }
 
-/* Oculta los títulos de las secciones */
-.playlist-slider h2 {
-    display: none; /* Oculta el título de la sección */
-}
-
 /* Estilo unificado para playlist */
 .playlist-slider {
     display: flex;
@@ -297,13 +292,19 @@ footer::before {
     scrollbar-width: none; /* Para Firefox */
 }
 
-#live-video {
+/* Ocultar títulos de las secciones */
+.playlist-slider h2 {
+    display: none; /* Oculta el título de la sección */
+}
+
+#live-video-container {
     flex: 0 0 450px; /* Ancho de la sección en vivo (50% más que playlist) */
     height: 300px; /* Altura de la sección en vivo (50% más que la playlist) */
 }
 
-#playlist {
-    flex: 0 1 auto; /* Ancho automático para la lista de reproducción */
+#playlist-container {
+    display: flex; /* Asegúrate de que los videos en la playlist se alineen horizontalmente */
+    gap: 20px; /* Espacio entre videos */
 }
 
 .playlist-item, .short-item {
