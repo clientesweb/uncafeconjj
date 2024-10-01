@@ -1,4 +1,4 @@
-const API_KEY = 'AIzaSyDm96WQoeg4AfeyYwjmXfn76eGDV8b_OOc';
+const API_KEY = AIzaSyBcNo4pMTbFhTs8RKujYFfNSo_HbIP9f7E';
 const CHANNEL_ID = 'UCc4fHgV3zRgjHxYZJkQdxhw'; // Reemplaza con tu ID de canal
 const MAX_RESULTS = 10; // Número de videos a obtener
 const CACHE_KEY = 'pastLiveStreamData';
