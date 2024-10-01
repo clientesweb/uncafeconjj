@@ -290,33 +290,37 @@ footer::before {
     scroll-behavior: smooth; /* Suavizar el desplazamiento */
     -ms-overflow-style: none; /* Para IE y Edge */
     scrollbar-width: none; /* Para Firefox */
+    padding: 0; /* Eliminar padding del contenedor */
 }
 
 /* Contenedor del video en vivo */
 #live-video {
     display: flex; /* Usar flexbox para centrar el contenido */
     justify-content: center; /* Centrar horizontalmente */
-    margin-bottom: 0; /* Eliminar espacio entre la sección de video en vivo y la sección de playlist */
+    margin-bottom: 0; /* Eliminar margen entre "En Vivo" y la sección de playlist */
 }
 
-/* Estilo del video en vivo sin restricciones */
+/* Contenedor del video en vivo */
 #live-video-container {
     width: 100%; /* Ancho completo */
     max-width: 90%; /* Ancho máximo para que no ocupe toda la pantalla */
     border-radius: 15px; /* Bordes redondeados */
     overflow: hidden; /* Ocultar desbordamiento */
     background-color: #f0f0f0; /* Fondo claro para el contenedor */
+    margin: 0; /* Eliminar margen */
 }
 
-/* Eliminar tamaños fijos de los videos en la playlist */
+/* Eliminar espacios no deseados debajo de los videos */
 .playlist-item {
     flex: 0 0 auto; /* Ajustar a su contenido natural */
     border-radius: 10px; /* Bordes redondeados */
     overflow: hidden; /* Ocultar desbordamiento */
     background-color: #f0f0f0; /* Fondo claro */
+    margin: 0; /* Eliminar margen */
+    padding: 0; /* Eliminar padding */
 }
 
-/* Eliminar restricciones de tamaño del iframe */
+/* Eliminar espacios debajo de los iframes */
 .playlist-item iframe,
 #live-video-container iframe {
     width: 100%; /* Ancho completo del contenedor */
@@ -324,6 +328,7 @@ footer::before {
     border: none; /* Sin borde */
     border-radius: 10px; /* Bordes redondeados */
     object-fit: cover; /* Ajustar el contenido dentro del iframe */
+    display: block; /* Evitar que los iframes se comporten como inline elements */
 }
 
 /* Ocultar scrollbar */
@@ -334,7 +339,8 @@ footer::before {
 /* Ajustes para el contenedor de videos */
 #playlist-container {
     display: flex; /* Alinear videos horizontalmente */
-    padding-bottom: 20px; /* Espacio en la parte inferior */
+    padding-bottom: 0; /* Eliminar padding inferior */
+    margin: 0; /* Eliminar márgenes */
 }
 
 /* Estilo para los títulos de las playlists */
