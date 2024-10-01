@@ -276,14 +276,14 @@ footer::before {
 }
 
 
-/* Sección de Videos, Playlists y Shorts */
+/* Sección de Videos, Playlists, y Shorts */
 #playlists {
     margin: 50px 0;
     padding: 0 20px;
 }
 
-/* Sin título de sección para los videos */
-h2 {
+/* Oculta los títulos de las secciones */
+.playlist-slider h2 {
     display: none; /* Oculta el título de la sección */
 }
 
@@ -297,20 +297,19 @@ h2 {
     scrollbar-width: none; /* Para Firefox */
 }
 
-.playlist-item {
-    flex: 0 0 300px; /* Ancho de cada video */
-    height: 200px; /* Altura del contenedor de video */
-    border-radius: 10px; /* Bordes redondeados */
-    overflow: hidden; /* Ocultar el desbordamiento */
-}
-
 #live-video {
     flex: 0 0 450px; /* Ancho de la sección en vivo (50% más que playlist) */
     height: 300px; /* Altura de la sección en vivo (50% más que la playlist) */
 }
 
-#live-video-container {
-    height: 100%; /* Altura completa del contenedor en vivo */
+#playlist {
+    flex: 0 1 auto; /* Ancho automático para la lista de reproducción */
+}
+
+.playlist-item, .short-item {
+    flex: 0 0 300px; /* Ancho de cada video */
+    height: 200px; /* Altura del contenedor de video */
+    border-radius: 10px; /* Bordes redondeados */
     overflow: hidden; /* Ocultar el desbordamiento */
 }
 
