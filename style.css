@@ -282,20 +282,13 @@ footer::before {
     padding: 0 20px;
 }
 
+/* Sin título de sección para los videos */
 h2 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: var(--text-color);
+    display: none; /* Oculta el título de la sección */
 }
 
-/* Estilo unificado para las secciones de playlists */
+/* Estilo unificado para playlist */
 .playlist-slider {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 30px; /* Espacio entre secciones */
-}
-
-#live-video-container, #playlist-container {
     display: flex;
     overflow-x: auto; /* Habilitar desplazamiento horizontal */
     gap: 20px; /* Espacio entre videos */
@@ -305,13 +298,20 @@ h2 {
 }
 
 .playlist-item {
-    flex: 0 0 280px; /* Ancho de cada video (ajustado a 280px) */
-    height: 160px; /* Altura del contenedor de video (ajustado a 160px) */
+    flex: 0 0 300px; /* Ancho de cada video */
+    height: 200px; /* Altura del contenedor de video */
     border-radius: 10px; /* Bordes redondeados */
     overflow: hidden; /* Ocultar el desbordamiento */
-    background-color: #f0f0f0; /* Fondo claro para el contenedor */
-    position: relative; /* Posicionamiento relativo para el iframe */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+}
+
+#live-video {
+    flex: 0 0 450px; /* Ancho de la sección en vivo (50% más que playlist) */
+    height: 300px; /* Altura de la sección en vivo (50% más que la playlist) */
+}
+
+#live-video-container {
+    height: 100%; /* Altura completa del contenedor en vivo */
+    overflow: hidden; /* Ocultar el desbordamiento */
 }
 
 iframe {
@@ -322,29 +322,8 @@ iframe {
     object-fit: cover; /* Ajustar el contenido dentro del iframe */
 }
 
-#live-video-container {
-    height: 400px; /* Aumentar la altura del contenedor en vivo */
-}
-
-#live-video-container::-webkit-scrollbar,
-#playlist-container::-webkit-scrollbar {
+.playlist-slider::-webkit-scrollbar {
     display: none; /* Ocultar scrollbar */
-}
-
-/* Agregar un estilo al contenedor en vivo */
-#live-video {
-    margin-bottom: 30px; /* Espacio inferior entre "En Vivo" y "Programas" */
-}
-
-/* Estilos opcionales para el texto de los programas */
-.playlist-item h3 {
-    position: absolute; /* Posiciona el título sobre el video */
-    bottom: 5px; /* Ajusta la posición del texto desde abajo */
-    left: 10px; /* Ajusta la posición del texto desde la izquierda */
-    color: white; /* Color del texto */
-    background: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente para mejor legibilidad */
-    padding: 5px; /* Espaciado alrededor del texto */
-    border-radius: 5px; /* Bordes redondeados */
 }
 
 /* Estilo para la sección de patrocinadores */
