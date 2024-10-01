@@ -276,8 +276,8 @@ footer::before {
 }
 
 
-/* Sección de Videos, Playlists, y Shorts */
-#videos, #playlists, #shorts-section {
+/* Sección de Videos, Playlists y Shorts */
+#playlists {
     margin: 50px 0;
     padding: 0 20px;
 }
@@ -288,33 +288,58 @@ h2 {
     color: var(--text-color);
 }
 
-/* Estilo unificado para playlist y shorts */
-.playlist-slider, #shorts-section {
+/* Estilo unificado para las secciones de playlists */
+.playlist-slider {
     display: flex;
-    overflow-x: auto;
-    gap: 20px;
-    scroll-behavior: smooth;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    flex-direction: column;
+    margin-bottom: 30px; /* Espacio entre secciones */
 }
 
-.playlist-item, .short-item {
-    flex: 0 0 300px;
-    height: 200px;
-    border-radius: 10px;
-    overflow: hidden;
+#live-video-container, #playlist-container {
+    display: flex;
+    overflow-x: auto; /* Habilitar desplazamiento horizontal */
+    gap: 20px; /* Espacio entre videos */
+    scroll-behavior: smooth; /* Suavizar el desplazamiento */
+    -ms-overflow-style: none; /* Para IE y Edge */
+    scrollbar-width: none; /* Para Firefox */
+}
+
+.playlist-item {
+    flex: 0 0 300px; /* Ancho de cada video */
+    height: 200px; /* Altura del contenedor de video */
+    border-radius: 10px; /* Bordes redondeados */
+    overflow: hidden; /* Ocultar el desbordamiento */
+    background-color: #f0f0f0; /* Fondo claro para el contenedor */
+    position: relative; /* Posicionamiento relativo para el iframe */
 }
 
 iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-    border-radius: 10px;
-    object-fit: cover;
+    width: 100%; /* Ancho completo del contenedor */
+    height: 100%; /* Altura completa del contenedor */
+    border: none; /* Sin borde */
+    border-radius: 10px; /* Bordes redondeados */
+    object-fit: cover; /* Ajustar el contenido dentro del iframe */
 }
 
-.playlist-slider::-webkit-scrollbar, #shorts-section::-webkit-scrollbar {
-    display: none;
+#live-video-container::-webkit-scrollbar,
+#playlist-container::-webkit-scrollbar {
+    display: none; /* Ocultar scrollbar */
+}
+
+/* Agregar un estilo al contenedor en vivo */
+#live-video {
+    margin-bottom: 30px; /* Espacio inferior entre "En Vivo" y "Programas" */
+}
+
+/* Estilos opcionales para el texto de los programas */
+.playlist-item h3 {
+    position: absolute; /* Posiciona el título sobre el video */
+    bottom: 5px; /* Ajusta la posición del texto desde abajo */
+    left: 10px; /* Ajusta la posición del texto desde la izquierda */
+    color: white; /* Color del texto */
+    background: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente para mejor legibilidad */
+    padding: 5px; /* Espaciado alrededor del texto */
+    border-radius: 5px; /* Bordes redondeados */
 }
 
 /* Estilo para la sección de patrocinadores */
