@@ -286,7 +286,7 @@ footer::before {
 .playlist-slider {
     display: flex; /* Usar flexbox para alinear horizontalmente */
     overflow-x: auto; /* Habilitar desplazamiento horizontal */
-    gap: 0; /* Sin espacio entre videos */
+    gap: 20px; /* Espacio entre videos */
     scroll-behavior: smooth; /* Suavizar el desplazamiento */
     -ms-overflow-style: none; /* Para IE y Edge */
     scrollbar-width: none; /* Para Firefox */
@@ -308,16 +308,16 @@ footer::before {
 /* Contenedor de la lista de videos */
 #playlist-container {
     display: flex; /* Alinear videos horizontalmente */
-    gap: 0; /* Sin espacio entre videos */
 }
 
-/* Estilo de los videos */
+/* Estilo de los videos en la playlist */
 .playlist-item {
-    flex: 0 0 auto; /* Ajustar automáticamente el tamaño del contenedor */
+    flex: 0 0 300px; /* Ancho fijo para cada video */
     height: 200px; /* Altura del contenedor de video */
     border-radius: 10px; /* Bordes redondeados */
     overflow: hidden; /* Ocultar el desbordamiento */
     background-color: #f0f0f0; /* Fondo claro para el contenedor */
+    position: relative; /* Posicionamiento relativo para el iframe */
 }
 
 /* Estilo del iframe para los videos */
@@ -332,6 +332,11 @@ iframe {
 /* Ocultar scrollbar */
 .playlist-slider::-webkit-scrollbar {
     display: none; /* Ocultar scrollbar */
+}
+
+/* Ajustes para el contenedor de videos */
+#playlist-container {
+    padding-bottom: 20px; /* Espacio en la parte inferior para evitar que los videos se corten */
 }
 /* Estilo para la sección de patrocinadores */
 #sponsors-section {
