@@ -276,44 +276,51 @@ footer::before {
 }
 
 
-/* Sección de Videos, Playlists, y Shorts */
+/* Sección de Playlists */
 #playlists {
-    margin: 50px 0;
-    padding: 0 20px;
+    margin: 50px 0; /* Espacio superior e inferior */
+    padding: 0 20px; /* Espacio lateral */
 }
 
-/* Estilo unificado para playlist */
+/* Estilo para los contenedores de las playlists */
 .playlist-slider {
-    display: flex;
+    display: flex; /* Usar flexbox para alinear horizontalmente */
     overflow-x: auto; /* Habilitar desplazamiento horizontal */
-    gap: 20px; /* Espacio entre videos */
+    gap: 0; /* Sin espacio entre videos */
     scroll-behavior: smooth; /* Suavizar el desplazamiento */
     -ms-overflow-style: none; /* Para IE y Edge */
     scrollbar-width: none; /* Para Firefox */
 }
 
-/* Ocultar títulos de las secciones */
-.playlist-slider h2 {
-    display: none; /* Oculta el título de la sección */
+/* Contenedor del video en vivo */
+#live-video {
+    display: flex; /* Usar flexbox para centrar el contenido */
+    justify-content: center; /* Centrar horizontalmente */
+    margin-bottom: 30px; /* Espacio inferior entre "En Vivo" y "Programas" */
 }
 
+/* Contenedor del video en vivo */
 #live-video-container {
-    flex: 0 0 450px; /* Ancho de la sección en vivo (50% más que playlist) */
-    height: 300px; /* Altura de la sección en vivo (50% más que la playlist) */
+    flex: 0 0 auto; /* Permitir que el contenedor se adapte al contenido */
+    height: auto; /* Ajustar la altura automáticamente */
 }
 
+/* Contenedor de la lista de videos */
 #playlist-container {
-    display: flex; /* Asegúrate de que los videos en la playlist se alineen horizontalmente */
-    gap: 20px; /* Espacio entre videos */
+    display: flex; /* Alinear videos horizontalmente */
+    gap: 0; /* Sin espacio entre videos */
 }
 
-.playlist-item, .short-item {
-    flex: 0 0 300px; /* Ancho de cada video */
+/* Estilo de los videos */
+.playlist-item {
+    flex: 0 0 auto; /* Ajustar automáticamente el tamaño del contenedor */
     height: 200px; /* Altura del contenedor de video */
     border-radius: 10px; /* Bordes redondeados */
     overflow: hidden; /* Ocultar el desbordamiento */
+    background-color: #f0f0f0; /* Fondo claro para el contenedor */
 }
 
+/* Estilo del iframe para los videos */
 iframe {
     width: 100%; /* Ancho completo del contenedor */
     height: 100%; /* Altura completa del contenedor */
@@ -322,10 +329,10 @@ iframe {
     object-fit: cover; /* Ajustar el contenido dentro del iframe */
 }
 
+/* Ocultar scrollbar */
 .playlist-slider::-webkit-scrollbar {
     display: none; /* Ocultar scrollbar */
 }
-
 /* Estilo para la sección de patrocinadores */
 #sponsors-section {
     overflow: hidden;
