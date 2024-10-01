@@ -9,9 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const playlistSlider = document.getElementById('playlist-slider');
     const liveStreamContainer = document.getElementById('live-stream-container');
-    const shortsSection = document.getElementById('shorts-section');
-    const menuToggle = document.getElementById('menu-toggle');
-    const navMenu = document.getElementById('nav-menu');
 
     // Funciones de caché
     function getCachedData() {
@@ -79,8 +76,9 @@ document.addEventListener('DOMContentLoaded', () => {
         return iframe;
     }
 
-    // Función para cargar los videos pasados y el video en vivo
+    // Función para cargar el video en vivo y los videos pasados
     async function loadLiveAndPastStreams() {
+        // Cargar video en vivo
         if (liveStreamContainer) {
             const liveStream = await fetchLiveStream();
             liveStreamContainer.innerHTML = liveStream
@@ -91,6 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        // Cargar videos pasados en la playlist
         if (playlistSlider) {
             const pastVideos = await fetchPastLiveStreams();
             playlistSlider.innerHTML = '';
@@ -100,45 +99,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         lazyLoadIframes();
-    }
-
-    // Función para cargar shorts
-    async function loadShorts() {
-        if (!shortsSection) {
-            console.warn('Elemento shorts-section no encontrado');
-            return;
-        }
-
-        try {
-            const response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=5&playlistId=${PLAYLIST_ID}&key=${API_KEY}`);
-            if (!response.ok) throw new Error('Error al obtener shorts');
-            
-            const data = await response.json();
-            shortsSection.innerHTML = '';
-            
-            data.items.forEach(item => {
-                const videoId = item.snippet.resourceId.videoId;
-                const shortElement = createShortElement(videoId);
-                shortsSection.appendChild(shortElement);
-            });
-        } catch (error) {
-            console.error('Error al cargar shorts:', error);
-            shortsSection.innerHTML = '<p>Error al cargar shorts. Por favor, intenta más tarde.</p>';
-        }
-    }
-
-    // Función para crear elemento de Short
-    function createShortElement(videoId) {
-        const shortItem = document.createElement('div');
-        shortItem.className = 'short-item';
-        shortItem.innerHTML = `
-            <iframe src="https://www.youtube.com/embed/${videoId}?rel=0"
-                    loading="lazy"
-                    frameborder="0"
-                    allowfullscreen>
-            </iframe>
-        `;
-        return shortItem;
     }
 
     // Función para cargar iframes cuando están en el viewport
@@ -159,13 +119,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Iniciar carga de videos
     loadLiveAndPastStreams();
-    loadShorts();
 
     // Actualizar cada 10 minutos
     setInterval(() => {
         loadLiveAndPastStreams();
-        loadShorts();
     }, CACHE_EXPIRY);
+});
 
     // Funcionalidad del menú de navegación
     if (menuToggle && navMenu) {
