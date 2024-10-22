@@ -15,7 +15,7 @@ const API_KEY = 'AIzaSyBcNo4pMTbFhTs8RKujYFfNSo_HbIP9f7E'; // Reemplaza con tu c
 const PLAYLIST_ID = 'PLSwBXxeopk-wzps96LvzkMKyy-YSxD2r5'; // Reemplaza con el ID de tu lista de reproducción
 
 async function fetchPlaylistItems() {
-    const response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=30&key=${API_KEY}`);
+    const response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=45&key=${API_KEY}`);
     const data = await response.json();
     return data.items;
 }
