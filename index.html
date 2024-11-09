@@ -1,184 +1,456 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Un Cafe Con JJ | Noticiero</title>
-    <meta name="description" content="El noticiero digital más escuchado de Guayaquil con el Precandidato Jimmy Jairala!">
+    <title>Un Cafe Con JJ | Noticiero Digital de Guayaquil</title>
+    <meta name="description" content="El noticiero digital más escuchado de Guayaquil con Jimmy Jairala. Noticias actualizadas, análisis político y entrevistas en vivo.">
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#000000">
+    <meta name="theme-color" content="#8B4513">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Un Cafe Con JJ">
+
+    <!-- SEO Meta Tags -->
     <link rel="canonical" href="https://uncafeconjj.com">
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- Open Graph tags -->
-    <meta property="og:title" content="Un Café Con JJ">
-    <meta property="og:description" content="Descubre que sucede en Ecuador y todo el mundo en el noticiero digital más visto de Guayaquil.">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Jimmy Jairala">
+    <meta name="keywords" content="noticias, Guayaquil, Ecuador, política, Jimmy Jairala, noticiero digital, análisis político">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://uncafeconjj.com/">
+    <meta property="og:title" content="Un Cafe Con JJ | Noticiero Digital de Guayaquil">
+    <meta property="og:description" content="El noticiero digital más escuchado de Guayaquil con Jimmy Jairala. Noticias actualizadas, análisis político y entrevistas en vivo.">
     <meta property="og:image" content="https://uncafeconjj.com/images/og-image.jpg">
-    <meta property="og:url" content="https://uncafeconjj.com">
-    <!-- Twitter Card tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@uncafeconjj">
-    <meta name="twitter:title" content="Un Café Con JJ | Noticiero">
-    <meta name="twitter:description" content="El noticiero digital más escuchado de Guayaquil con el Precandidato Jimmy Jairala!">
-    <meta name="twitter:image" content="https://uncafeconjj.com/images/twitter-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://uncafeconjj.com/">
+    <meta property="twitter:title" content="Un Cafe Con JJ | Noticiero Digital de Guayaquil">
+    <meta property="twitter:description" content="El noticiero digital más escuchado de Guayaquil con Jimmy Jairala. Noticias actualizadas, análisis político y entrevistas en vivo.">
+    <meta property="twitter:image" content="https://uncafeconjj.com/images/twitter-image.jpg">
+
+    <!-- Structured Data for Local SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Un Cafe Con JJ",
+      "image": "https://uncafeconjj.com/images/logo.png",
+      "url": "https://uncafeconjj.com",
+      "telephone": "+593999472777",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Av. 9 de Octubre 1234",
+        "addressLocality": "Guayaquil",
+        "postalCode": "090150",
+        "addressCountry": "EC"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -2.1894128,
+        "longitude": -79.8890662
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "opens": "07:00",
+        "closes": "09:00"
+      },
+      "sameAs": [
+        "https://www.facebook.com/uncafeconjj",
+        "https://www.twitter.com/uncafeconjj",
+        "https://www.instagram.com/uncafeconjj",
+        "https://www.youtube.com/uncafeconjj"
+      ]
+    }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8B4513',
+                        secondary: '#FFD700',
+                        accent: '#FFFFFF',
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .bg-gradient-primary {
+                background-image: linear-gradient(135deg, rgba(255, 215, 0, 0.8), rgba(139, 69, 19, 0.8), rgba(255, 255, 255, 0.8));
+            }
+            .text-shadow {
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            }
+            .pulse {
+                animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+            }
+            @keyframes pulse {
+                0%, 100% {
+                    opacity: 1;
+                }
+                50% {
+                    opacity: .5;
+                }
+            }
+            .animate-marquee {
+                animation: marquee 20s linear infinite;
+            }
+            @keyframes marquee {
+                0% { transform: translateX(100%); }
+                100% { transform: translateX(-100%); }
+            }
+            .bounce {
+                animation: bounce 1s infinite;
+            }
+            @keyframes bounce {
+                0%, 100% {
+                    transform: translateY(-25%);
+                    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+                }
+                50% {
+                    transform: translateY(0);
+                    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+                }
+            }
+            .fade-in {
+                opacity: 0;
+                transition: opacity 1s ease-in-out;
+            }
+            .fade-in.visible {
+                opacity: 1;
+            }
+        }
+    </style>
 </head>
-<body>
-    <header>
-        <div class="logo">
-            <img src="images/logo.png" alt="Logo de Un Café Con JJ">
+<body class="font-sans bg-gray-100 text-gray-800 relative">
+    <!-- Preloader -->
+    <div id="preloader" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white">
+        <img src="images/logo.png" alt="Logo Un Café Con JJ" class="w-32 h-32 pulse">
+        <p class="mt-4 text-primary font-semibold">Powered By Duality Domain</p>
+    </div>
+
+    <!-- SVG Background -->
+    <div class="fixed inset-0 z-0 pointer-events-none opacity-5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+            <defs>
+                <pattern id="news-pattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+                    <text x="10" y="50" font-family="Arial" font-size="20" fill="#333">NOTICIAS</text>
+                    <text x="50" y="80" font-family="Arial" font-size="15" fill="#666">ECUADOR</text>
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#news-pattern)" />
+        </svg>
+    </div>
+
+    <!-- Top Banner -->
+    <div class="bg-primary text-white py-2 px-4 overflow-hidden">
+        <div id="banner-messages" class="flex transition-transform duration-1000 ease-in-out">
+            <!-- Messages will be inserted here dynamically -->
         </div>
-        <div class="install-container">
-            <button id="install-button" class="install-button" style="display: none;">
-                <i class="fas fa-download"></i> Instalar Un Café Con JJ
-            </button>
+    </div>
+
+    <!-- Header -->
+    <header class="sticky top-0 z-40 bg-white shadow-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="images/logo.png" alt="Logo de Un Café Con JJ" class="h-16 mr-4 transition-transform duration-300 hover:scale-105">
+            </div>
+            <nav class="hidden md:flex space-x-6">
+                <a href="#playlists" class="text-gray-600 hover:text-primary transition-colors duration-300">Inicio</a>
+                <a href="#noticias" class="text-gray-600 hover:text-primary transition-colors duration-300">Noticias</a>
+                <a href="#contacto" class="text-gray-600 hover:text-primary transition-colors duration-300">Contacto</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <div class="flex space-x-2">
+                    <a href="https://facebook.com/uncafeconjj" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 transition-colors duration-300">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://twitter.com/uncafeconjj" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-600 transition-colors duration-300">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="https://instagram.com/uncafeconjj" target="_blank" rel="noopener noreferrer" class="text-pink-600 hover:text-pink-800 transition-colors duration-300">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://youtube.com/uncafeconjj" target="_blank" rel="noopener noreferrer" class="text-red-600 hover:text-red-800 transition-colors duration-300">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
         </div>
     </header>
-    
-    <main class="background-container">
-        <div class="main-container">
-            <section class="banner">
-                <div class="carousel">
-                    <div class="carousel-images">
-                        <img src="images/uncafeconjj (1).png" alt="Imagen destacada 1" loading="lazy">
-                    </div>
-                    <button class="carousel-button prev" aria-label="Imagen anterior"></button>
-                    <button class="carousel-button next" aria-label="Imagen siguiente"></button>
-                </div>
-            </section>
 
-           <section id="playlists">
-    <h2 class="playlist-title">En Vivo</h2> <!-- Título para el video en vivo -->
-    <div class="playlist-slider" id="live-video">
-        <div id="live-video-container">
-            <!-- El video en vivo se cargará aquí -->
-        </div>
-    </div>
-
-    <h2 class="playlist-title">Programas</h2> <!-- Título para la lista de programas -->
-    <div class="playlist-slider" id="playlist">
-        <div id="playlist-container">
-            <!-- Los últimos 4 videos se cargarán aquí -->
-        </div>
-    </div>
-</section>
-                 
-            <section id="instagram-videos">
-                <div class="instagram-slider">
-                    <div class="instagram-video-item">
-                        <iframe src="https://www.instagram.com/reel/DAePsIUR3Hm/embed" allowfullscreen></iframe>
-                    </div>
-                    <div class="instagram-video-item">
-                        <iframe src="https://www.instagram.com/reel/DAg1iizxm1z/embed" allowfullscreen></iframe>
-                    </div>
-                    <div class="instagram-video-item">
-                        <iframe src="https://www.instagram.com/reel/DAg1NwUR4m2/embed" allowfullscreen></iframe>
-                    </div>
-                    <!-- Agrega más Reels según sea necesario -->
+    <main class="container mx-auto px-4 py-8 relative z-10">
+        <section class="mb-12 fade-in">
+            <div class="relative overflow-hidden rounded-xl shadow-2xl">
+                <div id="carousel" class="flex transition-transform duration-500 ease-in-out">
+                    <img src="images/uncafeconjj (1).png" alt="Imagen destacada 1" class="w-full h-auto object-cover">
+                    <!-- Agrega más imágenes aquí si es necesario -->
                 </div>
-            </section>
-        </div>
+                <button class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-75 text-gray-800 rounded-full p-2 transition-all duration-300" id="prevBtn">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-75 text-gray-800 rounded-full p-2 transition-all duration-300" id="nextBtn">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <section id="playlists" class="mb-12 fade-in">
+            <h2 class="text-4xl font-serif font-bold text-center mb-6 text-primary">En Vivo</h2>
+            <div id="live-video" class="aspect-w-16 aspect-h-9 mb-8">
+                <div id="live-video-container" class="rounded-xl overflow-hidden shadow-lg" style="width: 100%; padding-bottom: 56.25%; position: relative;">
+                    <!-- The iframe will be inserted here by JavaScript -->
+                </div>
+            </div>
+
+            <h2 class="text-4xl font-serif font-bold text-center mb-6 text-primary">Programas Recientes</h2>
+            <div class="overflow-x-auto pb-4">
+                <div id="playlist-container" class="flex space-x-4">
+                    <!-- Los videos se cargarán aquí dinámicamente -->
+                </div>
+            </div>
+        </section>
+
+        <section id="instagram-videos" class="mb-12 fade-in">
+            <h2 class="text-4xl font-serif font-bold text-center mb-6 text-primary">Nuestros Reels</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="instagram-video-item aspect-[9/16] w-full">
+                    <iframe src="https://www.instagram.com/reel/DB_vzITJKC_/embed" class="w-full h-full rounded-xl" allowfullscreen></iframe>
+                </div>
+                <div class="instagram-video-item aspect-[9/16] w-full">
+                    <iframe src="https://www.instagram.com/reel/DB_vnY-JgTP/embed" class="w-full h-full rounded-xl" allowfullscreen></iframe>
+                </div>
+                <div class="instagram-video-item aspect-[9/16] w-full">
+                    <iframe src="https://www.instagram.com/reel/DB_ZdoYRFEK/embed" class="w-full h-full rounded-xl" allowfullscreen></iframe>
+                </div>
+            </div>
+        </section>
+
+        <section id="descargar-app" class="mb-12 bg-gradient-primary text-white rounded-xl shadow-lg p-8 fade-in">
+            <h2 class="text-4xl font-serif font-bold text-center mb-6">Descarga Nuestra Aplicación</h2>
+            <div class="flex flex-col md:flex-row items-center justify-center gap-8">
+                <div class="text-center md:text-left">
+                    <p class="mb-4">Mantente conectado con las últimas noticias y programas de Un Café Con JJ descargando nuestra aplicación móvil.</p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                        <a href="#" class="bg-black text-white px-6 py-2 rounded-lg flex items-center justify-center hover:bg-gray-800 transition-colors duration-300">
+                            <i class="fab fa-android mr-2"></i> Android
+                        </a>
+                        <a href="#" class="bg-black text-white px-6 py-2 rounded-lg flex items-center justify-center hover:bg-gray-800 transition-colors duration-300">
+                            <i class="fab fa-apple mr-2"></i> iOS
+                        </a>
+                    </div>
+                </div>
+                <img src="images/mockup.png" alt="Un Café Con JJ App" class="w-full max-w-xs rounded-xl shadow-lg">
+            </div>
+        </section>
+
+        <section id="programa-banner" class="mb-12 relative fade-in">
+            <img src="images/bannerpublicitario.png" alt="Un Café Con JJ - Programa" class="w-full h-auto rounded-xl shadow-lg object-cover">
+            <div class="absolute inset-0 bg-black bg-opacity-50 rounded-xl flex items-center justify-center">
+                <a href="https://www.youtube.com/channel/UCYUfYC2ZzWBmvfRp8ByQweQ" target="_blank" rel="noopener noreferrer" class="bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-full transition-all duration-300 text-xl transform hover:scale-105">
+                    Ver en YouTube <i class="fab fa-youtube ml-2"></i>
+                </a>
+            </div>
+        </section>
+
+        <section id="faqs" class="mb-12 bg-white rounded-xl shadow-lg p-8 fade-in">
+            <h2 class="text-4xl font-serif font-bold text-center mb-6 text-primary">Preguntas Frecuentes</h2>
+            <div class="space-y-4">
+                <details class="bg-gray-100 p-4 rounded-lg">
+                    <summary class="font-bold cursor-pointer">¿Cuál es el horario de transmisión de Un Café Con JJ?</summary>
+                    <p class="mt-2">Un Café Con JJ se transmite de lunes a viernes a las 7:00 AM hora de Ecuador.</p>
+                </details>
+                <details class="bg-gray-100 p-4 rounded-lg">
+                    <summary class="font-bold cursor-pointer">¿Cómo puedo participar en el programa?</summary>
+                    <p class="mt-2">Puedes participar enviando tus comentarios y preguntas a través de nuestras redes sociales o usando el formulario de contacto en nuestra página web.</p>
+                </details>
+                <details class="bg-gray-100 p-4 rounded-lg">
+                    <summary class="font-bold cursor-pointer">¿Dónde puedo ver los episodios anteriores?</summary>
+                    <p class="mt-2">Todos nuestros episodios anteriores están disponibles en nuestro canal de YouTube y en la sección de "Programas Recientes" de esta página web.</p>
+                </details>
+            </div>
+        </section>
+
+        <section id="contacto" class="mb-12 bg-white rounded-xl shadow-lg p-8 fade-in">
+            <h2 class="text-4xl font-serif font-bold text-center mb-6 text-primary">Contáctanos</h2>
+            <form id="contact-form" class="max-w-lg mx-auto">
+                <div class="mb-4">
+                    <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Nombre</label>
+                    <input type="text" id="name" name="name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                </div>
+                <div class="mb-4">
+                    <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                    <input type="email" id="email" name="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                </div>
+                <div class="mb-6">
+                    <label for="message" class="block text-gray-700 text-sm font-bold mb-2">Mensaje</label>
+                    <textarea id="message" name="message" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" rows="4" required></textarea>
+                </div>
+                <div class="flex items-center justify-between">
+                    <button type="submit" class="bg-primary hover:bg-opacity-90 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors duration-300">
+                        Enviar Mensaje
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Reviews Section -->
+        <section id="reviews" class="mb-12 bg-white rounded-xl shadow-lg p-8 fade-in">
+            <h2 class="text-4xl font-serif font-bold text-center mb-6 text-primary">Lo que dicen nuestros oyentes</h2>
+            <div class="relative overflow-hidden">
+                <div id="reviews-container" class="flex transition-transform duration-500 ease-in-out">
+                    <!-- Reviews will be inserted here dynamically -->
+                </div>
+                <button id="prevReview" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-75 text-gray-800 rounded-full p-2 transition-all duration-300">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button id="nextReview" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-75 text-gray-800 rounded-full p-2 transition-all duration-300">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- Google Map Section -->
+        <section id="map" class="mb-12 fade-in">
+            <h2 class="text-4xl font-serif font-bold text-center mb-6 text-primary">Encuéntranos</h2>
+            <div class="rounded-xl overflow-hidden shadow-lg" style="width: 100%; height: 400px;">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d254508.51141489705!2d-80.05583754765878!3d-2.1523157738145883!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x902d13cbe855805f%3A0x8015a492f4fca473!2sGuayaquil%2C%20Ecuador!5e0!3m2!1sen!2sus!4v1651234567890!5m2!1sen!2sus"
+                    width="100%"
+                    height="100%"
+                    style="border:0;"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </section>
+
+        <section id="boletin" class="mb-12 bg-gradient-primary text-white rounded-xl shadow-lg p-8 fade-in">
+            <h2 class="text-4xl font-serif font-bold text-center mb-6">Suscríbete a Nuestro Boletín</h2>
+            <form id="newsletter-form" class="max-w-md mx-auto">
+                <div class="flex items-center border-b border-white py-2">
+                    <input class="appearance-none bg-transparent border-none w-full text-white mr-3 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="Tu nombre" aria-label="Nombre completo">
+                </div>
+                <div class="flex items-center border-b border-white py-2 mt-4">
+                    <input class="appearance-none bg-transparent border-none w-full text-white mr-3 py-1 px-2 leading-tight focus:outline-none" type="tel" placeholder="Tu número de WhatsApp" aria-label="Número de WhatsApp">
+                </div>
+                <div class="flex justify-center mt-6">
+                    <button class="bg-white hover:bg-gray-100 text-primary font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors duration-300" type="submit">
+                        Suscribirse
+                    </button>
+                </div>
+            </form>
+        </section>
     </main>
 
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section about">
-                <img src="images/logo.png" alt="Un Café con JJ" class="footer-logo">
-                <p>Descubre que sucede en Ecuador y todo el mundo en el noticiero digital más visto de Guayaquil.</p>
-            </div>
-            <div class="footer-section socials">
-                <h3>Conéctate con Nosotros</h3>
-                <div class="social-icons">
-                    <a href="https://www.facebook.com/jimmyjairala/" target="_blank" rel="noopener" class="social-icon" aria-label="Síguenos en Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://x.com/uncafeconjj" target="_blank" rel="noopener" class="social-icon" aria-label="Síguenos en Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="https://www.instagram.com/uncafeconjjoficial?igsh=MW9idW52eDAxZDd5cQ==" target="_blank" rel="noopener" class="social-icon" aria-label="Síguenos en Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="https://youtube.com/@jimmyjairala?si=WzGRe9DqJ74pUqsz" target="_blank" rel="noopener" class="social-icon" aria-label="Suscríbete a nuestro canal de YouTube"><i class="fab fa-youtube"></i></a>
+    <footer class="bg-primary text-white py-12 pb-24">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <img src="images/logo.png" alt="Un Café con JJ" class="h-24 mb-4 mx-auto md:mx-0">
+                    <p class="text-center md:text-left">Descubre que sucede en Ecuador y todo el mundo en el noticiero digital más visto de Guayaquil.</p>
+                </div>
+                <div class="text-center md:text-left">
+                    <h3 class="text-2xl font-bold mb-4">Enlaces Rápidos</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#playlists" class="hover:text-secondary transition-colors duration-300">Inicio</a></li>
+                        <li><a href="#noticias" class="hover:text-secondary transition-colors duration-300">Noticias</a></li>
+                        <li><a href="#contacto" class="hover:text-secondary transition-colors duration-300">Contacto</a></li>
+                        <li><a href="#boletin" class="hover:text-secondary transition-colors duration-300">Boletín</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold mb-4 text-center md:text-left">Síguenos</h3>
+                    <div class="flex justify-center md:justify-start space-x-4">
+                        <a href="https://facebook.com/uncafeconjj" target="_blank" rel="noopener noreferrer" class="text-2xl hover:text-secondary transition-colors duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://twitter.com/uncafeconjj" target="_blank" rel="noopener noreferrer" class="text-2xl hover:text-secondary transition-colors duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://instagram.com/uncafeconjj" target="_blank" rel="noopener noreferrer" class="text-2xl hover:text-secondary transition-colors duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://youtube.com/uncafeconjj" target="_blank" rel="noopener noreferrer" class="text-2xl hover:text-secondary transition-colors duration-300">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
-            <div class="footer-section map">
-                <h3>Encuéntranos</h3>
-                <div class="map-container">
-                    <iframe 
-                        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15769.14526397902!2d-79.8899031!3d-2.1891341!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x902d13cbe855805f%3A0x8015a492f4fca473!2sGuayaquil%2C%20Ecuador!5e0!3m2!1ses!2ses!4v1695866437905!5m2!1ses!2ses"
-                        width="100%" 
-                        height="300" 
-                        style="border:0;" 
-                        allowfullscreen="" 
-                        loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"
-                        title="Ubicación de Un Café Con JJ">
-                    </iframe>
-                </div>
+            <div class="mt-8 pt-8 border-t border-white border-opacity-20 text-center">
+                <p>&copy; 2024 Un Café Con JJ. Todos los derechos reservados. | Desarrollado por <a href="https://dualitydomain.github.io/Dualitydomain/" target="_blank" rel="noopener" class="text-secondary hover:underline">Duality Domain</a></p>
             </div>
-        </div>
-        <div class="footer-bottom">
-            <p>Powered by <a href="https://dualitydomain.github.io/Dualitydomain/" target="_blank" rel="noopener">Duality Domain</a> | &copy; 2024 Todos los derechos reservados.</p>
         </div>
     </footer>
 
-    <div class="whatsapp-float">
-        <a href="javascript:void(0);" id="whatsappBtn" class="whatsapp-button" aria-label="Chatea con UnCafeConJJ en WhatsApp">
-            <i class="fab fa-whatsapp"></i>
-        </a>
+    <div class="fixed bottom-20 right-6 z-50">
+        <button id="whatsappBtn" class="bg-green-500 text-white rounded-full p-4 shadow-lg transition-transform duration-300 hover:scale-110 bounce" aria-label="Chatea con UnCafeConJJ en WhatsApp">
+            <i class="fab fa-whatsapp text-2xl"></i>
+        </button>
     </div>
 
-    <div id="whatsappModal" class="whatsapp-modal">
-        <div class="whatsapp-modal-content">
-            <button class="whatsapp-close" aria-label="Cerrar modal">&times;</button>
-            <h2>Chatea con Un Café Con JJ en WhatsApp</h2>
-            <p>Escribe tu mensaje:</p>
-            <textarea id="whatsappMessage" placeholder="Escribe tu mensaje aquí..." rows="4" style="width: 100%;"></textarea>
-            <button id="sendMessageBtn" class="send-btn">Enviar mensaje</button>
+    <div id="whatsappModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-bold text-primary">Chatea con Un Café Con JJ en WhatsApp</h2>
+                <button class="text-gray-500 hover:text-gray-700" id="closeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <p class="mb-4">Escribe tu mensaje:</p>
+            <textarea id="whatsappMessage" class="w-full p-2 border border-gray-300 rounded mb-4" rows="4" placeholder="Escribe tu mensaje aquí..."></textarea>
+            <button id="sendMessageBtn" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition-colors duration-300">
+                <i class="fab fa-whatsapp mr-2"></i> Enviar mensaje
+            </button>
         </div>
     </div>
 
-    <nav class="bottom-nav">
-        <a href="#playlists" class="nav-item"><i class="fas fa-home"></i><span>Inicio</span></a>
-        <a href="#features" class="nav-item"><i class="fas fa-calendar-alt"></i><span>Eventos</span></a>
-        <a href="#shorts-section" class="nav-item"><i class="fas fa-tags"></i><span>Ofertas</span></a>
-        <a href="#sponsors-section" class="nav-item"><i class="fas fa-star"></i><span>Patrocinadores</span></a>
-        <a href="#cta" class="nav-item"><i class="fas fa-envelope"></i><span>Contacto</span></a>
+    <nav class="fixed bottom-0 left-0 right-0 bg-white shadow-lg py-2 px-4 flex justify-around items-center z-40">
+        <a href="#playlists" class="flex flex-col items-center text-xs text-gray-600 hover:text-primary transition-colors duration-300">
+            <i class="fas fa-home text-xl mb-1"></i>
+            <span>Inicio</span>
+        </a>
+        <a href="#noticias" class="flex flex-col items-center text-xs text-gray-600 hover:text-primary transition-colors duration-300">
+            <i class="fas fa-newspaper text-xl mb-1"></i>
+            <span>Noticias</span>
+        </a>
+        <a href="#instagram-videos" class="flex flex-col items-center text-xs text-gray-600 hover:text-primary transition-colors duration-300">
+            <i class="fab fa-instagram text-xl mb-1"></i>
+            <span>Reels</span>
+        </a>
+        <a href="#contacto" class="flex flex-col items-center text-xs text-gray-600 hover:text-primary transition-colors duration-300">
+            <i class="fas fa-envelope text-xl mb-1"></i>
+            <span>Contacto</span>
+        </a>
+        <button id="install-button" class="flex flex-col items-center text-xs text-gray-600 hover:text-primary transition-colors duration-300">
+            <i class="fas fa-download text-xl mb-1"></i>
+            <span>Instalar</span>
+        </button>
     </nav>
 
     <script src="script.js"></script>
-    <script src="playlist.js"></script>
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
-                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
-                }, function(err) {
-                    console.log('ServiceWorker registration failed: ', err);
-                });
-            });
-        }
-
-        // Código para la instalación de la PWA
-        let deferredPrompt;
-        const installButton = document.getElementById('install-button');
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            installButton.style.display = 'block';
-        });
-
-        installButton.addEventListener('click', async () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') {
-                    console.log('User accepted the install prompt');
-                }
-                deferredPrompt = null;
-            }
-            installButton.style.display = 'none';
-        });
-    </script>
 </body>
 </html>
