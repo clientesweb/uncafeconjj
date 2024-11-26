@@ -81,10 +81,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Funcionalidad de YouTube
     const API_KEY = 'AIzaSyBcNo4pMTbFhTs8RKujYFfNSo_HbIP9f7E';
-    const PLAYLIST_ID = 'PLSwBXxeopk-wzps96LvzkMKyy-YSxD2r5';
+    const PLAYLIST_ID = 'PLSwBXxeopk-xySzecvVbfGTqnCTi8QhtE';
 
     async function fetchPlaylistItems() {
-        const response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=55&key=${API_KEY}`);
+        const response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=50&key=${API_KEY}`);
         const data = await response.json();
         return data.items;
     }
