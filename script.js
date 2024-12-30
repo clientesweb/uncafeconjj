@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const playlistContainer = document.getElementById('playlist-container');
         playlistContainer.innerHTML = '';
 
-        videos.slice(1, 5).forEach(video => {
+        videos.slice(1).forEach(video => {
             const videoItem = document.createElement('div');
             videoItem.classList.add('flex-shrink-0', 'w-72', 'h-40');
             videoItem.innerHTML = `
