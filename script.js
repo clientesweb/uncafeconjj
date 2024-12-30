@@ -84,9 +84,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const PLAYLIST_ID = 'PLSwBXxeopk-xySzecvVbfGTqnCTi8QhtE';
 
     async function fetchPlaylistItems() {
-        const response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=50&key=${API_KEY}`);
+        const response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=50&key=${API_KEY}&order=date`);
         const data = await response.json();
-        return data.items;
+        return data.items.sort((a, b) => new Date(b.snippet.publishedAt) - new Date(a.snippet.publishedAt));
     }
 
     function displayLiveVideo(video) {
@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function loadVideos() {
         const videos = await fetchPlaylistItems();
         if (videos.length > 0) {
-            const latestVideos = videos.reverse().slice(0, 5);
+            const latestVideos = videos.slice(0, 5);
             displayLiveVideo(latestVideos[0]);
             displayPlaylist(latestVideos);
         } else {
