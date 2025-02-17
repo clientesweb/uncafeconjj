@@ -1,307 +1,134 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
 
 :root {
-    --primary-color: #8B4513;
-    --secondary-color: #6B3500;
-    --text-color: #333333;
-    --background-color: #FFFFFF;
+  --primary-color: #8b4513;
+  --secondary-color: #6b3500;
+  --text-color: #333333;
+  --background-color: #ffffff;
 }
 
 body {
-    font-family: 'Inter', sans-serif;
-    color: var(--text-color);
-    background-color: var(--background-color);
+  font-family: "Inter", sans-serif;
+  color: var(--text-color);
+  background-color: var(--background-color);
 }
 
 /* Hero section styles */
 #hero {
-    position: relative;
-    height: 56.25vw; /* Maintains 1334x750 aspect ratio */
-    max-height: 750px; /* Ensures image doesn't grow too large on wide screens */
-    min-height: 300px; /* Ensures image doesn't become too small on narrow screens */
-    overflow: hidden;
+  position: relative;
+  height: 56.25vw; /* Maintains 1334x750 aspect ratio */
+  max-height: 750px; /* Ensures image doesn't grow too large on wide screens */
+  min-height: 300px; /* Ensures image doesn't become too small on narrow screens */
+  overflow: hidden;
 }
 
 #hero-carousel {
-    height: 100%;
-    width: 100%;
-    position: relative;
+  height: 100%;
+  width: 100%;
+  position: relative;
 }
 
 .hero-slide {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
 }
 
 .hero-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
-/* Rest of your existing styles */
-.fade-in {
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
-.fade-in.visible {
-    opacity: 1;
-}
-
-.program-scroll-container {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-}
-
-.program-scroll-container::-webkit-scrollbar {
-    display: none;
-}
-
-#video-playlist {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.5) rgba(0, 0, 0, 0.1);
-}
-
-#video-playlist::-webkit-scrollbar {
-    width: 6px;
-}
-
-#video-playlist::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.1);
-}
-
-#video-playlist::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 6px;
-    border: 3px solid rgba(0, 0, 0, 0.1);
-}
-
-.playlist-video {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    cursor: pointer;
-    padding: 0.5rem;
-    border-radius: 0.25rem;
-    transition: background-color 0.3s ease;
-}
-
-.playlist-video:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
-.playlist-video img {
-    width: 120px;
-    height: 67px;
-    object-fit: cover;
-    border-radius: 0.25rem;
-}
-
-.playlist-video p {
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-}
-
-/* Estilos actualizados para la sección de shorts */
-.shorts-carousel-container {
-    position: relative;
-    width: 100%;
-    max-width: 100%;
-    margin: 0 auto;
-    overflow: hidden;
-}
-
-#shorts-container {
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    padding-bottom: 10px; /* Añade un poco de espacio para el scroll en móviles */
-}
-
-#shorts-container::-webkit-scrollbar {
-    display: none;
-}
-
-.short-video {
-    flex: 0 0 auto;
-    width: 80%; /* Ajusta el ancho para móviles */
-    max-width: 315px;
-    margin-right: 16px;
-    scroll-snap-align: center;
-}
-
-.short-wrapper {
-    position: relative;
-    width: 100%;
-    padding-bottom: 177.78%; /* Proporción 9:16 */
-}
-
-.short-wrapper iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: 12px;
-}
-
-#prev-short,
-#next-short {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(255, 255, 255, 0.5);
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    z-index: 10;
-}
-
-#prev-short {
-    left: 10px;
-}
-
-#next-short {
-    right: 10px;
-}
-
-@media (min-width: 640px) {
-    .short-video {
-        width: 315px; /* Ancho fijo para pantallas más grandes */
-    }
-}
-
-@media (max-width: 639px) {
-    .shorts-carousel-container {
-        max-width: 100%; /* Permite que ocupe todo el ancho en móviles */
-    }
-    
-    #shorts-container {
-        padding-left: 10%; /* Añade un poco de espacio al inicio para centrar mejor */
-    }
-}
-
-#sponsors-slider {
-    position: relative;
-    overflow: hidden;
-}
-
-#sponsors-slider .flex {
-    transition: transform 0.5s ease-in-out;
-}
-
-#sponsors-slider button {
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-}
-
-#sponsors-slider:hover button {
-    opacity: 1;
-}
-
-@media (max-width: 640px) {
-    #sponsors-slider .flex > div {
-        width: 100%;
-        height: 100px;
-    }
-}
-
-@media (min-width: 641px) and (max-width: 768px) {
-    #sponsors-slider .flex > div {
-        width: 50%;
-        height: 100px;
-    }
-}
-
-@media (min-width: 769px) {
-    #sponsors-slider .flex > div {
-        width: 25%;
-        height: 100px;
-    }
-}
-
-#sponsors-slider .flex > div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100px;
-}
-
-#sponsors-slider .flex > div img {
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-}
-
-#download-app {
-    overflow: hidden;
-}
-
-#download-app .container {
-    position: relative;
-}
-
-#download-app .container::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(139, 69, 19, 0.2) 0%, rgba(139, 69, 19, 0) 50%);
-    transform: rotate(30deg);
-}
-
-/* Additional styles for Un Cafe Con JJ */
 .bg-primary {
-    background-color: var(--primary-color);
+  background-color: var(--primary-color);
 }
 
-.text-primary {
-    color: var(--primary-color);
+.text-white {
+  color: white;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+.mb-8 {
+  margin-bottom: 2rem;
+}
+
+.text-4xl {
+  font-size: 2.25rem;
+}
+
+.text-xl {
+  font-size: 1.25rem;
+}
+
+.leading-tight {
+  line-height: 1.25;
+}
+
+.rounded-full {
+  border-radius: 9999px;
+}
+
+.transition {
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
 }
 
 .hover\:bg-secondary:hover {
-    background-color: var(--secondary-color);
+  background-color: var(--secondary-color);
 }
 
-.border-primary {
-    border-color: var(--primary-color);
-}
+@media (min-width: 768px) {
+  .md\:text-6xl {
+    font-size: 3.75rem;
+  }
 
-.shadow-primary {
-    box-shadow: 0 4px 6px -1px rgba(139, 69, 19, 0.1), 0 2px 4px -1px rgba(139, 69, 19, 0.06);
+  .md\:text-2xl {
+    font-size: 1.5rem;
+  }
+
+  .md\:px-8 {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
 }
 
 /* Custom scrollbar for the entire page */
 ::-webkit-scrollbar {
-    width: 8px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+  background: #f1f1f1;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--primary-color);
-    border-radius: 4px;
+  background: var(--primary-color);
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--secondary-color);
+  background: var(--secondary-color);
 }
+
+/* Rest of your existing styles */
+/* ... */
+
