@@ -47,7 +47,7 @@ body {
     opacity: 1;
 }
 
-/* Fade-in animation */
+/* Rest of your existing styles */
 .fade-in {
     opacity: 0;
     transition: opacity 1s ease-in-out;
@@ -57,7 +57,6 @@ body {
     opacity: 1;
 }
 
-/* Program scroll container */
 .program-scroll-container {
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -67,7 +66,6 @@ body {
     display: none;
 }
 
-/* Video playlist styles */
 #video-playlist {
     scrollbar-width: thin;
     scrollbar-color: rgba(255, 255, 255, 0.5) rgba(0, 0, 0, 0.1);
@@ -113,7 +111,7 @@ body {
     line-height: 1.25rem;
 }
 
-/* Shorts section styles */
+/* Estilos actualizados para la sección de shorts */
 .shorts-carousel-container {
     position: relative;
     width: 100%;
@@ -129,7 +127,7 @@ body {
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    padding-bottom: 10px;
+    padding-bottom: 10px; /* Añade un poco de espacio para el scroll en móviles */
 }
 
 #shorts-container::-webkit-scrollbar {
@@ -138,7 +136,7 @@ body {
 
 .short-video {
     flex: 0 0 auto;
-    width: 80%;
+    width: 80%; /* Ajusta el ancho para móviles */
     max-width: 315px;
     margin-right: 16px;
     scroll-snap-align: center;
@@ -147,7 +145,7 @@ body {
 .short-wrapper {
     position: relative;
     width: 100%;
-    padding-bottom: 177.78%; /* 9:16 aspect ratio */
+    padding-bottom: 177.78%; /* Proporción 9:16 */
 }
 
 .short-wrapper iframe {
@@ -184,7 +182,22 @@ body {
     right: 10px;
 }
 
-/* Sponsors slider styles */
+@media (min-width: 640px) {
+    .short-video {
+        width: 315px; /* Ancho fijo para pantallas más grandes */
+    }
+}
+
+@media (max-width: 639px) {
+    .shorts-carousel-container {
+        max-width: 100%; /* Permite que ocupe todo el ancho en móviles */
+    }
+    
+    #shorts-container {
+        padding-left: 10%; /* Añade un poco de espacio al inicio para centrar mejor */
+    }
+}
+
 #sponsors-slider {
     position: relative;
     overflow: hidden;
@@ -201,58 +214,6 @@ body {
 
 #sponsors-slider:hover button {
     opacity: 1;
-}
-
-#sponsors-slider .flex > div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100px;
-}
-
-#sponsors-slider .flex > div img {
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-}
-
-/* Download app section styles */
-#download-app {
-    overflow: hidden;
-}
-
-#download-app .container {
-    position: relative;
-}
-
-#download-app .container::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(139, 69, 19, 0.2) 0%, rgba(139, 69, 19, 0) 50%);
-    transform: rotate(30deg);
-}
-
-/* Responsive styles */
-@media (min-width: 640px) {
-    .short-video {
-        width: 315px;
-    }
-}
-
-@media (max-width: 639px) {
-    .shorts-carousel-container {
-        max-width: 100%;
-    }
-    
-    #shorts-container {
-        padding-left: 10%;
-    }
 }
 
 @media (max-width: 640px) {
@@ -274,6 +235,40 @@ body {
         width: 25%;
         height: 100px;
     }
+}
+
+#sponsors-slider .flex > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+}
+
+#sponsors-slider .flex > div img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+#download-app {
+    overflow: hidden;
+}
+
+#download-app .container {
+    position: relative;
+}
+
+#download-app .container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(139, 69, 19, 0.2) 0%, rgba(139, 69, 19, 0) 50%);
+    transform: rotate(30deg);
 }
 
 /* Additional styles for Un Cafe Con JJ */
