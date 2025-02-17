@@ -1,12 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
 :root {
-    --primary-color: #8B0000;
-    --secondary-color: #6B0000;
+    --primary-color: #8B4513;
+    --secondary-color: #6B3500;
+    --text-color: #333333;
+    --background-color: #FFFFFF;
 }
 
 body {
     font-family: 'Inter', sans-serif;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    padding-bottom: 60px;
 }
 
 /* Hero section styles */
@@ -43,7 +48,7 @@ body {
     opacity: 1;
 }
 
-/* Rest of your existing styles */
+/* Animations */
 .fade-in {
     opacity: 0;
     transition: opacity 1s ease-in-out;
@@ -53,6 +58,7 @@ body {
     opacity: 1;
 }
 
+/* Program scroll container */
 .program-scroll-container {
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -62,32 +68,41 @@ body {
     display: none;
 }
 
+/* Live Stream Section */
+#live-stream {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 20px 0;
+}
+
+.video-grid {
+    display: grid;
+    gap: 20px;
+}
+
+#main-video {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #000;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
 #video-playlist {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.5) rgba(0, 0, 0, 0.1);
-}
-
-#video-playlist::-webkit-scrollbar {
-    width: 6px;
-}
-
-#video-playlist::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.1);
-}
-
-#video-playlist::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 6px;
-    border: 3px solid rgba(0, 0, 0, 0.1);
+    max-height: 400px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .playlist-video {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    padding: 10px;
+    gap: 12px;
     cursor: pointer;
-    padding: 0.5rem;
-    border-radius: 0.25rem;
+    border-radius: 4px;
     transition: background-color 0.3s ease;
 }
 
@@ -97,103 +112,55 @@ body {
 
 .playlist-video img {
     width: 120px;
-    height: 67px;
+    height: 68px;
+    border-radius: 4px;
     object-fit: cover;
-    border-radius: 0.25rem;
 }
 
-.playlist-video p {
-    font-size: 0.875rem;
-    line-height: 1.25rem;
+.playlist-video .video-info {
+    flex: 1;
 }
 
-/* Estilos actualizados para la sección de shorts */
-.shorts-carousel-container {
-    position: relative;
-    width: 100%;
-    max-width: 100%;
-    margin: 0 auto;
-    overflow: hidden;
+.playlist-video .video-title {
+    font-size: 14px;
+    margin-bottom: 4px;
+    color: white;
 }
 
-#shorts-container {
+/* Shorts Section */
+#shorts {
+    padding: 20px 0;
+    background-color: #fff;
+}
+
+.shorts-container {
     display: flex;
+    gap: 8px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    padding-bottom: 10px; /* Añade un poco de espacio para el scroll en móviles */
-}
-
-#shorts-container::-webkit-scrollbar {
-    display: none;
+    padding: 0 16px;
+    margin: 0 -16px;
 }
 
 .short-video {
     flex: 0 0 auto;
-    width: 80%; /* Ajusta el ancho para móviles */
-    max-width: 315px;
-    margin-right: 16px;
-    scroll-snap-align: center;
-}
-
-.short-wrapper {
+    width: calc(100vw - 32px);
+    max-width: 400px;
+    aspect-ratio: 9/16;
+    scroll-snap-align: start;
+    border-radius: 12px;
+    overflow: hidden;
     position: relative;
-    width: 100%;
-    padding-bottom: 177.78%; /* Proporción 9:16 */
+    background: #000;
 }
 
-.short-wrapper iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
+.short-video iframe {
     width: 100%;
     height: 100%;
-    border-radius: 12px;
-}
-
-#prev-short,
-#next-short {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(255, 255, 255, 0.5);
     border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    z-index: 10;
 }
 
-#prev-short {
-    left: 10px;
-}
-
-#next-short {
-    right: 10px;
-}
-
-@media (min-width: 640px) {
-    .short-video {
-        width: 315px; /* Ancho fijo para pantallas más grandes */
-    }
-}
-
-@media (max-width: 639px) {
-    .shorts-carousel-container {
-        max-width: 100%; /* Permite que ocupe todo el ancho en móviles */
-    }
-    
-    #shorts-container {
-        padding-left: 10%; /* Añade un poco de espacio al inicio para centrar mejor */
-    }
-}
-
+/* Sponsors Section */
 #sponsors-slider {
     position: relative;
     overflow: hidden;
@@ -212,27 +179,6 @@ body {
     opacity: 1;
 }
 
-@media (max-width: 640px) {
-    #sponsors-slider .flex > div {
-        width: 100%;
-        height: 100px;
-    }
-}
-
-@media (min-width: 641px) and (max-width: 768px) {
-    #sponsors-slider .flex > div {
-        width: 50%;
-        height: 100px;
-    }
-}
-
-@media (min-width: 769px) {
-    #sponsors-slider .flex > div {
-        width: 25%;
-        height: 100px;
-    }
-}
-
 #sponsors-slider .flex > div {
     display: flex;
     justify-content: center;
@@ -248,6 +194,7 @@ body {
     object-fit: contain;
 }
 
+/* Download App Section */
 #download-app {
     overflow: hidden;
 }
@@ -263,6 +210,112 @@ body {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 50%);
+    background: radial-gradient(circle, rgba(139, 69, 19, 0.2) 0%, rgba(139, 69, 19, 0) 50%);
     transform: rotate(30deg);
+}
+
+/* Custom Scrollbars */
+#video-playlist::-webkit-scrollbar {
+    width: 6px;
+}
+
+#video-playlist::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+#video-playlist::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+.shorts-container::-webkit-scrollbar {
+    display: none;
+}
+
+/* Utility Classes */
+.bg-primary {
+    background-color: var(--primary-color);
+}
+
+.text-primary {
+    color: var(--primary-color);
+}
+
+.hover\:bg-secondary:hover {
+    background-color: var(--secondary-color);
+}
+
+.border-primary {
+    border-color: var(--primary-color);
+}
+
+/* Responsive Styles */
+@media (min-width: 768px) {
+    .video-grid {
+        grid-template-columns: 2fr 1fr;
+    }
+
+    .short-video {
+        width: 315px;
+    }
+}
+
+@media (max-width: 640px) {
+    #sponsors-slider .flex > div {
+        width: 100%;
+    }
+}
+
+@media (min-width: 641px) and (max-width: 768px) {
+    #sponsors-slider .flex > div {
+        width: 50%;
+    }
+}
+
+@media (min-width: 769px) {
+    #sponsors-slider .flex > div {
+        width: 25%;
+    }
+}
+
+/* Bottom Navigation */
+#bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    z-index: 50;
+}
+
+/* Floating Chat Button */
+#floating-chat {
+    position: fixed;
+    right: 1rem;
+    bottom: 5rem;
+    z-index: 40;
+}
+
+/* Footer Adjustments */
+footer {
+    padding-bottom: 80px;
+}
+
+/* Global Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color);
 }
