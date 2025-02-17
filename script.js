@@ -68,9 +68,9 @@ document.addEventListener('DOMContentLoaded', () => {
     heroCarousel.addEventListener('touchend', handleTouchEnd, { passive: true });
 
     // YouTube API integration
-    const livePlaylistId = 'PLZ_v3bWMqpjEYZDAFLI-0GuAH4BpA5PiL';
-    const shortsPlaylistId = 'PLZ_v3bWMqpjFa0xI11mahmOCxPk_1TK2s';
-    const apiKey = 'AIzaSyB4HGg2WVC-Sq3Qyj9T9Z9aBBGbET1oGs0';
+    const livePlaylistId = 'PLSwBXxeopk-xySzecvVbfGTqnCTi8QhtE';
+    const shortsPlaylistId = 'PLSwBXxeopk-xUhmNW4jOBi8Olkr_4p2Rc';
+    const apiKey = 'AIzaSyBcNo4pMTbFhTs8RKujYFfNSo_HbIP9f7E';
     let player;
 
     const cachedFetch = async (url, cacheKey, expirationMinutes = 60) => {
